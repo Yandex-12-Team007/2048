@@ -4,6 +4,11 @@
 - Макет в Figma :  (тут будет ссылка на макет =))
 - [Гайд по .md](https://github.com/GnuriaN/format-README)
 
+## Инструменты разработки
+- Пакетный менеджер : `npm`
+- Вид компонентов : `Функциональные компоненты`
+- CSS : `PostCSS + Autoprefixer + postcss-nested`
+
 ## Команды для разработки :
 `Тут будут команды из packaje.json`
 
