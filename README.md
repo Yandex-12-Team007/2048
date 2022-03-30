@@ -3,14 +3,22 @@
 ## Полезные ссылки :
 - Макет в Figma :  (тут будет ссылка на макет =))
 - [Гайд по .md](https://github.com/GnuriaN/format-README)
+- [Ифнормация о приложение](https://disk.yandex.ru/d/JmLwXRMgqO2FFw)
 
 ## Инструменты разработки
 - Пакетный менеджер : `npm`
 - Вид компонентов : `Функциональные компоненты`
 - CSS : `PostCSS + Autoprefixer + postcss-nested`
+- ОС команды : `MacOS, Linux`
 
 ## Команды для разработки :
-`Тут будут команды из packaje.json`
+`dev` - запуск сервера разработки webpack-dev-server
+`build` - собираем webpack-ом приложение в dist
+`start` - Запускаем express на раздачу статики с dist
+`eslint` - Запускаем линтер
+`eslintFix` - Запускаем линтер с флагом --fix 
+`stylelint` - Запускаем css линтер
+`stylelintFix` - Запускаем css линтер с флагом --fix  
 
 ## О игре :
 
@@ -99,7 +107,7 @@ TODO : Мы сами реализуем, или используем API ?
 
 ## Форум
 
-[Будем ссылаться на требования практикума :](https://4pda.to/forum/index.php?act=idx)
+[Пример форума :](https://4pda.to/forum/index.php?act=idx)
 
 ### Структура 
 

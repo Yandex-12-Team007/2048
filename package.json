@@ -10,6 +10,7 @@
     "eslintFix": "eslint --fix 'src/**/*.tsx'",
     "build": "webpack --env production --mode production",
     "dev": "webpack-dev-server --env development --mode development"
+    "start": "node index.ts"
   },
   "repository": {
     "type": "git",
