@@ -1,7 +1,9 @@
 import React from "react";
 
+import Layout from "Components/Layout";
+
 export default function Profile() {
-    return <div>
-        Login
-    </div>
+    return <Layout title={'Профиль'}>
+      Profile
+    </Layout>
 }

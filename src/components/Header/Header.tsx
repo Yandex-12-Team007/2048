@@ -1,9 +1,11 @@
 import React from "react";
 
-import './Header.css';
+import Nav from "Components/Nav";
+
+import './Header.pcss';
 
 export default function Header() {
     return <div className={'header'}>
-        Тут будет header =)
+        <Nav />
     </div>
 }

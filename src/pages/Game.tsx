@@ -1,9 +1,9 @@
 import React from "react";
 
-import Layout from "../components/Layout";
+import Layout from "Components/Layout";
 
 export default function Game() {
-    return <Layout>
-        Login
+    return <Layout title={'Игра'}>
+      Game
     </Layout>
 }

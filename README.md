@@ -18,7 +18,9 @@
 `eslint` - Запускаем линтер
 `eslintFix` - Запускаем линтер с флагом --fix 
 `stylelint` - Запускаем css линтер
-`stylelintFix` - Запускаем css линтер с флагом --fix  
+`stylelintFix` - Запускаем css линтер с флагом --fix
+`prepare` - Проверяет установлен ли husky
+`pre-commit` - Выполняется перед коммитом
 
 ## О игре :
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Error.css"
+import "./Error.pcss"
 
 export default function Error({code}) {
     return <div className={'error'}>

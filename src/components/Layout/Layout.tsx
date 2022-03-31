@@ -1,12 +1,18 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "Components/Header";
+import Footer from "Components/Footer";
 
-import './Layout.css';
+import './Layout.pcss';
 
-export default function Layout({children}){
+const TITLE = require("Constants/title");
+
+export default function Layout({children, title = 'шаблон'}){
     return <div className={'container'}>
+        <Helmet>
+          <title>{`${TITLE} - ${title}`}</title>
+        </Helmet>
         <Header />
         <div className={'content'}>
             {children}
