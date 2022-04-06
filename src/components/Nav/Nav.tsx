@@ -1,11 +1,11 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link} from 'react-router-dom';
 
-import NAV from "Constants/Nav";
+import NAV from 'Constants/Nav';
 
 import './Nav.pcss';
 
-export default function Nav(){
+export default function Nav() {
   return <div className={'nav'}>
     {NAV.map((el, id) => <Link
       key={id}

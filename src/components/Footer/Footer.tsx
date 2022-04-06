@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import "./Footer.pcss";
+import './Footer.pcss';
 
 export default function Footer() {
-    return <div className={'footer'}>
+  return <div className={'footer'}>
         Тут будет Футер
-    </div>
+  </div>
 }

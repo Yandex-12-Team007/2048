@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default function ForumTheme(props) {
+export default function ForumTheme() {
   return <div>
     ForumTheme
   </div>
