@@ -10,7 +10,7 @@ export const CELL_HEIGHT = (CANVAS_HEIGHT - (BOARD_SIZE + 1) * BOARD_PADDING) / 
 export const BOARD_COLOR = '#bbada0';
 export const CELL_GRID_COLOR = '#CDC1B3';
 
-export enum KEY_CODES {
+export enum KeyCodes {
   UP = 'ArrowUp',
   DOWN = 'ArrowDown',
   LEFT = 'ArrowLeft',

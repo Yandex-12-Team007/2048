@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import Layout from "Components/Layout";
-import { BOARD_SIZE, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_CODES } from "Constants/game";
+import { BOARD_SIZE, CANVAS_HEIGHT, CANVAS_WIDTH, KeyCodes } from "Constants/game";
 import { createEmptyTiles, getNewTile, renderBoard, renderGrid, renderTiles } from "./utils";
 import { ITile } from "./types";
-import cloneDeep from 'lodash.clonedeep';
+import {cloneDeep} from 'lodash';
 
 import './Game.pcss';
 
@@ -61,24 +61,15 @@ export default function Game() {
   function addStartTiles(){
     const newTileList = cloneDeep(tileList);
 
-    const firstNewTile = getNewTile(tileList);
-
-    if (firstNewTile) {
-      const { rowIndex, columnIndex, value } = firstNewTile;
-      newTileList[rowIndex][columnIndex] = {
-        ...newTileList[rowIndex][columnIndex],
-        value,
-      };
-    }
-
-    const secondNewTile = getNewTile(newTileList);
-
-    if (secondNewTile) {
-      const { rowIndex, columnIndex, value } = secondNewTile;
-      newTileList[rowIndex][columnIndex] = {
-        ...newTileList[rowIndex][columnIndex],
-        value,
-      };
+    for (let i = 0; i < 2; i++) {
+      const newTile = getNewTile(newTileList);
+      if (newTile) {
+        const { rowIndex, columnIndex, value } = newTile;
+        newTileList[rowIndex][columnIndex] = {
+          ...newTileList[rowIndex][columnIndex],
+          value,
+        };
+      }
     }
 
     setTileList(newTileList);
@@ -87,16 +78,16 @@ export default function Game() {
 
   function moveCells(event: KeyboardEvent) {
     switch (event.code) {
-      case KEY_CODES.LEFT:
+      case KeyCodes.LEFT:
         moveToLeft();
         break;
-      case KEY_CODES.RIGHT:
+      case KeyCodes.RIGHT:
         moveToRight();
         break;
-      case KEY_CODES.DOWN:
+      case KeyCodes.DOWN:
         moveToDown();
         break;
-      case KEY_CODES.UP:
+      case KeyCodes.UP:
         moveToUp();
         break;
     }
