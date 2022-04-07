@@ -4,8 +4,8 @@
   "description": "Прекрасная игра 2048 !",
   "main": "webpack.config.js",
   "scripts": {
-    "styleLint": "cross-env npx stylelint 'src/**/*.css'",
-    "styleLintFix": "cross-env npx stylelint 'src/**/*.css' --fix",
+    "styleLint": "cross-env npx stylelint 'src/**/*.pcss'",
+    "styleLintFix": "cross-env npx stylelint 'src/**/*.pcss' --fix",
     "eslint": "cross-env eslint 'src/**/*.tsx'",
     "eslintFix": "cross-env eslint --fix 'src/**/*.tsx'",
     "build": "cross-env webpack --env production --mode production",
