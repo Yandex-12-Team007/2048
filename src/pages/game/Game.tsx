@@ -1,9 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from 'react';
 
-import Layout from "Components/Layout";
-import { BOARD_SIZE, CANVAS_HEIGHT, CANVAS_WIDTH, KeyCodes } from "Constants/game";
-import { createEmptyTiles, getNewTile, renderBoard, renderGrid, renderTiles } from "./utils";
-import { ITile } from "./types";
+import Layout from 'Components/Layout';
+import {
+  BOARD_SIZE,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  KeyCodes,
+} from 'Constants/game';
+import {
+  createEmptyTiles,
+  getNewTile,
+  renderBoard,
+  renderGrid,
+  renderTiles,
+} from './utils';
+import {ITile} from './types';
 import {cloneDeep} from 'lodash';
 
 import './Game.pcss';
@@ -58,13 +69,13 @@ export default function Game() {
     setScore(maxValue);
   }
 
-  function addStartTiles(){
+  function addStartTiles() {
     const newTileList = cloneDeep(tileList);
 
     for (let i = 0; i < 2; i++) {
       const newTile = getNewTile(newTileList);
       if (newTile) {
-        const { rowIndex, columnIndex, value } = newTile;
+        const {rowIndex, columnIndex, value} = newTile;
         newTileList[rowIndex][columnIndex] = {
           ...newTileList[rowIndex][columnIndex],
           value,
@@ -99,8 +110,14 @@ export default function Game() {
     const resultedCellRow: ITile[] = cloneDeep(cellRow);
 
     for (let k = 0; k < fullCellsInRow.length; k++) {
-      if (fullCellsInRow[k + 1] && fullCellsInRow[k].value === fullCellsInRow[k + 1].value) {
-        summedFullCellsInRow.push({ ...fullCellsInRow[k], value: fullCellsInRow[k].value * 2 });
+      if (
+        fullCellsInRow[k + 1] &&
+        fullCellsInRow[k].value === fullCellsInRow[k + 1].value
+      ) {
+        summedFullCellsInRow.push({
+          ...fullCellsInRow[k],
+          value: fullCellsInRow[k].value * 2,
+        });
         fullCellsInRow[k + 1].value = 0;
       } else if (fullCellsInRow[k].value !== 0) {
         summedFullCellsInRow.push(fullCellsInRow[k]);
@@ -129,7 +146,8 @@ export default function Game() {
   function moveToRight() {
     const updatedTileList: ITile[][] = cloneDeep(tileListRef.current);
     for (let i = 0; i < BOARD_SIZE; i++) {
-      updatedTileList[i] = getMovedToLeftCellRow(updatedTileList[i].reverse()).reverse();
+      const transposedRow = updatedTileList[i].reverse();
+      updatedTileList[i] = getMovedToLeftCellRow(transposedRow).reverse();
     }
 
     const updatedTileListWithNewTile = getTileListWithNewTile(updatedTileList);
@@ -140,13 +158,17 @@ export default function Game() {
 
   function moveToUp() {
     const cloneTileList: ITile[][] = cloneDeep(tileListRef.current);
-    const transposedCellList = cloneTileList[0].map((_col, i) => cloneTileList.map(row => row[i]));
+    const transposedCellList = cloneTileList[0].map((_col, i) => {
+      return cloneTileList.map((row) => row[i])
+    });
 
     for (let i = 0; i < BOARD_SIZE; i++) {
       transposedCellList[i] = getMovedToLeftCellRow(transposedCellList[i]);
     }
 
-    const updatedTileList = transposedCellList[0].map((_col, i) => transposedCellList.map(row => row[i]));
+    const updatedTileList = transposedCellList[0].map((_col, i) => {
+      return transposedCellList.map((row) => row[i]);
+    });
 
     const updatedTileListWithNewTile = getTileListWithNewTile(updatedTileList);
 
@@ -156,13 +178,18 @@ export default function Game() {
 
   function moveToDown() {
     const cloneTileList: ITile[][] = cloneDeep(tileListRef.current);
-    const transposedCellList = cloneTileList[0].map((_col, i) => cloneTileList.map(row => row[i]));
+    const transposedCellList = cloneTileList[0].map((_col, i) => {
+      return cloneTileList.map((row) => row[i]);
+    });
 
     for (let i = 0; i < BOARD_SIZE; i++) {
-      transposedCellList[i] = getMovedToLeftCellRow(transposedCellList[i].reverse()).reverse();
+      const transposedRow = transposedCellList[i].reverse();
+      transposedCellList[i] = getMovedToLeftCellRow(transposedRow).reverse();
     }
 
-    const updatedTileList = transposedCellList[0].map((_col, i) => transposedCellList.map(row => row[i]));
+    const updatedTileList = transposedCellList[0].map((_col, i) => {
+      return transposedCellList.map((row) => row[i]);
+    });
 
     const updatedTileListWithNewTile = getTileListWithNewTile(updatedTileList);
 
@@ -176,7 +203,7 @@ export default function Game() {
     const newTile = getNewTile(tileList);
 
     if (newTile) {
-      const { rowIndex, columnIndex, value } = newTile;
+      const {rowIndex, columnIndex, value} = newTile;
       updatedTileList[rowIndex][columnIndex] = {
         ...updatedTileList[rowIndex][columnIndex],
         value,
@@ -188,7 +215,12 @@ export default function Game() {
   return (
     <Layout title={'Игра'}>
       <div className="game-container">
-        <canvas className="game-canvas" ref={ref} width={CANVAS_WIDTH} height={CANVAS_HEIGHT}/>
+        <canvas
+          className="game-canvas"
+          ref={ref}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+        />
         <div className="game-score">
           <p className="game-score__caption">Счет</p>
           <p className="game-score__score">{score}</p>
