@@ -5,7 +5,7 @@ import App from './App';
 
 const container = document.getElementById('root');
 
-if(!container){
+if (!container) {
   throw new Error('Can\'t find root !');
 }
 

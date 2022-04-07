@@ -2,8 +2,8 @@ import React from 'react';
 
 import Layout from 'Components/Layout';
 
-export default function Forum() {
-  return <Layout title={'Форум'}>
-    Forum
+export default function Game() {
+  return <Layout title={'Игра'}>
+      Game
   </Layout>
 }

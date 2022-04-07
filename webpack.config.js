@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const Dotenv = require('dotenv-webpack');
 
-const TITLE = require(path.resolve(__dirname, 'src/constants/title.ts'));
-
 module.exports = (env) => {
   let envType = env.development ? 'development' : 'production';
 
