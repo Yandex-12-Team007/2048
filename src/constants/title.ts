@@ -1,2 +1,3 @@
-const TITLE = '2048'
-module.exports = TITLE;
+const TITLE = '2048';
+
+export default TITLE;
