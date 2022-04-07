@@ -17,6 +17,7 @@
   "rules": {
     "max-len": ["warn", { "code": 80 }],
     "semi": "off",
+    "require-jsdoc": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/ban-ts-comment": "off"
   },
