@@ -3,7 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const Dotenv = require('dotenv-webpack');
 
-const TITLE = require(path.resolve(__dirname, 'src/constants/title.ts'));
+//const TITLE = require(path.resolve(__dirname, 'src/constants/title.ts'));
+
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = (env) => {
   let envType = env.development ? 'development' : 'production';
@@ -11,6 +13,7 @@ module.exports = (env) => {
   return {
   entry: "./src/index.tsx",
   output: {
+    publicPath: ASSET_PATH,
     filename: '[name].bundle.js',
     path: path.join(__dirname, "/dist"),
   },
@@ -56,9 +59,10 @@ module.exports = (env) => {
       template: "./public/index.html",
       favicon: "./src/static/img/favicon.ico",
       meta: {
-        title : 'content=Default title, data-react-helmet=true'
-      }
-    }),
+
+      },
+      minify: true
+    })
   ],
   devServer: {
     client: {
