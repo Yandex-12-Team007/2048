@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
 
 //const TITLE = require(path.resolve(__dirname, 'src/constants/title.ts'));
-
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = (env) => {
