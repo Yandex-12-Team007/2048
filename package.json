@@ -6,8 +6,8 @@
   "scripts": {
     "styleLint": "cross-env npx stylelint 'src/**/*.pcss'",
     "styleLintFix": "cross-env npx stylelint 'src/**/*.pcss' --fix",
-    "eslint": "cross-env eslint 'src/**/*.tsx'",
-    "eslintFix": "cross-env eslint --fix 'src/**/*.tsx'",
+    "eslint": "cross-env eslint 'src/**/*.{ts,tsx}'",
+    "eslintFix": "cross-env eslint --fix 'src/**/*.{ts, tsx}'",
     "build": "cross-env webpack --env production --mode production",
     "dev": "cross-env webpack-dev-server --env development --mode development --open",
     "start": "cross-env node index.ts",
@@ -59,8 +59,8 @@
   "dependencies": {
     "express": "4.17.3",
     "react": "18.0.0",
+    "react-document-meta": "^3.0.0-beta.2",
     "react-dom": "18.0.0",
-    "react-helmet": "^6.1.0",
     "react-router-dom": "5.2.1"
   }
 }

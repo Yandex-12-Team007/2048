@@ -5,7 +5,7 @@ import PrivateRoute from './PrivateRoute';
 
 import Routes from 'Constants/Routes';
 
-// import Loading from "./components/Loading";
+// import Loading from './components/Loading';
 
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/game/Game'));

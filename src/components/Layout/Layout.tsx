@@ -1,5 +1,5 @@
 import React from 'react';
-import {Helmet} from 'react-helmet';
+import DocumentMeta from 'react-document-meta';
 
 import Header from 'Components/Header';
 import Footer from 'Components/Footer';
@@ -8,16 +8,19 @@ import TITLE from 'Constants/title';
 
 import './Layout.pcss';
 
-
 export default function Layout({children, title = 'шаблон'}) {
-  return <div className={'container'}>
-    <Helmet>
-      <title>{`${TITLE} - ${title}`}</title>
-    </Helmet>
-    <Header />
-    <div className={'content'}>
-      {children}
+  const meta = {
+    title: `${TITLE} - ${title}`,
+    description: `Тут будет описание странички ${title}`,
+  };
+
+  return <DocumentMeta {...meta}>
+    <div className={'container'}>
+      <Header/>
+      <div className={'content'}>
+        {children}
+      </div>
+      <Footer/>
     </div>
-    <Footer />
-  </div>
+  </DocumentMeta>
 }
