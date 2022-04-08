@@ -6,6 +6,8 @@ enum Routes {
     SIGNUP = '/signup',
     // Игра
     GAME = '/game',
+    // Таблица лидеров
+    LEADERBOARD = '/leaderboard',
     // Форум
     FORUM = '/forum',
     FORUM_THEME = '/forum/:theme_id',
@@ -17,6 +19,8 @@ enum Routes {
     ERROR = '/error/:num',
     ERROR_404 = '/error/404',
     ERROR_500 = '/error/500',
+    // Правила
+    RULE = '/rule'
 }
 
 export default Routes;

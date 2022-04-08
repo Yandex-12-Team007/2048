@@ -24,7 +24,9 @@
       "*": ["./src/*"],
       "Pages/*": ["./src/pages/*"],
       "Constants/*": ["./src/constants/*"],
-      "Components/*": ["./src/components/*"]
+      "Components/*": ["./src/components/*"],
+      "Utils/*": ["./src/utils/*"],
+      "Static/*": ["./src/static/*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
