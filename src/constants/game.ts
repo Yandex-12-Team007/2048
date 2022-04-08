@@ -15,7 +15,7 @@ export enum KeyCodes {
   DOWN = 'ArrowDown',
   LEFT = 'ArrowLeft',
   RIGHT = 'ArrowRight'
-};
+}
 
 export const TILE_BACKGROUND = {
   2: '#EEE4DA',
