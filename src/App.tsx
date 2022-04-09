@@ -10,7 +10,7 @@ import Routes from 'Constants/Routes';
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/game/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
-const Profile = lazy(() => import('Pages/Profile'));
+const Profile = lazy(() => import('Pages/profile/Profile'));
 const Error = lazy(() => import('Pages/Error'));
 
 import './App.pcss';
