@@ -6,6 +6,8 @@ enum Routes {
     SIGNUP = '/signup',
     // Игра
     GAME = '/game',
+    // Таблица лидеров
+    LEADERBOARD = '/leaderboard',
     // Форум
     FORUM = '/forum',
     FORUM_THEME = '/forum/:theme_id',
