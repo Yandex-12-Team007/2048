@@ -1,9 +1,13 @@
 import React from 'react';
 
+import ErrorBoundary from 'Components/ErrorBoundary';
+
 import './Footer.pcss';
 
 export default function Footer() {
-  return <div className={'footer'}>
+  return <ErrorBoundary>
+    <div className={'footer'}>
         Тут будет Футер
-  </div>
+    </div>
+  </ErrorBoundary>
 }

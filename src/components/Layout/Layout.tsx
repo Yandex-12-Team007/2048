@@ -3,6 +3,7 @@ import DocumentMeta from 'react-document-meta';
 
 import Header from 'Components/Header';
 import Footer from 'Components/Footer';
+import ErrorBoundary from 'Components/ErrorBoundary';
 
 import TITLE from 'Constants/title';
 
@@ -14,13 +15,15 @@ export default function Layout({children, title = 'шаблон'}) {
     description: `Тут будет описание странички ${title}`,
   };
 
-  return <DocumentMeta {...meta}>
-    <div className={'container'}>
-      <Header/>
-      <div className={'content'}>
-        {children}
+  return <ErrorBoundary>
+    <DocumentMeta {...meta}>
+      <div className={'container'}>
+        <Header/>
+        <div className={'content'}>
+          {children}
+        </div>
+        <Footer/>
       </div>
-      <Footer/>
-    </div>
-  </DocumentMeta>
+    </DocumentMeta>
+  </ErrorBoundary>
 }
