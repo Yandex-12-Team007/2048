@@ -1,34 +1,41 @@
 import React from 'react';
+import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
 import NAV from 'Constants/Nav';
 
 import './Nav.pcss';
 
-export default function Nav({small = true, changeSize}) {
+export default function Nav({isSmall = true, changeSize}) {
   /* TODO : Либо будем делать проверку на текущий роут, либо храним состояние */
-  const navClass = small ? 'nav' : 'nav nav-full'
+  const navClass = classNames({
+    'nav': true,
+    'nav_full': !isSmall,
+  });
 
   return <div className={navClass}>
-    <div className={'nav-link'} onClick={changeSize}>
-      <div className={'nav-link-icon-wrapper'}>
+    <div className={'nav__link'} onClick={changeSize}>
+      <div className={'nav__link-icon-wrapper'}>
         Ресайз
       </div>
     </div>
     {NAV.map((el, id) => <Link
       key={id}
-      className={'nav-link ' + (id === 1 ? 'nav-link--active' : '')}
+      className={classNames({
+        'nav__link': true,
+        'nav__link_active': (id === 1),
+      })}
       to={el.link}
     >
       <div
-        className={'nav-link-icon-wrapper'}
+        className={'nav__link-icon-wrapper'}
         dangerouslySetInnerHTML={{__html: `
-            <svg class="nav-link-icon">
+            <svg class="nav__link-icon">
                 ${el.icon}
             </svg>`,
         }}
       />
-      {!small ? <span className={'nav-link-title'}>{el.title}</span> : ''}
+      {!isSmall ? <span className={'nav__link-title'}>{el.title}</span> : ''}
     </Link>
     )}
   </div>

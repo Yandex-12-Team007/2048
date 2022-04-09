@@ -20,7 +20,7 @@ enum Routes {
     ERROR_404 = '/error/404',
     ERROR_500 = '/error/500',
     // Правила
-    RULE = '/rule'
+    RULES = '/rules'
 }
 
 export default Routes;

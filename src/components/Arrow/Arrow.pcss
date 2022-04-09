@@ -14,20 +14,6 @@
     width: 10px;
   }
 
-  .arrow-top {
-    top: 6.4px;
-  }
-
-  .arrow-top {
-    transform: rotate(45deg);
-    transform-origin: bottom right;
-  }
-
-  .arrow-bottom {
-    transform: rotate(-45deg);
-    transform-origin: top right;
-  }
-
   .arrow-top::after,
   .arrow-bottom::after {
     background: var(--orange);
@@ -38,24 +24,35 @@
     transition: all 0.15s;
   }
 
-  .arrow-top::after {
-    left: 100%;
-    right: 0;
-    transition-delay: 0s;
+  .arrow-top {
+    top: 6px;
+    transform: rotate(45deg);
+    transform-origin: bottom right;
+
+    &:after {
+      left: 100%;
+      right: 0;
+      transition-delay: 0s;
+    }
   }
 
-  .arrow-bottom::after {
+  .arrow-bottom {
+    transform: rotate(-45deg);
+    transform-origin: top right;
+
+    &:after {
+      left: 0;
+      right: 100%;
+      transition-delay: 0.15s;
+    }
+  }
+
+  &:hover .arrow-top::after {
     left: 0;
-    right: 100%;
     transition-delay: 0.15s;
   }
 
-  .arrow:hover .arrow-top::after {
-    left: 0;
-    transition-delay: 0.15s;
-  }
-
-  .arrow:hover .arrow-bottom::after {
+  &:hover .arrow-bottom::after {
     right: 0;
     transition-delay: 0s;
   }

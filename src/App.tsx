@@ -11,7 +11,7 @@ const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
-const Rule = lazy(() => import('Pages/Rule'));
+const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 
 const Error = lazy(() => import('Pages/Error'));
@@ -27,7 +27,7 @@ function App() {
           <Route exact path={Routes.LOGIN} component={Login}/>
           <Route exact path={Routes.GAME} component={Game}/>
           <Route exact path={Routes.FORUM} component={Forum}/>
-          <Route exact path={Routes.RULE} component={Rule}/>
+          <Route exact path={Routes.RULES} component={Rules}/>
           <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
           <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
           <Route component={Error}/>

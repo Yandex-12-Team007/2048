@@ -1,12 +1,17 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import Nav from 'Components/Nav';
 
 import './Sidebar.pcss';
 
-export default function Sidebar({small = true, changeSize}) {
-  const SidebarClass = small ? 'sidebar' : 'sidebar sidebar-full'
+export default function Sidebar({isSmall = true, changeSize}) {
+  const SidebarClass = classNames({
+    'sidebar': true,
+    'sidebar_full': !isSmall,
+  });
+
   return <div className={SidebarClass}>
-    <Nav small={small} changeSize={changeSize}/>
+    <Nav isSmall={isSmall} changeSize={changeSize}/>
   </div>
 }

@@ -11,10 +11,10 @@ import './Layout.pcss';
 
 export default function Layout({children, title = 'шаблон'}) {
   /** TODO: Позже будем использовать хуки на размер окна и состояния из Redux */
-  const [small, setSmall] = useState(true);
+  const [isSmall, setSmall] = useState(true);
 
   function changeSize() {
-    setSmall(!small)
+    setSmall(!isSmall)
   }
 
   const meta = {
@@ -24,9 +24,9 @@ export default function Layout({children, title = 'шаблон'}) {
 
   return <DocumentMeta {...meta}>
     <div className={'container'}>
-      <Header title={title} small={small} />
+      <Header title={title} isSmall={isSmall} />
       <div className={'content-wrapper'}>
-        <Sidebar small={small} changeSize={changeSize}/>
+        <Sidebar isSmall={isSmall} changeSize={changeSize}/>
         <div className={'content'}>
           {children}
         </div>

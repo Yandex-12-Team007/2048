@@ -12,7 +12,7 @@ const NAV: IRouteLink[] = [
   {title: 'Игра', link: Routes.HOME, icon: gameIcon},
   {title: 'Лидеры', link: Routes.LEADERBOARD, icon: leaderIcon},
   {title: 'Форум', link: Routes.FORUM, icon: forumIcon},
-  {title: 'Правила', link: Routes.RULE, icon: ruleIcon},
+  {title: 'Правила', link: Routes.RULES, icon: ruleIcon},
 ];
 
 export default NAV;
