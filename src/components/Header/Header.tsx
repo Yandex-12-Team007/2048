@@ -5,7 +5,12 @@ import ProfileWidget from 'Components/ProfileWidget';
 
 import './Header.pcss';
 
-export default function Header({title = '', isSmall = false}) {
+export interface IHeaderProps {
+  title? : string
+  isSmall? : boolean
+}
+
+export default function Header({title = '', isSmall = false} : IHeaderProps) {
   return <div className={'header'}>
     <Logo isSmall={isSmall} />
     <div className={'header-title'}>

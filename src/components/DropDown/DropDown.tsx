@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import {IDropDownItem, IDropDownItemType} from './IDropDownItem';
+import {IDropDownItem, DropDownItemType} from './IDropDownItem';
 
 import './DropDown.pcss';
 
@@ -25,7 +25,7 @@ export default function DropDown({children, options} : {
 
 // TODO: Возможно стоит сделать прокидываемым
 function DropDownItem({item} : {item : IDropDownItem}) {
-  if (item.type === IDropDownItemType.BUTTON) {
+  if (item.type === DropDownItemType.BUTTON) {
     return <div className={'drop-down-item'}>
       <button className={'drop-down-item__btn'} onClick={item.action}>
         {item.title}
@@ -33,7 +33,7 @@ function DropDownItem({item} : {item : IDropDownItem}) {
     </div>
   }
 
-  if (item.type === IDropDownItemType.LINK) {
+  if (item.type === DropDownItemType.LINK) {
     return <div className={'drop-down-item'}>
       <Link className={'drop-down-item__link'} to={item.link}>
         {item.title}

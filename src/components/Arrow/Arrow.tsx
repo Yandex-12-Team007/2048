@@ -11,7 +11,7 @@ export enum ArrowDirection {
 
 export default function Arrow({direction = 'left'}) {
   return <div className={'arrow arrow-'+direction}>
-    <div className="arrow-top" />
-    <div className="arrow-bottom" />
+    <div className="arrow__top" />
+    <div className="arrow__bottom" />
   </div>
 }

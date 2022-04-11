@@ -1,6 +1,6 @@
 import React from 'react';
 import Arrow, {ArrowDirection} from 'Components/Arrow';
-import DropDown, {IDropDownItem, IDropDownItemType} from 'Components/DropDown';
+import DropDown, {IDropDownItem, DropDownItemType} from 'Components/DropDown';
 
 import PROFILE from 'Constants/profileExample';
 import Routes from 'Constants/Routes';
@@ -10,12 +10,12 @@ import './ProfileWidget.pcss';
 export default function ProfileWidget() {
   const options : IDropDownItem[] = [
     {
-      type: IDropDownItemType.BUTTON,
+      type: DropDownItemType.BUTTON,
       title: 'Тест кнопки =)',
       action: () => console.log('test'),
     },
     {
-      type: IDropDownItemType.LINK,
+      type: DropDownItemType.LINK,
       title: 'Профиль',
       link: Routes.PROFILE,
     },
