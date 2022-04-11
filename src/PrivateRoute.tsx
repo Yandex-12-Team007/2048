@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
 import Routes from './constants/Routes';
+import { UserContext } from './hooks/userContext';
 
 function PrivateRoute({component: Component, ...rest}) {
-  const haveAccess = true;
+  const { user } = useContext(UserContext);
+
   return <Route
     {...rest}
-    render={(props) => haveAccess ?
+    render={(props) => user ?
             <Component {...props} /> :
-            <Redirect to={Routes.ERROR_404}/>
+            <Redirect to={Routes.REGISTRATION}/>
     }
   />
 }
