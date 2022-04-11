@@ -25,12 +25,15 @@
     color: #999;
   }
 
-  &__button {
-    font-weight: 500;
-    color: #72685d;
+  &__button-item:not(:last-child) {
+    border-bottom: 1px solid #eaeaea;
   }
 
-  &__button:not(:last-child) {
-    border-bottom: 1px solid var(--border-color);
+  &__button {
+    display: block;
+    font-weight: 500;
+    color: #72685d;
+    text-decoration: none;
+    padding: 10px 0;
   }
 }

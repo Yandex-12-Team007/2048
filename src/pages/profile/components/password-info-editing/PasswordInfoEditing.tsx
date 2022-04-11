@@ -1,60 +1,78 @@
-import React, {useState} from 'react';
-import Button, {EButtonAppearance} from 'Components/Button/Button';
-import TextInput from 'Components/TextInput/TextInput';
+import React from 'react';
+import {object, string, ref} from 'yup';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+
+import Button from 'Components/Button/Button';
+import Input from 'Components/Input/Input';
+
 import './PasswordInfoEditing.pcss';
 
-interface IPasswordInfoEditingProps {
-  onSave: () => void;
-}
+const schema = object({
+  oldPassword: string().required('Укажите значение'),
+  password: string().required('Укажите значение'),
+  doublePassword: string().required('Укажите значение').oneOf([ref('password'), null], 'Пароли должны совпадать'),
+}).required();
 
-const PasswordInfoEditing: React.FunctionComponent<IPasswordInfoEditingProps> = ({ onSave }) => {
-  const [oldPassword, setOldPassword] = useState('12345');
-  const [password, setPassword] = useState('12345');
-  const [doublePassword, setDoublePassword] = useState('12345');
 
-  const handleInfoSave = () => {
+const PasswordInfoEditing = () => {
+  const {handleSubmit, formState: {errors}, register} = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      oldPassword: '',
+      password: '',
+      doublePassword: '',
+    },
+  });
+
+  const handleInfoSave = (data) => {
+    console.log('handleInfoSave', data);
     //  TODO: сохранение с помощью api
-    onSave();
   }
 
   return (
-    <div className='profile-info-editing'>
+    <form className='profile-info-editing' onSubmit={handleSubmit(handleInfoSave)}>
       <ul className='profile-info-editing__list'>
         <li className='profile-info-editing__item'>
-          <span className='profile-info-editing__item-caption'>Старый пароль</span>
-          <TextInput
+          <span className='profile-info-editing__item-caption'>
+            Старый пароль
+          </span>
+          <Input
             className='profile-info-editing__input'
             type='password'
-            value={oldPassword}
-            onChange={setOldPassword}
+            errorMessage={errors.oldPassword?.message}
+            {...register('oldPassword')}
           />
         </li>
         <li className='profile-info-editing__item'>
-          <span className='profile-info-editing__item-caption'>Новый пароль</span>
-          <TextInput
+          <span className='profile-info-editing__item-caption'>
+            Новый пароль
+          </span>
+          <Input
             className='profile-info-editing__input'
             type='password'
-            value={password}
-            onChange={setPassword}
+            errorMessage={errors.password?.message}
+            {...register('password')}
           />
         </li>
         <li className='profile-info-editing__item'>
-          <span className='profile-info-editing__item-caption'>Повторите новый пароль</span>
-          <TextInput
+          <span className='profile-info-editing__item-caption'>
+            Повторите новый пароль
+          </span>
+          <Input
             className='profile-info-editing__input'
             type='password'
-            value={doublePassword}
-            onChange={setDoublePassword}
+            errorMessage={errors.doublePassword?.message}
+            {...register('doublePassword')}
           />
         </li>
       </ul>
       <Button
-        appearance={EButtonAppearance.SUBMIT}
         className='profile-info-editing__submit-button'
         text='Сохранить'
-        onClick={handleInfoSave}
+        type='submit'
       />
-    </div>
+    </form>
   )
 }
 

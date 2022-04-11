@@ -10,7 +10,7 @@ import Routes from 'Constants/Routes';
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/game/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
-const Profile = lazy(() => import('Pages/profile/Profile'));
+const Profile = lazy(() => import('Pages/Profile'));
 const Error = lazy(() => import('Pages/Error'));
 
 import './App.pcss';
@@ -25,6 +25,16 @@ function App() {
           <Route exact path={Routes.GAME} component={Game}/>
           <Route exact path={Routes.FORUM} component={Forum}/>
           <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
+          <PrivateRoute
+            exact
+            path={Routes.PROFILE_EDITING}
+            component={Profile}
+          />
+          <PrivateRoute
+            exact
+            path={Routes.PROFILE_PASSWORD_EDITING}
+            component={Profile}
+          />
           <Route component={Error}/>
         </Switch>
       </Suspense>

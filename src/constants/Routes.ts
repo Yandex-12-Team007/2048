@@ -12,7 +12,8 @@ enum Routes {
     FORUM_CARD = '/forum/:theme_id/:card_id',
     // Профиль
     PROFILE = '/profile',
-    PROFILE_CHANGE = '/profile/change',
+    PROFILE_EDITING = '/profile/editing',
+    PROFILE_PASSWORD_EDITING = '/profile/password-editing',
     // Ошибки
     ERROR = '/error/:num',
     ERROR_404 = '/error/404',

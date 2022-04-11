@@ -1,38 +1,22 @@
-import React from 'react';
+import React, {ButtonHTMLAttributes} from 'react';
 import classNames from 'classnames';
 import './Button.pcss';
 
-export enum EButtonAppearance {
-  TEXT,
-  SUBMIT,
-}
-
-interface IButtonProps {
-  appearance: EButtonAppearance;
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  onClick: () => void;
   className?: string;
 }
 
-const Button: React.FunctionComponent<IButtonProps> = ({
-  appearance,
-  text,
-  onClick,
-  className,
-}) => {
-  function getClassNameByAppearance() {
-    switch (appearance) {
-      case EButtonAppearance.TEXT:
-        return 'button--text';
-      case EButtonAppearance.SUBMIT:
-        return 'button--submit';
-    }
-  }
-
+const Button: React.FunctionComponent<IButtonProps> = (props) => {
+  const {
+    className,
+    text,
+    ...restProps
+  } = props;
   return (
     <button
-      className={classNames('button', getClassNameByAppearance(), className)}
-      onClick={onClick}
+      className={classNames('button', className)}
+      {...restProps}
     >
       {text}
     </button>

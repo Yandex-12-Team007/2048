@@ -1,66 +1,78 @@
-import React, {useState} from 'react';
-import Button, {EButtonAppearance} from 'Components/Button/Button';
-import TextInput from 'Components/TextInput/TextInput';
+import React from 'react';
+import {object, string} from 'yup';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+
+import Button from 'Components/Button/Button';
+import Input from 'Components/Input/Input';
+
 import './ProfileInfoEditing.pcss';
 
-interface IProfileInfoEditingProps {
-  onSave: () => void;
-}
+const schema = object({
+  email: string().email('Укажите email').required('Укажите значение'),
+  login: string().min(3, 'Укажите значение от 3 до 20 символов').max(20, 'Укажите значение от 3 до 20 символов'),
+  firstName: string().required('Укажите значение'),
+  secondName: string().required('Укажите значение'),
+}).required();
 
-const ProfileInfoEditing: React.FunctionComponent<IProfileInfoEditingProps> = ({ onSave }) => {
-  const [mail, setMail] = useState('pochta@yandex.ru');
-  const [login, setLogin] = useState('ivanivanov');
-  const [firstName, setFirstName] = useState('Иван');
-  const [secondName, setSecondName] = useState('Иванов');
+const ProfileInfoEditing = () => {
+  const {handleSubmit, formState: {errors}, register} = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: 'pochta@yandex.ru',
+      login: 'ivanivanov',
+      firstName: 'Иван',
+      secondName: 'Иванов',
+    },
+  });
 
   const handleInfoSave = () => {
     //  TODO: сохранение с помощью api
-    onSave();
   }
 
   return (
-    <div className='profile-info-editing'>
+    <form className='profile-info-editing' onSubmit={handleSubmit(handleInfoSave)}>
       <ul className='profile-info-editing__list'>
         <li className='profile-info-editing__item'>
           <span className='profile-info-editing__item-caption'>Почта</span>
-          <TextInput
+          <Input
             className='profile-info-editing__input'
-            value={mail}
-            onChange={setMail}
+            errorMessage={errors.email?.message}
+            {...register('email')}
           />
         </li>
         <li className='profile-info-editing__item'>
           <span className='profile-info-editing__item-caption'>Логин</span>
-          <TextInput
+          <Input
             className='profile-info-editing__input'
-            value={login}
-            onChange={setLogin}
+            errorMessage={errors.login?.message}
+            {...register('login')}
           />
         </li>
         <li className='profile-info-editing__item'>
           <span className='profile-info-editing__item-caption'>Имя</span>
-          <TextInput
+          <Input
             className='profile-info-editing__input'
-            value={firstName}
-            onChange={setFirstName}
+            errorMessage={errors.firstName?.message}
+            {...register('firstName')}
           />
         </li>
         <li className='profile-info-editing__item'>
           <span className='profile-info-editing__item-caption'>Фамилия</span>
-          <TextInput
+          <Input
             className='profile-info-editing__input'
-            value={secondName}
-            onChange={setSecondName}
+            errorMessage={errors.secondName?.message}
+            {...register('secondName')}
           />
         </li>
       </ul>
       <Button
-        appearance={EButtonAppearance.SUBMIT}
         className='profile-info-editing__submit-button'
         text='Сохранить'
+        type='submit'
         onClick={handleInfoSave}
       />
-    </div>
+    </form>
   )
 }
 

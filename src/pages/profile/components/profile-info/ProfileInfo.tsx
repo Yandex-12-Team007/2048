@@ -1,16 +1,9 @@
 import React from 'react';
-import Button, {EButtonAppearance} from 'Components/Button/Button';
+import {Link} from 'react-router-dom';
+import Routes from 'Constants/Routes';
 import './ProfileInfo.pcss';
 
-interface IProfileInfoProps {
-  onInfoChange: () => void;
-  onPasswordChange: () => void;
-}
-
-const ProfileInfo: React.FunctionComponent<IProfileInfoProps> = ({
-  onInfoChange,
-  onPasswordChange,
-}) => {
+const ProfileInfo = () => {
   return (
     <div className='profile-info'>
       <ul className='profile-info__list'>
@@ -39,22 +32,22 @@ const ProfileInfo: React.FunctionComponent<IProfileInfoProps> = ({
           </span>
         </li>
       </ul>
-      <ul className='profile__button-list'>
-        <li>
-          <Button
-            appearance={EButtonAppearance.TEXT}
+      <ul className='profile-info__button-list'>
+        <li className='profile-info__button-item'>
+          <Link
             className='profile-info__button'
-            text='Изменить данные'
-            onClick={onInfoChange}
-          />
+            to={Routes.PROFILE_EDITING}
+          >
+            Изменить данные
+          </Link>
         </li>
-        <li>
-          <Button
-            appearance={EButtonAppearance.TEXT}
+        <li className='profile-info__button-item'>
+          <Link
             className='profile-info__button'
-            text='Изменить пароль'
-            onClick={onPasswordChange}
-          />
+            to={Routes.PROFILE_PASSWORD_EDITING}
+          >
+            Изменить пароль
+          </Link>
         </li>
       </ul>
     </div>
