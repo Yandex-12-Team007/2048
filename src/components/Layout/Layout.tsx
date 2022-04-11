@@ -18,7 +18,7 @@ export default function Layout({children, title = 'шаблон'}) {
   return <ErrorBoundary>
     <DocumentMeta {...meta}>
       <div className={'container'}>
-        <Header/>
+        <Header />
         <div className={'content'}>
           {children}
         </div>

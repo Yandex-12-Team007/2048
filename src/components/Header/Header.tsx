@@ -6,9 +6,10 @@ import ErrorBoundary from 'Components/ErrorBoundary';
 import './Header.pcss';
 
 export default function Header() {
-  return <ErrorBoundary>
-    <div className={'header'}>
-      <Nav />
+  return <div className={'header'}>
+      <ErrorBoundary>
+        <Nav />
+      </ErrorBoundary>
     </div>
-  </ErrorBoundary>
+
 }
