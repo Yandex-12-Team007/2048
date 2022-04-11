@@ -8,8 +8,6 @@ import NAV from 'Constants/Nav';
 import './Nav.pcss';
 
 export default function Nav() {
-  throw new Error('Возникли ошибки');
-
   return <ErrorBoundary>
     <div className={'nav'}>
       {NAV.map((el, id) => <Link
