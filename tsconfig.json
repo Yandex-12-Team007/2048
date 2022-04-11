@@ -17,7 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "declaration": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {

@@ -11,6 +11,7 @@ module.exports = (env) => {
 
   return {
   entry: "./src/index.tsx",
+  devtool: 'source-map',
   output: {
     publicPath: ASSET_PATH,
     filename: '[name].bundle.js',
