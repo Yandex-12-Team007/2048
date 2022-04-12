@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -8,6 +8,10 @@ import Input from 'Components/Input/Input';
 
 import './ProfileInfoEditing.pcss';
 
+interface IProfileInfoEditingProps {
+  onSave: () => void;
+}
+
 const schema = object({
   email: string().email('Укажите email').required('Укажите значение'),
   login: string().min(3, 'Укажите значение от 3 до 20 символов').max(20, 'Укажите значение от 3 до 20 символов'),
@@ -15,7 +19,7 @@ const schema = object({
   secondName: string().required('Укажите значение'),
 }).required();
 
-const ProfileInfoEditing = () => {
+const ProfileInfoEditing: FunctionComponent<IProfileInfoEditingProps> = ({onSave}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -28,6 +32,7 @@ const ProfileInfoEditing = () => {
 
   const handleInfoSave = () => {
     //  TODO: сохранение с помощью api
+    onSave();
   }
 
   return (

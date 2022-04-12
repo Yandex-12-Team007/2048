@@ -15,7 +15,6 @@ const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 
 const Error = lazy(() => import('Pages/Error'));
-const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 
 import './App.pcss';
 
@@ -31,16 +30,6 @@ function App() {
           <Route exact path={Routes.RULES} component={Rules}/>
           <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
           <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
-          <PrivateRoute
-            exact
-            path={Routes.PROFILE_EDITING}
-            component={Profile}
-          />
-          <PrivateRoute
-            exact
-            path={Routes.PROFILE_PASSWORD_EDITING}
-            component={Profile}
-          />
           <Route component={Error}/>
         </Switch>
       </Suspense>

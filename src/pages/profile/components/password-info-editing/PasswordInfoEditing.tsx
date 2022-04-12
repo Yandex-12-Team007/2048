@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {object, string, ref} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -8,6 +8,10 @@ import Input from 'Components/Input/Input';
 
 import './PasswordInfoEditing.pcss';
 
+interface IPasswordInfoEditingProps {
+  onSave: () => void;
+}
+
 const schema = object({
   oldPassword: string().required('Укажите значение'),
   password: string().required('Укажите значение'),
@@ -15,7 +19,7 @@ const schema = object({
 }).required();
 
 
-const PasswordInfoEditing = () => {
+const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = ({onSave}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -28,6 +32,7 @@ const PasswordInfoEditing = () => {
   const handleInfoSave = (data) => {
     console.log('handleInfoSave', data);
     //  TODO: сохранение с помощью api
+    onSave();
   }
 
   return (

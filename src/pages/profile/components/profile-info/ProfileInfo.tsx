@@ -1,9 +1,13 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import Routes from 'Constants/Routes';
+import React, {FunctionComponent} from 'react';
+import Button, { ButtonAppearance } from 'Components/Button/Button';
 import './ProfileInfo.pcss';
 
-const ProfileInfo = () => {
+interface IProfileInfo {
+  onInfoChange: () => void;
+  onPasswordChange: () => void;
+}
+
+const ProfileInfo: FunctionComponent<IProfileInfo> = ({onInfoChange, onPasswordChange}) => {
   return (
     <div className='profile-info'>
       <ul className='profile-info__list'>
@@ -34,20 +38,18 @@ const ProfileInfo = () => {
       </ul>
       <ul className='profile-info__button-list'>
         <li className='profile-info__button-item'>
-          <Link
-            className='profile-info__button'
-            to={Routes.PROFILE_EDITING}
-          >
-            Изменить данные
-          </Link>
+          <Button
+            appearance={ButtonAppearance.TEXT}
+            text='Изменить данные'
+            onClick={onInfoChange}
+          />
         </li>
         <li className='profile-info__button-item'>
-          <Link
-            className='profile-info__button'
-            to={Routes.PROFILE_PASSWORD_EDITING}
-          >
-            Изменить пароль
-          </Link>
+          <Button
+            appearance={ButtonAppearance.TEXT}
+            text='Изменить пароль'
+            onClick={onPasswordChange}
+          />
         </li>
       </ul>
     </div>
