@@ -24,3 +24,18 @@
   width: 200px;
   height: 100%;
 }
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--second-bg);
+  transition: var(--change-width);
+
+  &--wide {
+    width: 280px;
+    border-right: 1px solid var(--gray);
+  }
+}

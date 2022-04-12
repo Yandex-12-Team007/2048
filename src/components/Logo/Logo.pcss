@@ -1,13 +1,5 @@
 .logo {
-  width: 64px;
-  height: 64px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font: var(--title-font);
-  background: var(--second-bg);
-
-  transition: var(--change-width);
 
   .logo-orange {
     color: var(--orange);
@@ -16,11 +8,15 @@
   .logo-light-orange {
     color: var(--light-orange);
   }
-}
 
-.logo_full {
-  width: 280px;
-  border-right: 1px solid var(--gray);
-  font-size: 28px;
-  letter-spacing: 5px;
+  &--medium {
+    font-size: 28px;
+    letter-spacing: 5px;
+  }
+
+  &--large {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
 }
