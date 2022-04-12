@@ -4,6 +4,7 @@
 - Макет в Figma :  (тут будет ссылка на макет =))
 - [Гайд по .md](https://github.com/GnuriaN/format-README)
 - [Ифнормация о приложение](https://disk.yandex.ru/d/JmLwXRMgqO2FFw)
+- [Задеплоенная версия на heroku](https://barcelona-007.herokuapp.com/)
 
 ## Инструменты разработки
 - Пакетный менеджер : `npm`
