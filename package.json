@@ -54,6 +54,7 @@
     "style-loader": "3.3.1",
     "stylelint": "14.6.1",
     "stylelint-config-standard": "25.0.0",
+    "svg-inline-loader": "^0.8.2",
     "ts-loader": "9.2.8",
     "typescript": "4.6.3",
     "webpack": "5.70.0",
@@ -62,10 +63,12 @@
     "yup": "0.32.11"
   },
   "dependencies": {
+    "classnames": "^2.3.1",
     "express": "4.17.3",
     "react": "18.0.0",
     "react-document-meta": "^3.0.0-beta.2",
     "react-dom": "18.0.0",
-    "react-router-dom": "5.2.1"
+    "react-router-dom": "5.2.1",
+    "reset-css": "^5.0.1"
   }
 }

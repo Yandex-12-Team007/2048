@@ -1,11 +1,23 @@
 import React from 'react';
 
-import Nav from 'Components/Nav';
+import Logo from 'Components/Logo';
+import ProfileWidget from 'Components/ProfileWidget';
 
 import './Header.pcss';
 
-export default function Header() {
+export interface IHeaderProps {
+  title? : string
+  isSmall? : boolean
+}
+
+export default function Header({title = '', isSmall = false} : IHeaderProps) {
   return <div className={'header'}>
-    <Nav />
+    <Logo isSmall={isSmall} />
+    <div className={'header-title'}>
+      {title}
+    </div>
+    <div className={'header-profile'}>
+      <ProfileWidget />
+    </div>
   </div>
 }
