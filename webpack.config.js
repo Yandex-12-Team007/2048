@@ -23,6 +23,8 @@ module.exports = (env) => {
       Pages: path.resolve(__dirname, 'src/pages'),
       Constants: path.resolve(__dirname, 'src/constants'),
       Components: path.resolve(__dirname, 'src/components'),
+      Utils: path.resolve(__dirname, 'src/utils'),
+      Static: path.resolve(__dirname, 'src/static'),
     },
     extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
@@ -34,8 +36,12 @@ module.exports = (env) => {
         exclude: /node_modules/
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         loader: 'file-loader',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
