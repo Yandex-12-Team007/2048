@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorBoundary from 'Components/ErrorBoundary';
 import Logo from 'Components/Logo';
 import ProfileWidget from 'Components/ProfileWidget';
 
@@ -14,6 +15,7 @@ export interface IHeaderProps {
 
 export default function Header({title = '', isSmall = false} : IHeaderProps) {
   return <div className={'header'}>
+    <ErrorBoundary>
     <div
       className={
         classNames('logo-container', {'logo-container--wide': !isSmall})
@@ -27,5 +29,6 @@ export default function Header({title = '', isSmall = false} : IHeaderProps) {
     <div className={'header-profile'}>
       <ProfileWidget />
     </div>
-  </div>
+      </ErrorBoundary>
+    </div>
 }

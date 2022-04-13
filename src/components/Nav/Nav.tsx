@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
+import ErrorBoundary from 'Components/ErrorBoundary';
+
 import NAV from 'Constants/Nav';
 
 import './Nav.pcss';
@@ -14,6 +16,7 @@ export default function Nav({isSmall = true, changeSize}) {
   });
 
   return <div className={navClass}>
+    <ErrorBoundary>
     <div className={'nav__link'} onClick={changeSize}>
       <div className={'nav__link-icon-wrapper'}>
         Ресайз
@@ -38,5 +41,6 @@ export default function Nav({isSmall = true, changeSize}) {
       {!isSmall ? <span className={'nav__link-title'}>{el.title}</span> : ''}
     </Link>
     )}
+    </ErrorBoundary>
   </div>
 }
