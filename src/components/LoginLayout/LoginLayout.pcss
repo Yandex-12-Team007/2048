@@ -6,16 +6,28 @@
   flex-direction: column;
   height: 100%;
 
+  &__title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: var(--main-text-color);
+  }
+
   &__logo {
     margin-bottom: 40px;
   }
 
   &__form {
     width: 340px;
+    height: 430px;
     background-color: var(--main-bg);
     box-shadow: 0 0 6px rgb(0 0 0 / 14%);
     border-radius: 12px;
     padding: 50px 30px 20px;
     text-align: center;
+  }
+
+  &__content {
+    height: calc(100% - 50px);
   }
 }

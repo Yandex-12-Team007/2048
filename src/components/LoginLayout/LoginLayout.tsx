@@ -16,7 +16,10 @@ export default function LoginLayout({children, title = 'Авторизация'}
     <div className='login-layout'>
       <Logo className='login-layout__logo' size={LoginSize.LARGE} />
       <div className='login-layout__form'>
-        {children}
+        <h1 className='login-layout__title'>{title}</h1>
+        <div className='login-layout__content'>
+          {children}
+        </div>
       </div>
     </div>
   </DocumentMeta>
