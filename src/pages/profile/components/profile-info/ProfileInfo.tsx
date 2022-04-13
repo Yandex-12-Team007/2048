@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import Button, { ButtonAppearance } from 'Components/Button/Button';
+import Button, {ButtonAppearance} from 'Components/Button/Button';
 import './ProfileInfo.pcss';
 
 interface IProfileInfo {
