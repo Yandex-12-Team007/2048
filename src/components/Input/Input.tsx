@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, {forwardRef, InputHTMLAttributes, RefObject} from 'react';
+import React, {InputHTMLAttributes} from 'react';
 import './Input.pcss';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,15 +8,17 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   className?: string;
   errorMessage?: string;
+  errorClassName?: string;
 }
 
-const Input: React.FunctionComponent<IInputProps> = forwardRef((props, ref) => {
+const Input: React.FunctionComponent<IInputProps> = (props) => {
   const {
     id,
     className,
     label,
     type,
     errorMessage,
+    errorClassName,
     ...restProps
   } = props;
 
@@ -33,15 +35,16 @@ const Input: React.FunctionComponent<IInputProps> = forwardRef((props, ref) => {
         )
       }
       <input
-        ref={ref as RefObject<HTMLInputElement>}
         id={id}
         className={classNames('input', className)}
         type={type || 'text'}
         {...restProps}
       />
-      <span className='input__error-message'>{errorMessage}</span>
+      <span className={classNames('input__error-message', errorClassName)}>
+        {errorMessage}
+      </span>
     </div>
   )
-});
+};
 
 export default Input;

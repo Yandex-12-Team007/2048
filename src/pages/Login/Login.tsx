@@ -46,6 +46,7 @@ export default function Login() {
             label='Пароль'
             className='login-form__password'
             errorMessage={errors.password?.message}
+            errorClassName='login-form__password-error-message'
             {...register('password')}
           />
         </div>
