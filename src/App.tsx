@@ -2,6 +2,7 @@ import React, {Suspense, lazy} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
+import ErrorBoundary from 'Components/ErrorBoundary';
 
 import Routes from 'Constants/Routes';
 
@@ -19,7 +20,8 @@ const Error = lazy(() => import('Pages/Error'));
 import './App.pcss';
 
 function App() {
-  return <div className={'app'}>
+  return <ErrorBoundary>
+    <div className={'app'}>
     <Router>
       <Suspense fallback={<Loading />}>
         <Switch>
@@ -34,7 +36,8 @@ function App() {
         </Switch>
       </Suspense>
     </Router>
-  </div>
+    </div>
+  </ErrorBoundary>
 }
 
 export default App;
