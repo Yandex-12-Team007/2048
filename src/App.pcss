@@ -20,14 +20,19 @@
   --orange: #f57c5f;
   --main-text-color: #72685d;
   --second-text-color: #999;
+  --error-text-color: #ff2f2f;
+  --light-gray: #efefef;
+
   /* Fotn */
   --default-font: normal 14px inter, sans-serif;
   --title-font: normal 20px inter, sans-serif;
+
   /* Width */
   --small-side-size: 64px;
   --full-side-size: 280px;
+
   /* Width transition */
-  --change-width : width .5s ease-in-out;
+  --change-width: width 0.5s ease-in-out;
 }
 
 button, input[type="submit"], input[type="reset"] {
@@ -40,9 +45,9 @@ button, input[type="submit"], input[type="reset"] {
   outline: inherit;
 }
 
+a,
 a:active, /* активная/посещенная ссылка */
-a:hover,  /* при наведении */
-a {
+a:hover,  /* при наведении */ {
   text-decoration: none;
   color: inherit;
 }
@@ -79,8 +84,4 @@ body {
   height: 100vh;
   margin: 0;
   overflow: hidden;
-}
-
-#root {
-  height: 100%;
 }

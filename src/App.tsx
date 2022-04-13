@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserContext } from './hooks/userContext';
 
 import PrivateRoute from './PrivateRoute';
+import ErrorBoundary from 'Components/ErrorBoundary';
 
 import Routes from 'Constants/Routes';
 
@@ -12,10 +13,11 @@ const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/game/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
-// const Rules = lazy(() => import('Pages/Rules'));
-const Error = lazy(() => import('Pages/Error'));
+const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 const Registration = lazy(() => import('Pages/Registration'));
+
+const Error = lazy(() => import('Pages/Error'));
 
 import './App.pcss';
 import useFindUser from './hooks/useFindUser';
@@ -24,7 +26,8 @@ function App() {
 
   const { user, setUser } = useFindUser();
 
-  return <div className={'app'}>
+  return <ErrorBoundary>
+  <div className={'app'}>
     <Router>
       <UserContext.Provider value={{ user, setUser }}>
         <Suspense fallback={<div>Загрузка...</div>}>
@@ -41,7 +44,8 @@ function App() {
         </Suspense>
       </UserContext.Provider>
     </Router>
-  </div>
+    </div>
+  </ErrorBoundary>
 }
 
 export default App;
