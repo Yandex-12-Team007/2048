@@ -16,7 +16,6 @@ const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 
 const Error = lazy(() => import('Pages/Error'));
-const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 
 import './App.pcss';
 
