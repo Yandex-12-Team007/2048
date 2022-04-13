@@ -1,3 +1,62 @@
+@import "reset-css";
+
+@font-face {
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  src:
+    url("./static/fonts/Inter/Inter-Medium.woff2") format("woff2"),
+    url("./static/fonts/Inter/Inter-Medium.woff") format("woff"),
+    url("./static/fonts/Inter/Inter-Medium.ttf") format("ttf");
+}
+
+:root {
+  /* Colour */
+  --main-bg: #fbf8f1;
+  --second-bg: #eee4da;
+  --gray: #7c746b;
+  --light-orange: #f0b17b;
+  --middle-orange: #f59565;
+  --orange: #f57c5f;
+  --main-text-color: #72685d;
+  --second-text-color: #999;
+  /* Fotn */
+  --default-font: normal 14px inter, sans-serif;
+  --title-font: normal 20px inter, sans-serif;
+  /* Width */
+  --small-side-size: 64px;
+  --full-side-size: 280px;
+  /* Width transition */
+  --change-width : width .5s ease-in-out;
+}
+
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+a:active, /* активная/посещенная ссылка */
+a:hover,  /* при наведении */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
 html {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
@@ -23,9 +82,5 @@ body {
 }
 
 #root {
-  height: 100%;
-}
-
-.app {
   height: 100%;
 }

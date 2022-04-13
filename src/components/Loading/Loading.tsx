@@ -1,11 +1,11 @@
 import React from 'react';
 
-import ErrorBoundary from 'Components/ErrorBoundary';
+import loadingIcon from 'Static/img/loading/loading.gif';
+
+import './Loading.pcss';
 
 export default function Loading() {
-  return <ErrorBoundary>
-    <div className={'loading'}>
-      <h1>Loading</h1>
-    </div>
-  </ErrorBoundary>
+  return <div className={'loading'}>
+    <img className={'loading-icon'} src={loadingIcon} alt={'loading...'}/>
+  </div>
 }

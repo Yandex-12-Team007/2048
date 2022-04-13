@@ -2,5 +2,6 @@ import Routes from 'constants/Routes';
 
 export default interface IRouteLink {
   title : string,
-  link : Routes
+  link : Routes,
+  icon : string
 }
