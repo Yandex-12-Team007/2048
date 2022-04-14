@@ -22,19 +22,19 @@ import './App.pcss';
 function App() {
   return <ErrorBoundary>
     <div className={'app'}>
-    <Router>
-      <Suspense fallback={<Loading />}>
-        <Switch>
-          <Route exact path={Routes.LOGIN} component={Login}/>
-          <Route exact path={Routes.GAME} component={Game}/>
-          <Route exact path={Routes.FORUM} component={Forum}/>
-          <Route exact path={Routes.RULES} component={Rules}/>
-          <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
-          <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
-          <Route component={Error}/>
-        </Switch>
-      </Suspense>
-    </Router>
+      <Router>
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route exact path={Routes.LOGIN} component={Login}/>
+            <Route exact path={Routes.GAME} component={Game}/>
+            <Route exact path={Routes.FORUM} component={Forum}/>
+            <Route exact path={Routes.RULES} component={Rules}/>
+            <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
+            <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
+            <Route component={Error}/>
+          </Switch>
+        </Suspense>
+      </Router>
     </div>
   </ErrorBoundary>
 }

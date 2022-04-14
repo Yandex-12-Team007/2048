@@ -9,11 +9,11 @@ interface IError {
 class ErrorBoundary extends Component<Record<any, any>, IError> {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {hasError: false};
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return {hasError: true};
   }
 
   render() {
