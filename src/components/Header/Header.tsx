@@ -5,6 +5,8 @@ import Logo from 'Components/Logo';
 import ProfileWidget from 'Components/ProfileWidget';
 
 import './Header.pcss';
+import classNames from 'classnames';
+import {LoginSize} from 'Components/Logo/Logo';
 
 export interface IHeaderProps {
   title? : string
@@ -14,7 +16,13 @@ export interface IHeaderProps {
 export default function Header({title = '', isSmall = false} : IHeaderProps) {
   return <div className={'header'}>
     <ErrorBoundary>
-      <Logo isSmall={isSmall} />
+      <div
+        className={
+          classNames('logo-container', {'logo-container--wide': !isSmall})
+        }
+      >
+        <Logo size={isSmall ? LoginSize.SMALL : LoginSize.MEDIUM} />
+      </div>
       <div className={'header-title'}>
         {title}
       </div>

@@ -6,9 +6,8 @@ import Footer from 'Components/Footer';
 import ErrorBoundary from 'Components/ErrorBoundary';
 import Sidebar from 'Components/Sidebar';
 
-import TITLE from 'Constants/title';
-
 import './Layout.pcss';
+import {getPageTitle} from 'Utils/getTitle';
 
 export default function Layout({children, title = 'шаблон'}) {
   /** TODO: Позже будем использовать хуки на размер окна и состояния из Redux */
@@ -19,7 +18,7 @@ export default function Layout({children, title = 'шаблон'}) {
   }
 
   const meta = {
-    title: `${TITLE} - ${title}`,
+    title: getPageTitle(title),
     description: `Тут будет описание странички ${title}`,
   };
 

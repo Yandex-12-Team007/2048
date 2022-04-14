@@ -1,5 +1,13 @@
 .input-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &__label {
+    font-size: 10px;
+    color: var(--gray);
+  }
 }
 
 .input {
@@ -7,6 +15,7 @@
   border-bottom: 1px solid #cdc1b3;
   padding: 7px 0;
   font-size: 14px;
+  background-color: transparent;
 
   &:focus-visible {
     outline: none;

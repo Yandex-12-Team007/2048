@@ -48,6 +48,7 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
             Старый пароль
           </span>
           <Input
+            id='profile-old-password'
             className='profile-info-editing__input'
             type='password'
             errorMessage={errors.oldPassword?.message}
@@ -59,6 +60,7 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
             Новый пароль
           </span>
           <Input
+            id='profile-password'
             className='profile-info-editing__input'
             type='password'
             errorMessage={errors.password?.message}
@@ -70,6 +72,7 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
             Повторите новый пароль
           </span>
           <Input
+            id='profile-double-password'
             className='profile-info-editing__input'
             type='password'
             errorMessage={errors.doublePassword?.message}
