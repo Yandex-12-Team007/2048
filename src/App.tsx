@@ -9,7 +9,7 @@ import Routes from 'Constants/Routes';
 import Loading from './components/Loading';
 
 const Login = lazy(() => import('Pages/Login'));
-const Game = lazy(() => import('Pages/Game/Game'));
+const Game = lazy(() => import('Pages/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
 const Rules = lazy(() => import('Pages/Rules'));
