@@ -1,17 +1,24 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {authController} from '../../controllers/auth-controller';
+import Routes from 'Constants/Routes';
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
 import Button from 'Components/Button/Button';
 import './Login.pcss';
-import Routes from 'Constants/Routes';
 
 const schema = object({
-  login: string().matches(/^[\w-]{3,20}[a-zA-Zа-яА-Я]+[0-9]*$/, 'Введите логин латиницей от 3 до 20 символов'),
-  password: string().matches(/^(?=.*\d)(?=.*[A-Z]).{8,40}$/, 'Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и цифру'),
+  login: string().matches(
+      /^[\w-]{3,20}[a-zA-Zа-яА-Я]+[0-9]*$/,
+      'Введите логин латиницей от 3 до 20 символов',
+  ),
+  password: string().matches(
+      /^(?=.*\d)(?=.*[A-Z]).{8,40}$/,
+      'Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и цифру',
+  ),
 }).required();
 
 export default function Login() {
@@ -23,8 +30,14 @@ export default function Login() {
     },
   });
 
-  const handleSignIn = () => {
+  const history = useHistory();
 
+  const handleSignIn = (
+      {login, password}: { login: string, password: string }
+  ) => {
+    authController.signIn({login, password}).then(() => {
+      history.push(Routes.GAME);
+    });
   }
 
   return (
@@ -44,6 +57,7 @@ export default function Login() {
           <Input
             id='password'
             label='Пароль'
+            type='password'
             className='login-form__password'
             errorMessage={errors.password?.message}
             errorClassName='login-form__password-error-message'

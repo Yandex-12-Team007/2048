@@ -9,3 +9,8 @@ export default interface IUser {
   phone: string
   password? : string
 }
+
+export interface ILoginUserModel {
+  login: string,
+  password: string,
+}
