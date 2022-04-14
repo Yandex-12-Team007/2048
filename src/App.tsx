@@ -25,7 +25,6 @@ function App() {
       <Router>
         <Suspense fallback={<Loading />}>
           <Switch>
-            <Route exact path={Routes.HOME} component={Game}/>
             <Route exact path={Routes.LOGIN} component={Login}/>
             <Route exact path={Routes.GAME} component={Game}/>
             <Route exact path={Routes.FORUM} component={Forum}/>

@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 
-import Layout from 'Components/Layout';
-import './Profile.pcss';
-import ProfileInfo from './Components/profile-info/ProfileInfo';
-import ProfileInfoEditing from './Components/profile-info-editing/ProfileInfoEditing';
-import PasswordInfoEditing from './Components/password-info-editing/PasswordInfoEditing';
 import classNames from 'classnames';
+
+import Layout from 'Components/Layout';
+import ProfileInfo from './components/ProfileInfo';
+import ProfileInfoEditing from './components/ProfileInfoEditing';
+import PasswordInfoEditing from './components/PasswordInfoEditing';
+
+import './Profile.pcss';
 
 enum CurrentView {
   PROFILE_INFO,

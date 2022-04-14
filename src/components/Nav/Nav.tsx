@@ -17,30 +17,30 @@ export default function Nav({isSmall = true, changeSize}) {
 
   return <div className={navClass}>
     <ErrorBoundary>
-    <div className={'nav__link'} onClick={changeSize}>
-      <div className={'nav__link-icon-wrapper'}>
-        Ресайз
+      <div className={'nav__link'} onClick={changeSize}>
+        <div className={'nav__link-icon-wrapper'}>
+          Ресайз
+        </div>
       </div>
-    </div>
-    {NAV.map((el, id) => <Link
-      key={id}
-      className={classNames({
-        'nav__link': true,
-        'nav__link_active': (id === 1),
-      })}
-      to={el.link}
-    >
-      <div
-        className={'nav__link-icon-wrapper'}
-        dangerouslySetInnerHTML={{__html: `
-            <svg class="nav__link-icon">
-                ${el.icon}
-            </svg>`,
-        }}
-      />
-      {!isSmall ? <span className={'nav__link-title'}>{el.title}</span> : ''}
-    </Link>
-    )}
+      {NAV.map((el, id) => <Link
+        key={id}
+        className={classNames({
+          'nav__link': true,
+          'nav__link_active': (id === 1),
+        })}
+        to={el.link}
+      >
+        <div
+          className={'nav__link-icon-wrapper'}
+          dangerouslySetInnerHTML={{__html: `
+              <svg class="nav__link-icon">
+                  ${el.icon}
+              </svg>`,
+          }}
+        />
+        {!isSmall ? <span className={'nav__link-title'}>{el.title}</span> : ''}
+      </Link>
+      )}
     </ErrorBoundary>
   </div>
 }
