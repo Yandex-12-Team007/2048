@@ -9,7 +9,7 @@ import ruleIcon from 'Static/img/figmaIcons/rule.svg';
 
 
 const NAV: IRouteLink[] = [
-  {title: 'Игра', link: Routes.HOME, icon: gameIcon},
+  {title: 'Игра', link: Routes.GAME, icon: gameIcon},
   {title: 'Лидеры', link: Routes.LEADERBOARD, icon: leaderIcon},
   {title: 'Форум', link: Routes.FORUM, icon: forumIcon},
   {title: 'Правила', link: Routes.RULES, icon: ruleIcon},
