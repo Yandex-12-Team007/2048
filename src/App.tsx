@@ -13,7 +13,7 @@ const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/game/Game'));
 const Forum = lazy(() => import('Pages/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
-const Rules = lazy(() => import('Pages/Rules'));
+// const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 const Registration = lazy(() => import('Pages/Registration'));
 
