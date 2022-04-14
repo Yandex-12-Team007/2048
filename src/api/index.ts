@@ -13,12 +13,17 @@ class ApiModule {
 
   public put = (url: string, data) => this.request('PUT', url, data);
 
-  private request(method: string, url: string, data = null, headers?: HeadersInit) {
+  private request(
+      method: string,
+      url: string,
+      data = null,
+      headers?: HeadersInit,
+  ) {
     return fetch(`${this.baseUrl}${url}`, {
       method,
       mode: 'cors',
       cache: 'no-cache',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...headers,

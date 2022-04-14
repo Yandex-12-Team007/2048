@@ -1,18 +1,22 @@
-import React, {Component} from 'react';
+import React, {Component, ReactNode} from 'react';
 
 import './ErrorBoundary.pcss';
 
-interface IError {
+interface IErrorProps {
+  children: ReactNode;
+}
+
+interface IErrorState {
   hasError : boolean
 }
 
-class ErrorBoundary extends Component<Record<any, any>, IError> {
+class ErrorBoundary extends Component<IErrorProps, IErrorState> {
   constructor(props) {
     super(props);
     this.state = {hasError: false};
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return {hasError: true};
   }
 

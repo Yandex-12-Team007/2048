@@ -7,7 +7,10 @@ interface IProfileInfo {
   onPasswordChange: () => void;
 }
 
-const ProfileInfo: FunctionComponent<IProfileInfo> = ({onInfoChange, onPasswordChange}) => {
+const ProfileInfo: FunctionComponent<IProfileInfo> = ({
+  onInfoChange,
+  onPasswordChange,
+}) => {
   return (
     <div className='profile-info'>
       <ul className='profile-info__list'>

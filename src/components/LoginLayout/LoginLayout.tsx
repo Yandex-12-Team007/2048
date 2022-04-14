@@ -1,15 +1,14 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
-import TITLE from 'Constants/title';
-
 import './LoginLayout.pcss';
 import Logo from 'Components/Logo';
 import {LoginSize} from 'Components/Logo/Logo';
+import {getPageTitle} from 'Utils/getTitle';
 
 export default function LoginLayout({children, title = 'Авторизация'}) {
   const meta = {
-    title: `${TITLE} - ${title}`,
+    title: getPageTitle(title),
   };
 
   return <DocumentMeta {...meta}>

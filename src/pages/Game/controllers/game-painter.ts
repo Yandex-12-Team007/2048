@@ -27,7 +27,13 @@ class GamePainter {
     this.renderGrid();
   }
 
-  private renderRoundedSquare(x: number, y: number, width: number, height: number, color: string) {
+  private renderRoundedSquare(
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      color: string,
+  ) {
     this.ctx.beginPath();
     this.ctx.moveTo(x + BOARD_BORDER_RADIUS, y);
     this.ctx.arcTo(x + width, y, x + width, y + height, BOARD_BORDER_RADIUS);
@@ -44,7 +50,11 @@ class GamePainter {
     this.ctx.font = '55px sans-serif';
     this.ctx.fillStyle = '#FFF';
     this.ctx.textAlign = 'center';
-    this.ctx.fillText(value.toString(), x + CELL_WIDTH / 2, y + CELL_WIDTH / 1.5);
+    this.ctx.fillText(
+        value.toString(),
+        x + CELL_WIDTH / 2,
+        y + CELL_WIDTH / 1.5,
+    );
   }
 
   private renderTiles(tileList: ITile[]) {

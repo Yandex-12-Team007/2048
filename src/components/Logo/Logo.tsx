@@ -9,7 +9,9 @@ export enum LoginSize {
   LARGE,
 }
 
-export default function Logo({size = LoginSize.SMALL, className}: {size: LoginSize, className?: string}) {
+export default function Logo(
+    {size = LoginSize.SMALL, className}: {size: LoginSize, className?: string},
+) {
   const logoClass = classNames({
     'logo': true,
     'logo--medium': size === LoginSize.MEDIUM,

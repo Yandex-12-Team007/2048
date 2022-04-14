@@ -220,7 +220,10 @@ class GameEngine {
     }
   }
 
-  public init(ctx: CanvasRenderingContext2D, updateScoreCallback: (score: number) => void) {
+  public init(
+      ctx: CanvasRenderingContext2D,
+      updateScoreCallback: (score: number) => void,
+  ) {
     gamePainter.init(ctx);
     this.updateScoreCallback = updateScoreCallback;
 
