@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react';
 
+import Layout from 'Components/Layout';
 import LeaderboardTable from './LeaderboardTable';
 
 import IUser from 'Interface/IUser';
@@ -67,7 +68,7 @@ export default function Leaderboard() {
     },
   ], []);
 
-  return <div className={'leaderboard'}>
+  return <Layout title={'Таблица лидеров'}>
     <LeaderboardTable data={LEADERBOARD_EXAMPLE} />
-  </div>
+  </Layout>
 }
