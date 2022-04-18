@@ -72,7 +72,7 @@ export default function Login() {
           />
           <Link
             className='login-form__signup-link'
-            to={Routes.SIGNUP}
+            to={Routes.REGISTRATION}
           >
             Зарегистрироваться
           </Link>
