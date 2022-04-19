@@ -1,4 +1,4 @@
-import React, {Suspense, lazy} from 'react';
+import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
@@ -7,6 +7,7 @@ import ErrorBoundary from 'Components/ErrorBoundary';
 import Routes from 'Constants/Routes';
 
 import Loading from './components/Loading';
+import {authController} from './controllers/auth-controller';
 
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/Game'));
@@ -20,6 +21,10 @@ const Error = lazy(() => import('Pages/Error'));
 import './App.pcss';
 
 function App() {
+  useEffect(() => {
+    authController.get();
+  });
+
   return <ErrorBoundary>
     <div className={'app'}>
       <Router>
