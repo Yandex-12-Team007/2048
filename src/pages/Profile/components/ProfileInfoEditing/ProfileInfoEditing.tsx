@@ -6,6 +6,8 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import Button from 'Components/Button/Button';
 import Input from 'Components/Input/Input';
 
+import {userController} from 'Controllers/userController';
+
 import './ProfileInfoEditing.pcss';
 
 interface IProfileInfoEditingProps {
@@ -17,23 +19,31 @@ const schema = object({
   login: string()
       .min(3, 'Укажите значение от 3 до 20 символов')
       .max(20, 'Укажите значение от 3 до 20 символов'),
-  firstName: string().required('Укажите значение'),
-  secondName: string().required('Укажите значение'),
+  first_name: string().required('Укажите значение'),
+  second_name: string().required('Укажите значение'),
+  display_name: string().required('Укажите значение'),
+  phone: string().required('Укажите значение'),
 }).required();
 
-const ProfileInfoEditing: FunctionComponent<IProfileInfoEditingProps> = ({onSave}) => {
+const ProfileInfoEditing:
+  FunctionComponent<IProfileInfoEditingProps> = ({onSave}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       email: 'pochta@yandex.ru',
       login: 'ivanivanov',
-      firstName: 'Иван',
-      secondName: 'Иванов',
+      first_name: 'Иван',
+      second_name: 'Иванов',
+      display_name: 'Ivanya',
+      phone : '79099673030'
     },
   });
 
-  const handleInfoSave = () => {
-    //  TODO: сохранение с помощью api
+  const handleInfoSave = async (data) => {
+    let res = await userController.changeProfile(data);
+    if(!res) {
+      throw new Error('Bad http request');
+    }
     onSave();
   }
 
@@ -66,17 +76,30 @@ const ProfileInfoEditing: FunctionComponent<IProfileInfoEditingProps> = ({onSave
           <Input
             id='profile-first-name'
             className='profile-info-editing__input'
-            errorMessage={errors.firstName?.message}
-            {...register('firstName')}
+            errorMessage={errors.first_name?.message}
+            {...register('first_name')}
           />
         </li>
         <li className='profile-info-editing__item'>
-          <span className='profile-info-editing__item-caption'>Фамилия</span>
+          <span className='profile-info-editing__item-caption'>
+            Отображаемое имя
+          </span>
+          <Input
+            id='profile-display-name'
+            type={'text'}
+            className='profile-info-editing__input'
+            errorMessage={errors.second_name?.message}
+            {...register('display_name')}
+          />
+        </li>
+        <li className='profile-info-editing__item'>
+          <span className='profile-info-editing__item-caption'>Телефон</span>
           <Input
             id='profile-second-name'
+            type={'tel'}
             className='profile-info-editing__input'
-            errorMessage={errors.secondName?.message}
-            {...register('secondName')}
+            errorMessage={errors.second_name?.message}
+            {...register('phone')}
           />
         </li>
       </ul>

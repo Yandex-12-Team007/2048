@@ -1,4 +1,4 @@
-import apiModule from '../api';
+import apiModule from './index';
 import {ILoginUserModel} from 'Interface/IUser';
 
 class AuthApi {
