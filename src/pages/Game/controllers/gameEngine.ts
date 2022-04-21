@@ -119,10 +119,10 @@ class GameEngine {
     const summedFullCellsInRow: ITile[] = [];
     const resultedCellRow: ITile[] = cloneDeep(cellRow);
 
-    const moveList = fullCellsInRow.map(el => {
+    const moveList = fullCellsInRow.map((el) => {
       return {
-        oldPosition : el,
-        newPosition : null
+        oldPosition: el,
+        newPosition: null,
       }
     });
 
@@ -133,7 +133,7 @@ class GameEngine {
         fullCellsInRow[k + 1] &&
         fullCellsInRow[k].value === fullCellsInRow[k + 1].value
       ) {
-        let newVal = fullCellsInRow[k].value * 2;
+        const newVal = fullCellsInRow[k].value * 2;
 
         summedFullCellsInRow.push({
           ...fullCellsInRow[k],
@@ -141,9 +141,9 @@ class GameEngine {
         });
 
         moveList[k + 1].oldPosition = {
-          x : fullCellsInRow[k + 1].x,
-          y : fullCellsInRow[k + 1].y,
-          value : fullCellsInRow[k + 1].value,
+          x: fullCellsInRow[k + 1].x,
+          y: fullCellsInRow[k + 1].y,
+          value: fullCellsInRow[k + 1].value,
         }
 
         fullCellsInRow[k + 1].value = 0;
@@ -156,22 +156,18 @@ class GameEngine {
     for (let j = 0; j < BOARD_SIZE; j++) {
       resultedCellRow[j].value = summedFullCellsInRow[j]?.value || 0;
 
-      let move = moveList[j];
-      if(move && !move.newPosition && move.oldPosition.value !== 0) {
+      const move = moveList[j];
+      if (move && !move.newPosition && move.oldPosition.value !== 0) {
         let k = j
-        while(resultedCellRow[k].value === 0){
+        while (resultedCellRow[k].value === 0) {
           k--;
         }
         // @ts-ignore
         move.newPosition = {
-          x : resultedCellRow[k].x,
-          y : resultedCellRow[k].y,
-          value :resultedCellRow[k].value
+          x: resultedCellRow[k].x,
+          y: resultedCellRow[k].y,
+          value: resultedCellRow[k].value,
         };
-      }
-
-      if(move && !move.newPosition && resultedCellRow[j].value !== 0) {
-
       }
     }
     // TODO: Сделать пред проверку а не пост проверку ....
@@ -183,8 +179,8 @@ class GameEngine {
     }
 
     return {
-      tileList : resultedCellRow,
-      moveList : moveList
+      tileList: resultedCellRow,
+      moveList: moveList,
     };
   }
 
@@ -248,7 +244,7 @@ class GameEngine {
         value,
       };
 
-      let tile = this.createTile(rowIndex, columnIndex, value);
+      const tile = this.createTile(rowIndex, columnIndex, value);
       this.newList.push(tile);
     }
   }
@@ -298,7 +294,7 @@ class GameEngine {
 
   private updateMaxResult() {
     const tileValueList = this.tileList.flat().map((tile) => tile.value);
-    let currentScore = tileValueList.reduce((acc, el) => {
+    const currentScore = tileValueList.reduce((acc, el) => {
       acc += el;
       return acc;
     }, 0)
@@ -314,7 +310,7 @@ class GameEngine {
     this.updateScoreCallback = updateScoreCallback;
 
     this.tileList = this.createEmptyTiles();
-    //this.tileList = this.createTestFields();
+    // this.tileList = this.createTestFields();
     this.addStartTiles();
     this.updateGameState();
 

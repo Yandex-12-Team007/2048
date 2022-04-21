@@ -87,24 +87,24 @@ class GamePainter {
   }
 
   public animatedBoardUpdate(moveList, newList) {
-    let renderBoard = this.renderBoard.bind(this);
-    let renderGrid = this.renderGrid.bind(this);
-    let renderAnimatedTiles = this.renderAnimatedTiles.bind(this);
-    let animatedNewTiles = this.animatedNewTiles.bind(this);
+    const renderBoard = this.renderBoard.bind(this);
+    const renderGrid = this.renderGrid.bind(this);
+    const renderAnimatedTiles = this.renderAnimatedTiles.bind(this);
+    const animatedNewTiles = this.animatedNewTiles.bind(this);
 
-    let stepIx = 1, count = 8;
+    let stepIx = 1; const count = 8;
     function step(timestamp) {
-      //console.log('step');
+      // console.log('step');
       renderBoard();
       renderGrid();
       renderAnimatedTiles(moveList, stepIx, count);
 
-      if(stepIx < count){
+      if (stepIx < count) {
         window.requestAnimationFrame(step);
         stepIx++;
       }
 
-      if(stepIx === count){
+      if (stepIx === count) {
         animatedNewTiles(newList);
       }
     }
@@ -119,26 +119,25 @@ class GamePainter {
   }
 
   private renderAnimatedTile(oldPosition, newPosition, coef) {
-    //console.log('renderAnimatedTile');
-    let xDiff = (newPosition.x - oldPosition.x) * coef;
-    let yDiff = (newPosition.y - oldPosition.y) * coef;
+    // console.log('renderAnimatedTile');
+    const xDiff = (newPosition.x - oldPosition.x) * coef;
+    const yDiff = (newPosition.y - oldPosition.y) * coef;
 
-    let x = oldPosition.x + xDiff;
-    let y = oldPosition.y + yDiff;
-    let value = coef !== 1 ? oldPosition.value : newPosition.value;
+    const x = oldPosition.x + xDiff;
+    const y = oldPosition.y + yDiff;
+    const value = coef !== 1 ? oldPosition.value : newPosition.value;
 
     this.renderTile(x, y, value);
   }
 
   private animatedNewTiles(newTiles) {
-    let renderNewTiles = this.renderNewTiles.bind(this);
+    const renderNewTiles = this.renderNewTiles.bind(this);
 
-    let stepIx = 1, count = 5;
+    let stepIx = 1; const count = 5;
     function step(timestamp) {
-      //console.log('step');
       renderNewTiles(newTiles, stepIx, count);
 
-      if(stepIx < count){
+      if (stepIx < count) {
         window.requestAnimationFrame(step);
         stepIx++;
       }
@@ -154,23 +153,23 @@ class GamePainter {
   }
 
   private renderNewTile(x: number, y: number, value: number, coef) {
-    this.renderRoundedSquareAnimate(x, y, CELL_WIDTH * coef, CELL_HEIGHT  * coef, TILE_BACKGROUND[value]);
+    this.renderRoundedSquareAnimate(x, y, CELL_WIDTH * coef, CELL_HEIGHT * coef, TILE_BACKGROUND[value]);
     this.ctx.font = '55px sans-serif';
     this.ctx.fillStyle = '#FFF';
     this.ctx.textAlign = 'center';
     this.ctx.fillText(
-      value.toString(),
-      x + CELL_WIDTH / 2,
-      y + CELL_WIDTH / 1.5,
+        value.toString(),
+        x + CELL_WIDTH / 2,
+        y + CELL_WIDTH / 1.5,
     );
   }
 
   private renderRoundedSquareAnimate(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    color: string,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      color: string,
   ) {
     this.ctx.beginPath();
     this.ctx.moveTo(x + BOARD_BORDER_RADIUS, y);
