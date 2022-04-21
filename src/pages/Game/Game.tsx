@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import gameEngine from './controllers/game-engine';
+import gameEngine from './controllers/gameEngine';
 import Layout from 'Components/Layout';
 import {
   CANVAS_HEIGHT,
@@ -32,9 +32,15 @@ export default function Game() {
           width={CANVAS_WIDTH}
           height={CANVAS_HEIGHT}
         />
-        <div className="game-score">
-          <p className="game-score__caption">Счет</p>
-          <p className="game-score__score">{score}</p>
+        <div className={'game-info'}>
+          <div className="game-score">
+            <p className="game-score__caption">Счет</p>
+            <p className="game-score__score">{score}</p>
+          </div>
+          <div className="game-record">
+            <p className="game-record__caption">Рекорд</p>
+            <p className="game-record__score">0</p>
+          </div>
         </div>
       </div>
     </Layout>

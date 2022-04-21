@@ -4,6 +4,11 @@ export interface ITile {
   value: number;
 }
 
+export interface IMoveTile {
+  oldPosition : ITile
+  newPosition : ITile | null
+}
+
 export interface INewTileScheme {
   rowIndex: number;
   columnIndex: number;

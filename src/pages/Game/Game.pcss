@@ -10,18 +10,42 @@
   margin-right: 100px;
 }
 
+.game-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .game-score {
   font-size: 40px;
   font-weight: bold;
   text-align: center;
 
   &__caption {
-    color: #f0b17b;
+    color: var(--light-orange);
     margin: 0;
   }
 
   &__score {
-    color: #756a61;
+    color: var(--gray);
+    margin: 0;
+  }
+}
+
+.game-record {
+  margin-top: 20px;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+
+  &__caption {
+    color: var(--orange);
+    margin: 0;
+  }
+
+  &__score {
+    color: var(--gray);
     margin: 0;
   }
 }
