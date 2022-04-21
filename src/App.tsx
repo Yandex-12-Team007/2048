@@ -30,7 +30,7 @@ function App() {
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   useEffect(() => {
     dispatch(getUser());
-  });
+  }, []);
 
   return <ErrorBoundary>
     <div className={'app'}>
