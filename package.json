@@ -29,6 +29,7 @@
   "homepage": "https://github.com/Yandex-12-Team007/2048#readme",
   "devDependencies": {
     "@hookform/resolvers": "2.8.8",
+    "@redux-devtools/extension": "3.2.2",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
     "@types/react-redux": "7.1.24",
@@ -72,6 +73,7 @@
     "react-redux": "8.0.0",
     "react-router-dom": "5.2.1",
     "redux": "4.1.2",
+    "redux-thunk": "2.4.1",
     "yup": "0.32.11"
   }
 }

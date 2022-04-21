@@ -1,0 +1,38 @@
+.error-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bg);
+
+  &__title {
+    font-size: 96px;
+    font-weight: 700;
+    margin-bottom: 60px;
+    letter-spacing: 5px;
+  }
+
+  &__title-part:nth-child(1) {
+    color: var(--orange);
+  }
+
+  &__title-part:nth-child(2) {
+    color: var(--middle-orange);
+  }
+
+  &__title-part:nth-child(3) {
+    color: var(--light-orange);
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    margin-bottom: 55px;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: var(--error-text-color);
+  }
+}

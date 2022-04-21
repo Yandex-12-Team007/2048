@@ -1,13 +1,19 @@
 import React, {Suspense, lazy, useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
+import Loading from './components/Loading';
 
 import Routes from 'Constants/Routes';
 
-import Loading from './components/Loading';
-import {authController} from './controllers/auth-controller';
+import './App.pcss';
+
+import {getUser} from './store/actionCreators/user';
+import { IRootState } from 'Interface/IRootState';
 
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/Game'));
@@ -15,19 +21,21 @@ const Forum = lazy(() => import('Pages/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
 const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
-
 const Error = lazy(() => import('Pages/Error'));
 
-import './App.pcss';
-
 function App() {
+  const loggedIn = useSelector<IRootState>((state) => state.user.status !== 'failed');
+
+  console.log(loggedIn);
+
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   useEffect(() => {
-    authController.get();
+    dispatch(getUser());
   });
 
   return <ErrorBoundary>
     <div className={'app'}>
-      <Router>
+      <BrowserRouter>
         <Suspense fallback={<Loading />}>
           <Switch>
             <Route exact path={Routes.LOGIN} component={Login}/>
@@ -35,11 +43,19 @@ function App() {
             <Route exact path={Routes.FORUM} component={Forum}/>
             <Route exact path={Routes.RULES} component={Rules}/>
             <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
-            <PrivateRoute exact path={Routes.PROFILE} component={Profile}/>
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE}
+              component={Profile}
+              loggedIn={loggedIn}
+            />
+            <Route exact path='/'>
+              <Redirect to={Routes.GAME} />
+            </Route>
             <Route component={Error}/>
           </Switch>
         </Suspense>
-      </Router>
+      </BrowserRouter>
     </div>
   </ErrorBoundary>
 }
