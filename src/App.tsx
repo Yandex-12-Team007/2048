@@ -13,7 +13,8 @@ import Routes from 'Constants/Routes';
 import './App.pcss';
 
 import {getUser} from './store/actionCreators/user';
-import { IRootState } from 'Interface/IRootState';
+import {IRootState} from 'Interface/IRootState';
+import {isUserStatusFailedSelector} from './store/selectors';
 
 const Login = lazy(() => import('Pages/Login'));
 const Game = lazy(() => import('Pages/Game'));
@@ -24,9 +25,7 @@ const Leaderboard = lazy(() => import('Pages/Leaderboard'));
 const Error = lazy(() => import('Pages/Error'));
 
 function App() {
-  const loggedIn = useSelector<IRootState>((state) => state.user.status !== 'failed');
-
-  console.log(loggedIn);
+  const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
 
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   useEffect(() => {
@@ -47,7 +46,7 @@ function App() {
               exact
               path={Routes.PROFILE}
               component={Profile}
-              loggedIn={loggedIn}
+              loggedIn={!isUserStatusFailed}
             />
             <Route exact path='/'>
               <Redirect to={Routes.GAME} />
