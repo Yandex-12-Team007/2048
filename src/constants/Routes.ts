@@ -3,7 +3,7 @@ enum Routes {
     HOME = '/',
     // Авторизация
     LOGIN = '/login',
-    SIGNUP = '/signup',
+    REGISTRATION = '/registration',
     // Игра
     GAME = '/game',
     // Таблица лидеров
