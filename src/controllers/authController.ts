@@ -1,5 +1,5 @@
 import {authApi} from '../api/auth-api';
-import {ILoginUserModel} from 'Interface/IUser';
+import {ILoginUserModel, IRegistrationUserModel} from 'Interface/IUser';
 
 export class AuthController {
   public signIn(model: ILoginUserModel) {
@@ -8,6 +8,10 @@ export class AuthController {
 
   public get() {
     return authApi.get();
+  }
+
+  public signUp(model: IRegistrationUserModel) {
+    return authApi.signUp(model);
   }
 }
 

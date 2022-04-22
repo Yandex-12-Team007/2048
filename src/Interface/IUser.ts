@@ -6,11 +6,20 @@ export default interface IUser {
   display_name: string,
   login: string,
   email: string,
-  phone: string
+  phone: string,
   password? : string
 }
 
 export interface ILoginUserModel {
   login: string,
   password: string,
+}
+
+export interface IRegistrationUserModel {
+  first_name: string,
+  second_name: string,
+  login: string,
+  email: string,
+  phone: string;
+  password: string
 }

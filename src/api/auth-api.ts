@@ -1,5 +1,5 @@
 import apiModule from '../api';
-import {ILoginUserModel} from 'Interface/IUser';
+import {ILoginUserModel, IRegistrationUserModel} from 'Interface/IUser';
 
 class AuthApi {
   public signIn(model: ILoginUserModel) {
@@ -8,6 +8,10 @@ class AuthApi {
 
   public get() {
     return apiModule.get('/auth/user');
+  }
+
+  public signUp(model: IRegistrationUserModel) {
+    return apiModule.post('/auth/signup', model);
   }
 }
 
