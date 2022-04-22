@@ -29,8 +29,11 @@
   "homepage": "https://github.com/Yandex-12-Team007/2048#readme",
   "devDependencies": {
     "@hookform/resolvers": "2.8.8",
+    "@redux-devtools/extension": "3.2.2",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
+    "@types/react-redux": "7.1.24",
+    "@types/redux": "3.6.0",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "autoprefixer": "^10.4.4",
     "classnames": "2.3.1",
@@ -67,7 +70,11 @@
     "react": "18.0.0",
     "react-document-meta": "^3.0.0-beta.2",
     "react-dom": "18.0.0",
+    "react-redux": "8.0.0",
     "react-router-dom": "5.2.1",
+    "redux": "4.1.2",
+    "redux-thunk": "2.4.1",
+    "reselect": "4.1.5",
     "yup": "0.32.11"
   }
 }

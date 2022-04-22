@@ -6,6 +6,10 @@ export class AuthController {
     return authApi.signIn(model);
   }
 
+  public get() {
+    return authApi.get();
+  }
+
   public signUp(model: IRegistrationUserModel) {
     return authApi.signUp(model);
   }

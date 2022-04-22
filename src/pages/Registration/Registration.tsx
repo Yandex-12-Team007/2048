@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {authController} from '../../controllers/auth-controller';
+import {authController} from '../../controllers/authController';
 import Routes from 'Constants/Routes';
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';

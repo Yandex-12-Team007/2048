@@ -6,6 +6,10 @@ class AuthApi {
     return apiModule.post('/auth/signin', model);
   }
 
+  public get() {
+    return apiModule.get('/auth/user');
+  }
+
   public signUp(model: IRegistrationUserModel) {
     return apiModule.post('/auth/signup', model);
   }
