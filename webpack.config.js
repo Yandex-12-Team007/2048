@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const Dotenv = require('dotenv-webpack');
 
@@ -67,6 +68,10 @@ module.exports = (env) => {
 
         },
         minify: true,
+      }),
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
       }),
     ],
     devServer: {
