@@ -18,7 +18,7 @@ export const schema = object({
   oldPassword: string().required('Укажите значение'),
   newPassword: string().required('Укажите значение'),
   reNewPassword: string().required('Укажите значение')
-    .oneOf([ref('newPassword'), null], 'Пароли должны совпадать'),
+      .oneOf([ref('newPassword'), null], 'Пароли должны совпадать'),
 }).required();
 
 
@@ -34,8 +34,8 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
   });
 
   const handleInfoSave = async (data) => {
-    let res = await userController.changePassword(data);
-    if(!res) {
+    const res = await userController.changePassword(data);
+    if (!res) {
       throw new Error('Bad http request');
     }
     onSave();

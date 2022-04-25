@@ -21,9 +21,9 @@ export default function Profile() {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const avatarContainerClass = classNames({
-    'profile-container__avatar-container' : true,
-    'profile-container__avatar-container--editing' :
-      currentView === CurrentView.PROFILE_INFO
+    'profile-container__avatar-container': true,
+    'profile-container__avatar-container--editing':
+      currentView === CurrentView.PROFILE_INFO,
   })
 
   return (

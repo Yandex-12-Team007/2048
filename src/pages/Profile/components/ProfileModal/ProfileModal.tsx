@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faXmark} from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames';
 
 import DefaultModal from 'Components/Modal/DefaultModal';
@@ -10,6 +10,7 @@ import {userController} from 'Controllers/userController';
 
 import './ProfileModal.pcss';
 
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const _ = require('lodash');
 
 enum ErrorType {
@@ -18,8 +19,8 @@ enum ErrorType {
 }
 
 const DEFAULT_ERROR_STATE = {
-  [ErrorType.VALID] : false,
-  [ErrorType.QUERY] : false,
+  [ErrorType.VALID]: false,
+  [ErrorType.QUERY]: false,
 }
 
 const VALID_ERROR_TEXT = 'Нужно выбрать файл';
@@ -31,21 +32,21 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
   const [error, setError] = useState(DEFAULT_ERROR_STATE);
 
   function changeFile() {
-    if(avatar.current?.files?.length === 1){
+    if (avatar.current?.files?.length === 1) {
       setError(_.clone(DEFAULT_ERROR_STATE));
       setIsFileUpload(true);
       return
     }
 
-    let updatedError = error;
+    const updatedError = error;
     updatedError[ErrorType.VALID] = true;
     setError(updatedError);
   }
 
   function uploadFile() {
     const {current} = avatar;
-    if(!current?.files) {
-      let updatedError = error;
+    if (!current?.files) {
+      const updatedError = error;
       updatedError[ErrorType.VALID] = true;
       setError(updatedError);
       return;
@@ -53,24 +54,23 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     const file = current.files[0];
 
     userController.uploadProfileImg(file)
-      .then(res => {
+        .then((res) => {
 
-      })
-      .catch(err => {
-        let updatedError = error;
-        updatedError[ErrorType.QUERY] = true;
-        setError(updatedError);
-      })
+        })
+        .catch((err) => {
+          const updatedError = error;
+          updatedError[ErrorType.QUERY] = true;
+          setError(updatedError);
+        })
   }
 
   function close() {
     setIsOpen(false);
   }
 
-  console.log(avatar);
   const titleClass = classNames({
-    'profile-modal__title' : true,
-    'profile-modal__title_error' : error[ErrorType.QUERY],
+    'profile-modal__title': true,
+    'profile-modal__title_error': error[ErrorType.QUERY],
   });
   const title = error[ErrorType.QUERY] ? QUERY_ERROR_TEXT :
     isFileUpload ? 'Аватар загружен' : 'Загрузить аватар';
@@ -78,12 +78,12 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
 
   let label = 'Выбрать файл на компьютере';
   const labelClass = classNames({
-    'profile-modal__label' : true,
-    'profile-modal__label_done' : isFileUpload
+    'profile-modal__label': true,
+    'profile-modal__label_done': isFileUpload,
   });
-  if(isFileUpload) {
+  if (isFileUpload) {
     const {current} = avatar;
-    if(!current || !current.files){
+    if (!current || !current.files) {
       throw new Error('undefined file');
     }
     const file = current.files[0];
@@ -122,8 +122,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
         text={'Загрузить'}
       />
       {error[ErrorType.VALID] ?
-        <div className={'profile-modal__error'}>{VALID_ERROR_TEXT}</div>
-        :
+        <div className={'profile-modal__error'}>{VALID_ERROR_TEXT}</div> :
         null
       }
     </div>

@@ -21,11 +21,11 @@ class UserApi {
     return fetch('https://ya-praktikum.tech/api/v2/user/profile/avatar', {
       cache: 'no-cache',
       credentials: 'include',
-      headers : {
-        contentType : 'multipart/form-data',
+      headers: {
+        contentType: 'multipart/form-data',
       },
-      method : 'put',
-      body : formData,
+      method: 'put',
+      body: formData,
     });
   }
 }

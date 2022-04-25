@@ -3,20 +3,21 @@ import React from 'react';
 import './DefaultModal.pcss';
 import classNames from 'classnames';
 
-export default function DefaultModal ({
+export default function DefaultModal({
   isOpen = true,
-  close = () => {},
+  close = () => {
+  },
   addClass = '',
-  children
+  children,
 }) {
   const modalClass = classNames({
-    'modal' : true,
-    'modal_open' : isOpen,
+    'modal': true,
+    'modal_open': isOpen,
   })
 
   const modalFormClass = classNames({
-    'modal__form' : true,
-    [addClass] : true
+    'modal__form': true,
+    [addClass]: true,
   })
 
   return <div className={modalClass} onClick={close}>
