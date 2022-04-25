@@ -28,7 +28,11 @@ export default function Layout({children, title = 'шаблон'}) {
       <div className={'container'}>
         <Header title={title} isSmall={isSmall} />
         <div className={'content-wrapper'}>
-          <Sidebar isSmall={isSmall} contentRef={contentRef} changeSize={changeSize}/>
+          <Sidebar
+            isSmall={isSmall}
+            contentRef={contentRef}
+            changeSize={changeSize}
+          />
           <div className={'content'} ref={contentRef}>
             {children}
           </div>

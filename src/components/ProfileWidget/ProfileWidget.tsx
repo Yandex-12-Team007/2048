@@ -42,7 +42,11 @@ export default function ProfileWidget() {
         src={userAvatar}
         alt={'аватар'}
       /> :
-      <div className={classNames('profile-widget__image', 'profile-widget__image--empty')} />
+      <div
+        className={
+          classNames('profile-widget__image', 'profile-widget__image--empty')
+        }
+      />
     }
     <div className={'profile-widget__display-name-wrapper'}>
       {userName}
