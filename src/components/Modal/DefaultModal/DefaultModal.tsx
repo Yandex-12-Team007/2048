@@ -16,7 +16,7 @@ export default function DefaultModal ({
 
   const modalFormClass = classNames({
     'modal__form' : true,
-    [addClass] : addClass !== ''
+    [addClass] : true
   })
 
   return <div className={modalClass} onClick={close}>

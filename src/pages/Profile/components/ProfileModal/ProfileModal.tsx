@@ -10,7 +10,7 @@ import {userController} from 'Controllers/userController';
 
 import './ProfileModal.pcss';
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 enum ErrorType {
   VALID,
@@ -27,13 +27,13 @@ const QUERY_ERROR_TEXT = 'Ошибка, попробуйте еще раз';
 
 export default function ProfileModal({isOpen = true, setIsOpen}) {
   const avatar = useRef<HTMLInputElement>(null);
-  const [fileUpload, setFileUpload] = useState(false);
+  const [isFileUpload, setIsFileUpload] = useState(false);
   const [error, setError] = useState(DEFAULT_ERROR_STATE);
 
   function changeFile() {
     if(avatar.current?.files?.length === 1){
       setError(_.clone(DEFAULT_ERROR_STATE));
-      setFileUpload(true);
+      setIsFileUpload(true);
       return
     }
 
@@ -50,7 +50,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
       setError(updatedError);
       return;
     }
-    const file = current?.files[0];
+    const file = current.files[0];
 
     userController.uploadProfileImg(file)
       .then(res => {
@@ -73,15 +73,15 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     'profile-modal__title_error' : error[ErrorType.QUERY],
   });
   const title = error[ErrorType.QUERY] ? QUERY_ERROR_TEXT :
-    fileUpload ? 'Аватар загружен' : 'Загрузить аватар';
+    isFileUpload ? 'Аватар загружен' : 'Загрузить аватар';
 
 
   let label = 'Выбрать файл на компьютере';
   const labelClass = classNames({
     'profile-modal__label' : true,
-    'profile-modal__label_done' : fileUpload
+    'profile-modal__label_done' : isFileUpload
   });
-  if(fileUpload) {
+  if(isFileUpload) {
     const {current} = avatar;
     if(!current || !current.files){
       throw new Error('undefined file');
@@ -116,7 +116,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     </div>
     <div className={'profile-modal__action-wrapper'}>
       <Button
-        disabled={!fileUpload}
+        disabled={!isFileUpload}
         className={'profile-modal__action'}
         onClick={uploadFile}
         text={'Загрузить'}
