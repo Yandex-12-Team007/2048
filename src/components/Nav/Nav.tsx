@@ -7,20 +7,20 @@ import ErrorBoundary from 'Components/ErrorBoundary';
 import NAV from 'Constants/Nav';
 import Routes from 'Constants/Routes';
 
-import resizeToFull from 'Static/img/resize/toBig.svg';
-import resizeToSmall from 'Static/img/resize/toSmall.svg';
+import fullSize from 'Static/img/resize/toBig.svg';
+import smallSize from 'Static/img/resize/toSmall.svg';
 
 import fullScreenSvg from 'Static/img/fullscreen/fullscreen.svg';
 
 import './Nav.pcss';
 
-export interface INavLink{
-  isSmall : boolean,
-  title : string,
-  link : null | Routes,
-  icon : string
-  linkActive : boolean,
-  action : null | any
+export interface INavLink {
+  isSmall: boolean,
+  title: string,
+  link: null | Routes,
+  icon: string
+  linkActive: boolean,
+  action: null | any
 }
 
 export default function Nav({isSmall = true, changeSize, contentRef}) {
@@ -30,10 +30,10 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
     'nav_full': !isSmall,
   });
 
-  let resizeIcon = isSmall ? resizeToSmall : resizeToFull;
+  const resizeIcon = isSmall ? smallSize : fullSize;
 
   // @ts-ignore
-  let nav : INavLink[] = Array.from(NAV).map(el => {
+  const nav: INavLink[] = Array.from(NAV).map((el) => {
     // @ts-ignore
     el.isSmall = isSmall;
     // @ts-ignore
@@ -44,21 +44,21 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
   });
 
   const resize = {
-    isSmall : isSmall,
-    title : 'Сжать',
-    link : null,
-    icon : resizeIcon,
-    linkActive : false,
-    action : () => changeSize(!isSmall)
+    isSmall: isSmall,
+    title: 'Сжать',
+    link: null,
+    icon: resizeIcon,
+    linkActive: false,
+    action: () => changeSize(!isSmall),
   }
 
   const fullScreen = {
-    isSmall : isSmall,
-    title : 'Полный экран',
-    link : null,
-    icon : fullScreenSvg,
-    linkActive : false,
-    action : () => contentRef.current.requestFullscreen()
+    isSmall: isSmall,
+    title: 'Полный экран',
+    link: null,
+    icon: fullScreenSvg,
+    linkActive: false,
+    action: () => contentRef.current.requestFullscreen(),
   }
 
   nav.unshift(fullScreen, resize);
@@ -70,8 +70,15 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
   </div>
 }
 
-function NavLink({isSmall, icon, title, link = null, linkActive = false, action = null} : INavLink) {
-  if(link !== null) {
+function NavLink({
+  isSmall,
+  icon,
+  title,
+  link = null,
+  linkActive = false,
+  action = null,
+}: INavLink) {
+  if (link !== null) {
     return <Link
       className={classNames({
         'nav__link': true,
@@ -81,7 +88,8 @@ function NavLink({isSmall, icon, title, link = null, linkActive = false, action 
     >
       <div
         className={'nav__link-icon-wrapper'}
-        dangerouslySetInnerHTML={{__html: `
+        dangerouslySetInnerHTML={{
+          __html: `
           <svg class="nav__link-icon">
               ${icon}
           </svg>`,
@@ -91,11 +99,12 @@ function NavLink({isSmall, icon, title, link = null, linkActive = false, action 
     </Link>
   }
 
-  if(action !== null) {
+  if (action !== null) {
     return <div className={'nav__link'} onClick={action}>
       <div
         className={'nav__link-icon-wrapper'}
-        dangerouslySetInnerHTML={{__html: `
+        dangerouslySetInnerHTML={{
+          __html: `
               <svg class="nav__link-icon">
                   ${icon}
               </svg>`,
