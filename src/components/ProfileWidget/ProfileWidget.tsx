@@ -1,36 +1,55 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import Arrow, {ArrowDirection} from 'Components/Arrow';
 import DropDown, {IDropDownItem, DropDownItemType} from 'Components/DropDown';
 
-import PROFILE from 'Constants/profileExample';
 import Routes from 'Constants/Routes';
 
 import './ProfileWidget.pcss';
+import {useSelector} from 'react-redux';
+import {userAvatarSelector, userNameSelector} from 'Store/selectors';
+import classNames from 'classnames';
+import {authController} from '../../controllers/authController';
 
 export default function ProfileWidget() {
+  const userName = useSelector(userNameSelector);
+  const userAvatar = useSelector(userAvatarSelector);
+
+  const history = useHistory();
+
   const options : IDropDownItem[] = [
-    {
-      type: DropDownItemType.BUTTON,
-      title: 'Тест кнопки =)',
-      action: () => console.log('test'),
-    },
     {
       type: DropDownItemType.LINK,
       title: 'Профиль',
       link: Routes.PROFILE,
     },
+    {
+      type: DropDownItemType.BUTTON,
+      title: 'Выйти',
+      action: () => {
+        authController.logout().then(() => {
+          history.push(Routes.LOGIN);
+        })
+      },
+    },
   ];
 
   return <div className={'profile-widget'}>
-    <div className={'profile-widget__image-wrapper'}>
+    {
+      userAvatar.length > 0 ?
       <img
         className={'profile-widget__image'}
-        src={PROFILE.avatar}
+        src={userAvatar}
         alt={'аватар'}
+      /> :
+      <div
+        className={
+          classNames('profile-widget__image', 'profile-widget__image--empty')
+        }
       />
-    </div>
+    }
     <div className={'profile-widget__display-name-wrapper'}>
-      {PROFILE.display_name}
+      {userName}
     </div>
     <div className={'profile-widget__options-wrapper'}>
       <DropDown options={options}>

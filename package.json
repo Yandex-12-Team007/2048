@@ -12,7 +12,7 @@
     "dev": "cross-env webpack-dev-server --env development --mode development --open",
     "start": "cross-env node index.ts",
     "prepare": "cross-env husky install",
-    "pre-commit": "cross-env echo pre-commit"
+    "pre-commit": "cross-env eslint 'src/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,6 @@
     "@types/redux": "3.6.0",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "autoprefixer": "^10.4.4",
-    "classnames": "2.3.1",
     "cross-env": "^7.0.3",
     "css-loader": "6.7.1",
     "dotenv-webpack": "7.1.0",

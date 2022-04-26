@@ -13,6 +13,10 @@ export class AuthController {
   public signUp(model: IRegistrationUserModel) {
     return authApi.signUp(model);
   }
+
+  public logout() {
+    return authApi.logout();
+  }
 }
 
 export const authController = new AuthController();

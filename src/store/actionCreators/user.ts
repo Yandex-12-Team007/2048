@@ -7,8 +7,8 @@ export const userActionTypes = {
 };
 
 export const getUser = () => (dispatch: Dispatch) => {
-  return authApi.get().then((model) => {
-    dispatch({type: userActionTypes.SET_USER, payload: model});
+  return authApi.get().then((response) => {
+    dispatch({type: userActionTypes.SET_USER, payload: response});
     dispatch({type: userActionTypes.SET_STATUS, payload: 'success'});
   }).catch(() => {
     dispatch({type: userActionTypes.SET_STATUS, payload: 'failed'});

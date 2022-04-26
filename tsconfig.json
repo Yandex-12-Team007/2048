@@ -26,7 +26,8 @@
       "Constants/*": ["./src/constants/*"],
       "Components/*": ["./src/components/*"],
       "Utils/*": ["./src/utils/*"],
-      "Static/*": ["./src/static/*"]
+      "Static/*": ["./src/static/*"],
+      "Store/*": ["./src/store/*"],
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
