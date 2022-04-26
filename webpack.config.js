@@ -96,7 +96,7 @@ module.exports = (env) => {
             },
           },
           {
-            urlPattern: /\.(?:js)$/,
+            urlPattern: /\.(?:bundle.js)$/,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'scripts',
