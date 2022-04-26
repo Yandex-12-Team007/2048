@@ -1,28 +1,44 @@
 import {
   BOARD_BORDER_RADIUS,
   BOARD_COLOR,
-  BOARD_PADDING,
   BOARD_SIZE,
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
   CELL_GRID_COLOR,
-  CELL_HEIGHT,
-  CELL_WIDTH,
   TILE_BACKGROUND,
 } from 'Constants/game';
-import {ITile} from '../types';
 
 class GamePainter {
   private ctx!: CanvasRenderingContext2D;
-
-  public score: number;
+  private width : number;
+  private boardPadding : number
+  private cellWidth : number
 
   constructor() {
-    this.score = 0;
+    this.width = 500;
+    this.boardPadding = this.width / (BOARD_SIZE + 1) / (BOARD_SIZE + 1);
+    this.cellWidth = (this.width - (BOARD_SIZE + 1) * this.boardPadding) / BOARD_SIZE;
   }
 
-  public init(ctx: CanvasRenderingContext2D) {
+  public setWidth(width : number) {
+    this.width = width;
+    this.boardPadding = this.width / (BOARD_SIZE + 1) / (BOARD_SIZE + 1);
+    this.cellWidth = (this.width - (BOARD_SIZE + 1) * this.boardPadding) / BOARD_SIZE;
+  }
+
+  private calculateX(x) {
+    return this.boardPadding + (this.cellWidth + this.boardPadding) * x;
+  }
+
+  private calculateY(y) {
+    return this.boardPadding + (this.cellWidth + this.boardPadding) * y;
+  }
+
+  public init(ctx: CanvasRenderingContext2D, width : number) {
     this.ctx = ctx;
+    this.setWidth(width);
+    console.log('PAINTER INIT');
+    console.log(this.width);
+    console.log(this.boardPadding);
+    console.log(this.cellWidth);
     this.renderBoard();
     this.renderGrid();
   }
@@ -45,45 +61,38 @@ class GamePainter {
     this.ctx.fill();
   }
 
-  private renderTile(x: number, y: number, value: number) {
-    this.renderRoundedSquare(x, y, CELL_WIDTH, CELL_HEIGHT, TILE_BACKGROUND[value]);
-    this.ctx.font = '55px sans-serif';
+  private renderTile(x: number, y: number, value: number, coef = 1) {
+    const colour = TILE_BACKGROUND[value] ?? '#000';
+    this.renderRoundedSquare(
+        x,
+        y,
+        this.cellWidth * coef,
+        this.cellWidth * coef,
+        colour,
+    );
+    this.ctx.font = '40px sans-serif';
     this.ctx.fillStyle = '#FFF';
     this.ctx.textAlign = 'center';
     this.ctx.fillText(
         value.toString(),
-        x + CELL_WIDTH / 2,
-        y + CELL_WIDTH / 1.5,
+        x + this.cellWidth / 2,
+        y + this.cellWidth / 1.5,
     );
   }
 
-  private renderTiles(tileList: ITile[]) {
-    tileList.forEach(({x, y, value}) => {
-      this.renderTile(x, y, value);
-    });
-  }
-
   public renderBoard() {
-    this.renderRoundedSquare(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, BOARD_COLOR);
+    this.renderRoundedSquare(0, 0, this.width, this.width, BOARD_COLOR);
   }
 
   public renderGrid() {
     for (let i = 0; i < BOARD_SIZE; i++) {
       for (let j = 0; j < BOARD_SIZE; j++) {
-        const cellWidth = (CANVAS_WIDTH - (BOARD_SIZE + 1) * BOARD_PADDING) / BOARD_SIZE;
-        const cellHeight = (CANVAS_HEIGHT - (BOARD_SIZE + 1) * BOARD_PADDING) / BOARD_SIZE;
+        const x = this.boardPadding + (this.cellWidth + this.boardPadding) * j;
+        const y = this.boardPadding + (this.cellWidth + this.boardPadding) * i;
 
-        const x = BOARD_PADDING + (cellWidth + BOARD_PADDING) * j;
-        const y = BOARD_PADDING + (cellHeight + BOARD_PADDING) * i;
-
-        this.renderRoundedSquare(x, y, cellWidth, cellHeight, CELL_GRID_COLOR);
+        this.renderRoundedSquare(x, y, this.cellWidth, this.cellWidth, CELL_GRID_COLOR);
       }
     }
-  }
-
-  public updateBoard(tileList: ITile[]) {
-    this.renderGrid();
-    this.renderTiles(tileList);
   }
 
   public animatedBoardUpdate(moveList, newList) {
@@ -92,9 +101,33 @@ class GamePainter {
     const renderAnimatedTiles = this.renderAnimatedTiles.bind(this);
     const animatedNewTiles = this.animatedNewTiles.bind(this);
 
+    moveList = moveList.map((el) => {
+      return {
+        oldPosition: {
+          x: this.calculateX(el.oldPosition.x),
+          y: this.calculateY(el.oldPosition.y),
+          value: el.oldPosition.value,
+        },
+        newPosition: {
+          x: this.calculateX(el.newPosition.x),
+          y: this.calculateY(el.newPosition.y),
+          value: el.newPosition.value,
+        },
+      }
+    })
+
+    newList = newList.map((el) => {
+      {
+        return {
+          x: this.calculateX(el.x),
+          y: this.calculateY(el.y),
+          value: el.value,
+        }
+      }
+    })
+
     let stepIx = 1; const count = 8;
     function step(timestamp) {
-      // console.log('step');
       renderBoard();
       renderGrid();
       renderAnimatedTiles(moveList, stepIx, count);
@@ -119,7 +152,6 @@ class GamePainter {
   }
 
   private renderAnimatedTile(oldPosition, newPosition, coef) {
-    // console.log('renderAnimatedTile');
     const xDiff = (newPosition.x - oldPosition.x) * coef;
     const yDiff = (newPosition.y - oldPosition.y) * coef;
 
@@ -148,38 +180,8 @@ class GamePainter {
 
   private renderNewTiles(newTiles, stepIx, count) {
     newTiles.forEach(({x, y, value}) => {
-      this.renderNewTile(x, y, value, stepIx / count);
+      this.renderTile(x, y, value, stepIx / count);
     });
-  }
-
-  private renderNewTile(x: number, y: number, value: number, coef) {
-    this.renderRoundedSquareAnimate(x, y, CELL_WIDTH * coef, CELL_HEIGHT * coef, TILE_BACKGROUND[value]);
-    this.ctx.font = '55px sans-serif';
-    this.ctx.fillStyle = '#FFF';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(
-        value.toString(),
-        x + CELL_WIDTH / 2,
-        y + CELL_WIDTH / 1.5,
-    );
-  }
-
-  private renderRoundedSquareAnimate(
-      x: number,
-      y: number,
-      width: number,
-      height: number,
-      color: string,
-  ) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(x + BOARD_BORDER_RADIUS, y);
-    this.ctx.arcTo(x + width, y, x + width, y + height, BOARD_BORDER_RADIUS);
-    this.ctx.arcTo(x + width, y + height, x, y + height, BOARD_BORDER_RADIUS);
-    this.ctx.arcTo(x, y + height, x, y, BOARD_BORDER_RADIUS);
-    this.ctx.arcTo(x, y, x + width, y, BOARD_BORDER_RADIUS);
-    this.ctx.closePath();
-    this.ctx.fillStyle = color;
-    this.ctx.fill();
   }
 }
 

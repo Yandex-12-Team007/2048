@@ -1,10 +1,13 @@
+export const MATRIX_SIZE = 4;
 export const BOARD_SIZE = 4;
 export const CANVAS_WIDTH = 500;
 export const CANVAS_HEIGHT = 500;
 export const BOARD_BORDER_RADIUS = 5;
 export const BOARD_PADDING = 20;
 
+// eslint-disable-next-line max-len
 export const CELL_WIDTH = (CANVAS_WIDTH - (BOARD_SIZE + 1) * BOARD_PADDING) / BOARD_SIZE;
+// eslint-disable-next-line max-len
 export const CELL_HEIGHT = (CANVAS_HEIGHT - (BOARD_SIZE + 1) * BOARD_PADDING) / BOARD_SIZE;
 
 export const BOARD_COLOR = '#bbada0';
@@ -27,6 +30,14 @@ export const TILE_BACKGROUND = {
   128: '#EDCF72',
   256: '#EDCC61',
   512: '#EDC850',
-  1024: '#F2B179',
+  1024: '#f3d774',
   2048: '#EDC22E',
+}
+
+export enum GameState {
+  INIT,
+  PLAY,
+  WIN,
+  AFTER_WIN,
+  LOSE,
 }

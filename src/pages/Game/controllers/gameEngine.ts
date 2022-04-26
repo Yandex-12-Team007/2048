@@ -1,53 +1,65 @@
 import {
-  BOARD_PADDING,
   BOARD_SIZE,
-  CELL_HEIGHT,
-  CELL_WIDTH,
+  GameState,
   KeyCodes,
 } from 'Constants/game';
-import {INewTileScheme, ITile, IMoveTile} from '../types';
+import {Direction, ICanMove, IMoveTile, INewTileScheme, ITile} from '../types';
 
-import {cloneDeep} from 'lodash';
 import gamePainter from './gamePainter';
-/*
-const TEST_FIELD = [
-  [0, 0, 0, 2],
-  [0, 0, 0, 2],
-  [0, 0, 0, 2],
-  [0, 0, 0, 2],
-];
- */
+import {check, move} from './gameMatrixHelper';
+
+// const TEST_FIELD : number[][] = [
+//   [4, 8, 4, 0],
+//   [4, 8, 4, 8],
+//   [8, 4, 8, 4],
+//   [4, 8, 4, 8],
+// ];
 
 /* TODO: Нормальная проверка на возможность сдвига */
-/* TODO: Сообщать о пройгрыше */
-/* TODO: Сообщать о победе / предложить продолжить игру */
 class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
   private newList: ITile[];
-  private isMoved: boolean;
+  private record: number;
+  private gameState: GameState;
+  private canMove: ICanMove;
+
   private updateScoreCallback!: (score: number) => void;
+  private updateRecordCallback!: (score: number) => void;
+  private updateGameStateCallback!: (score: number) => void;
 
   constructor() {
+    this.gameState = GameState.INIT;
     this.tileList = new Array(BOARD_SIZE).fill(new Array(BOARD_SIZE));
     this.moveList = [];
+    this.record = 0;
     this.newList = [];
-    this.isMoved = false;
+    this.canMove = {
+      [Direction.LEFT]: true,
+      [Direction.RIGHT]: true,
+      [Direction.UP]: true,
+      [Direction.DOWN]: true,
+    };
   }
 
-  // private createTestFields() {
-  //   const cells = TEST_FIELD;
-  //
-  //   for (let i = 0; i < BOARD_SIZE; i++) {
-  //     for (let j = 0; j < BOARD_SIZE; j++) {
-  //       console.log(cells[i][j]);
-  //       // @ts-ignore
-  //       cells[i][j] = this.createTile(i, j, cells[i][j]);
-  //     }
-  //   }
-  //   console.log(cells);
-  //   return cells;
+  // private createTestFields() : ITile[][] {
+  //   return this.createTileListFromMatrix(TEST_FIELD);
   // }
+
+  private createTileListFromMatrix(matrix : number[][]) {
+    const newTiles : ITile[][] = [];
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      newTiles[i] = [];
+      for (let j = 0; j < BOARD_SIZE; j++) {
+        const tile = this.createTile(i, j, matrix[i][j]);
+        newTiles[i][j] = tile;
+        if (tile.value !== 0) {
+          this.newList.push(tile);
+        }
+      }
+    }
+    return newTiles;
+  }
 
   private createEmptyTiles() {
     const cells: ITile[][] = new Array(BOARD_SIZE).fill(new Array(BOARD_SIZE));
@@ -62,10 +74,8 @@ class GameEngine {
     return cells;
   }
 
-  private createTile(y, x, value) {
-    const squareX = BOARD_PADDING + (CELL_WIDTH + BOARD_PADDING) * x;
-    const squareY = BOARD_PADDING + (CELL_HEIGHT + BOARD_PADDING) * y;
-    return {x: squareX, y: squareY, value: value};
+  private createTile(y, x, value) : ITile {
+    return {x: x, y: y, value: value};
   }
 
   private addListeners() {
@@ -77,8 +87,29 @@ class GameEngine {
   }
 
   private updateGameState() {
+    console.log(this.moveList);
     this.updatedBoard();
     this.updateMaxResult();
+    this.checkMove();
+    if (this.checkLose()) {
+      this.setGameStatus(GameState.LOSE);
+    }
+
+    console.log(this.gameState);
+  }
+
+  private checkMove() {
+    console.log('checkMove');
+    this.canMove = check(this.tileList);
+  }
+
+  private checkLose() {
+    for (const direction in this.canMove) {
+      if (this.canMove[direction]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private updatedBoard() {
@@ -91,147 +122,44 @@ class GameEngine {
     console.log('moveCells');
     this.moveList = [];
     this.newList = [];
+
+    let res;
+
     switch (event.code) {
       case KeyCodes.LEFT:
-        this.moveToLeft();
+        if (!this.canMove[Direction.LEFT]) {
+          return;
+        }
+        res = move(this.tileList, Direction.LEFT)
         break;
       case KeyCodes.RIGHT:
-        this.moveToRight();
+        if (!this.canMove[Direction.RIGHT]) {
+          return;
+        }
+        res = move(this.tileList, Direction.RIGHT)
         break;
       case KeyCodes.DOWN:
-        this.moveToDown();
+        if (!this.canMove[Direction.DOWN]) {
+          return;
+        }
+        res = move(this.tileList, Direction.DOWN)
         break;
       case KeyCodes.UP:
-        this.moveToUp();
+        if (!this.canMove[Direction.UP]) {
+          return;
+        }
+        res = move(this.tileList, Direction.UP)
         break;
     }
 
-    if (this.isMoved) {
-      this.addTile();
-      this.isMoved = false;
-    }
+    const [matrix, moveList] = res;
+
+    this.moveList = moveList;
+    this.tileList = this.createTileListFromMatrix(matrix)
+
+    this.addTile();
+
     this.updateGameState();
-  }
-
-  private getMovedToLeftCellRow(cellRow: ITile[]) {
-    console.log('getMovedToLeftCellRow');
-    const fullCellsInRow = cellRow.filter((cell) => cell.value !== 0);
-    const summedFullCellsInRow: ITile[] = [];
-    const resultedCellRow: ITile[] = cloneDeep(cellRow);
-
-    const moveList = fullCellsInRow.map((el) => {
-      return {
-        oldPosition: el,
-        newPosition: null,
-      }
-    });
-
-    for (let k = 0; k < fullCellsInRow.length; k++) {
-      /* Если значение следующего не нулевого элемента в ряду
-      *  равно значению текущего элемента  */
-      if (
-        fullCellsInRow[k + 1] &&
-        fullCellsInRow[k].value === fullCellsInRow[k + 1].value
-      ) {
-        const newVal = fullCellsInRow[k].value * 2;
-
-        summedFullCellsInRow.push({
-          ...fullCellsInRow[k],
-          value: newVal,
-        });
-
-        moveList[k + 1].oldPosition = {
-          x: fullCellsInRow[k + 1].x,
-          y: fullCellsInRow[k + 1].y,
-          value: fullCellsInRow[k + 1].value,
-        }
-
-        fullCellsInRow[k + 1].value = 0;
-      } else if (fullCellsInRow[k].value !== 0) {
-        /* Если элемент не с чем сложить - просто заливаем его сюда )' */
-        summedFullCellsInRow.push(fullCellsInRow[k]);
-      }
-    }
-    /* Заполняем массив выходных данных */
-    for (let j = 0; j < BOARD_SIZE; j++) {
-      resultedCellRow[j].value = summedFullCellsInRow[j]?.value || 0;
-
-      const move = moveList[j];
-      if (move && !move.newPosition && move.oldPosition.value !== 0) {
-        let k = j
-        while (resultedCellRow[k].value === 0) {
-          k--;
-        }
-        // @ts-ignore
-        move.newPosition = {
-          x: resultedCellRow[k].x,
-          y: resultedCellRow[k].y,
-          value: resultedCellRow[k].value,
-        };
-      }
-    }
-    // TODO: Сделать пред проверку а не пост проверку ....
-    const isChanged = resultedCellRow.some((cell, cellIndex) => {
-      return cell.value !== cellRow[cellIndex].value;
-    });
-    if (isChanged) {
-      this.isMoved = true;
-    }
-
-    return {
-      tileList: resultedCellRow,
-      moveList: moveList,
-    };
-  }
-
-  private moveToLeft() {
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      const {tileList, moveList} = this.getMovedToLeftCellRow(this.tileList[i]);
-      this.moveList = this.moveList.concat(moveList);
-      this.tileList[i] = tileList;
-    }
-  }
-
-  private moveToRight() {
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      const transposedRow = this.tileList[i].reverse();
-      const {tileList, moveList} = this.getMovedToLeftCellRow(transposedRow);
-      this.moveList = this.moveList.concat(moveList);
-      this.tileList[i] = tileList.reverse();
-    }
-  }
-
-  private moveToUp() {
-    const transposedCellList = this.tileList[0].map((_col, i) => {
-      return this.tileList.map((row) => row[i])
-    });
-
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      const {tileList, moveList} = this.getMovedToLeftCellRow(transposedCellList[i]);
-      this.moveList = this.moveList.concat(moveList);
-      transposedCellList[i] = tileList;
-    }
-
-    this.tileList = transposedCellList[0].map((_col, i) => {
-      return transposedCellList.map((row) => row[i]);
-    });
-  }
-
-  private moveToDown() {
-    const transposedCellList = this.tileList[0].map((_col, i) => {
-      return this.tileList.map((row) => row[i]);
-    });
-
-    for (let i = 0; i < BOARD_SIZE; i++) {
-      const transposedRow = transposedCellList[i].reverse();
-      const {tileList, moveList} = this.getMovedToLeftCellRow(transposedRow);
-      this.moveList = this.moveList.concat(moveList);
-      transposedCellList[i] = tileList.reverse();
-    }
-
-    this.tileList = transposedCellList[0].map((_col, i) => {
-      return transposedCellList.map((row) => row[i]);
-    });
   }
 
   private addTile() {
@@ -293,28 +221,69 @@ class GameEngine {
   }
 
   private updateMaxResult() {
+    // Обновляем счет
     const tileValueList = this.tileList.flat().map((tile) => tile.value);
     const currentScore = tileValueList.reduce((acc, el) => {
       acc += el;
       return acc;
     }, 0)
-
     this.updateScoreCallback(currentScore);
+    // Обновляем рекорд
+    if (currentScore > this.record) {
+      this.record = currentScore;
+      this.updateRecordCallback(this.record);
+    }
+    // Если игра в стадии Play - проверяем на 2048
+    // eslint-disable-next-line max-len
+    if (this.gameState === GameState.PLAY && Math.max(...tileValueList) >= 2048) {
+      // TODO: Убирать обработчики нажатий при открытой модалке
+      this.setGameStatus(GameState.WIN);
+    }
+  }
+
+  private setGameStatus(newStatus : GameState) {
+    this.gameState = newStatus;
+    this.updateGameStateCallback(newStatus);
   }
 
   public init(
       ctx: CanvasRenderingContext2D,
+      width: number,
+      record = 0,
       updateScoreCallback: (score: number) => void,
+      updateRecordCallback: (score: number) => void,
+      updateGameStateCallback: (score: number) => void,
   ) {
-    gamePainter.init(ctx);
+    gamePainter.init(ctx, width);
     this.updateScoreCallback = updateScoreCallback;
+    this.updateRecordCallback = updateRecordCallback;
+    this.updateGameStateCallback = updateGameStateCallback;
+    this.record = record;
+
+    this.tileList = this.createEmptyTiles();
+    // this.tileList = this.createTestFields();
+    // Добавляем ячейки
+    this.addStartTiles();
+    // Рисуем
+    this.updateGameState();
+    // Выставляем статус начала игры
+    this.setGameStatus(GameState.PLAY);
+    // Вешаем обработчик
+    this.addListeners();
+  }
+
+  public restart() {
+    this.tileList = new Array(BOARD_SIZE).fill(new Array(BOARD_SIZE));
+    this.moveList = [];
+    this.newList = [];
 
     this.tileList = this.createEmptyTiles();
     // this.tileList = this.createTestFields();
     this.addStartTiles();
     this.updateGameState();
 
-    this.addListeners();
+    // Выставляем статус начала игры
+    this.setGameStatus(GameState.PLAY);
   }
 
   public finish() {

@@ -1,20 +1,34 @@
 .game-container {
-  display: flex;
-  justify-content: center;
   width: 100%;
   height: 100%;
+
+  padding-left: 64px;
+
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-.game-canvas {
-  margin-right: 100px;
+.game-canvas__wrapper{
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-info {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+
+  width: 100%;
+}
+
+.game-score,
+.game-record {
+  margin: 20px;
 }
 
 .game-score {
@@ -34,7 +48,6 @@
 }
 
 .game-record {
-  margin-top: 20px;
   font-size: 40px;
   font-weight: bold;
   text-align: center;
