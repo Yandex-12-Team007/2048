@@ -9,6 +9,11 @@ import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
 import Button from 'Components/Button/Button';
 import './Login.pcss';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
+import {IRootState} from 'Interface/IRootState';
+import {useDispatch} from 'react-redux';
+import {getUser} from 'Store/actionCreators/user';
 
 const schema = object({
   login: string().matches(
@@ -31,13 +36,18 @@ export default function Login() {
   });
 
   const history = useHistory();
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
   const handleSignIn = (
       {login, password}: { login: string, password: string }
   ) => {
-    authController.signIn({login, password}).then(() => {
-      history.push(Routes.GAME);
-    });
+    authController.signIn({login, password})
+        .then(() => {
+          dispatch(getUser());
+        })
+        .then(() => {
+          history.push(Routes.GAME);
+        });
   }
 
   return (

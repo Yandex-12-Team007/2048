@@ -40,10 +40,25 @@ function App() {
           <Switch>
             <Route exact path={Routes.LOGIN} component={Login}/>
             <Route exact path={Routes.REGISTRATION} component={Registration}/>
-            <Route exact path={Routes.GAME} component={Game}/>
-            <Route exact path={Routes.FORUM} component={Forum}/>
+            <PrivateRoute
+              exact
+              path={Routes.GAME}
+              component={Game}
+              loggedIn={!isUserStatusFailed}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.FORUM}
+              component={Forum}
+              loggedIn={!isUserStatusFailed}
+            />
             <Route exact path={Routes.RULES} component={Rules}/>
-            <Route exact path={Routes.LEADERBOARD} component={Leaderboard}/>
+            <PrivateRoute
+              exact
+              path={Routes.LEADERBOARD}
+              component={Leaderboard}
+              loggedIn={!isUserStatusFailed}
+            />
             <PrivateRoute
               exact
               path={Routes.PROFILE}
