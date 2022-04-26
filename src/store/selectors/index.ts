@@ -7,3 +7,11 @@ export const isUserStatusFailedSelector = createSelector(
       return userStatus === 'failed';
     },
 );
+
+export const userNameSelector = (state: IRootState) => {
+  return state.user.model?.login || '';
+};
+
+export const userAvatarSelector = (state: IRootState) => {
+  return state.user.model?.avatar || '';
+};

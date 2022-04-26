@@ -65,7 +65,7 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
 
   return <div className={navClass}>
     <ErrorBoundary>
-      {nav.map((el, id) => <NavLink {...el}/>)}
+      {nav.map((el) => <NavLink {...el}/>)}
     </ErrorBoundary>
   </div>
 }
