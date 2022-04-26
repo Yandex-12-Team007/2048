@@ -70,13 +70,52 @@ module.exports = (env) => {
         minify: true,
       }),
       new WorkboxPlugin.GenerateSW({
+        exclude: [/(?:)/],
         clientsClaim: true,
         skipWaiting: true,
         navigateFallback: 'index.html',
-        runtimeCaching: [{
-          urlPattern: /(?:)/,
-          handler: 'NetworkFirst',
-        }],
+        runtimeCaching: [
+          {
+            urlPattern: ({url}) => {
+              const routeList = [
+                '/',
+                '/game',
+                '/login',
+                '/registration',
+                '/leaderboard',
+                '/forum',
+                '/profile',
+                '/rules',
+              ]
+              return routeList.includes(url.pathname);
+            },
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages',
+            },
+          },
+          {
+            urlPattern: /\.(?:js)$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'scripts',
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+            },
+          },
+          {
+            urlPattern: /\.(?:woff|woff2|ttf)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'fonts',
+            },
+          },
+        ],
       }),
     ],
     devServer: {
