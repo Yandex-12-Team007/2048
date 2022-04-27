@@ -6,17 +6,19 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import Button from 'Components/Button/Button';
 import Input from 'Components/Input/Input';
 
+import {userController} from 'Controllers/userController';
+
 import './PasswordInfoEditing.pcss';
 
 interface IPasswordInfoEditingProps {
   onSave: () => void;
 }
 
-const schema = object({
+export const schema = object({
   oldPassword: string().required('Укажите значение'),
-  password: string().required('Укажите значение'),
-  doublePassword: string().required('Укажите значение')
-      .oneOf([ref('password'), null], 'Пароли должны совпадать'),
+  newPassword: string().required('Укажите значение'),
+  reNewPassword: string().required('Укажите значение')
+      .oneOf([ref('newPassword'), null], 'Пароли должны совпадать'),
 }).required();
 
 
@@ -26,14 +28,16 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
     resolver: yupResolver(schema),
     defaultValues: {
       oldPassword: '',
-      password: '',
-      doublePassword: '',
+      newPassword: '',
+      reNewPassword: '',
     },
   });
 
-  const handleInfoSave = (data) => {
-    console.log('handleInfoSave', data);
-    //  TODO: сохранение с помощью api
+  const handleInfoSave = async (data) => {
+    const res = await userController.changePassword(data);
+    if (!res) {
+      throw new Error('Bad http request');
+    }
     onSave();
   }
 
@@ -63,8 +67,8 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
             id='profile-password'
             className='profile-info-editing__input'
             type='password'
-            errorMessage={errors.password?.message}
-            {...register('password')}
+            errorMessage={errors.newPassword?.message}
+            {...register('newPassword')}
           />
         </li>
         <li className='profile-info-editing__item'>
@@ -75,8 +79,8 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
             id='profile-double-password'
             className='profile-info-editing__input'
             type='password'
-            errorMessage={errors.doublePassword?.message}
-            {...register('doublePassword')}
+            errorMessage={errors.reNewPassword?.message}
+            {...register('reNewPassword')}
           />
         </li>
       </ul>

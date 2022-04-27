@@ -19,7 +19,7 @@ class ApiModule {
       data = null,
       headers?: HeadersInit,
   ) {
-    return fetch(`${this.baseUrl}${url}`, {
+    const requestInit: RequestInit = {
       method,
       mode: 'cors',
       cache: 'no-cache',
@@ -28,8 +28,13 @@ class ApiModule {
         'Content-Type': 'application/json',
         ...headers,
       },
-      body: JSON.stringify(data),
-    })
+    };
+
+    if (method === 'POST' || method === 'PUT') {
+      requestInit.body = JSON.stringify(data);
+    }
+
+    return fetch(`${this.baseUrl}${url}`, requestInit)
         .then((response) => {
           if (response.ok) {
             return response;

@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {authController} from '../../controllers/auth-controller';
+import {authController} from '../../controllers/authController';
 import Routes from 'Constants/Routes';
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
@@ -72,7 +72,7 @@ export default function Login() {
           />
           <Link
             className='login-form__signup-link'
-            to={Routes.SIGNUP}
+            to={Routes.REGISTRATION}
           >
             Зарегистрироваться
           </Link>
