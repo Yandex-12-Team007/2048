@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import DropDown, {DropDownItemType, IDropDownItem} from './';
 
-it('hello jest', () => {
+it('Dropdown with options', () => {
   const options : IDropDownItem[] = [
     {
       title: 'test link',
@@ -23,7 +23,3 @@ it('hello jest', () => {
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
-
-it('DropDown', () => {
-  expect(1 + 2).toBe(3);
-})

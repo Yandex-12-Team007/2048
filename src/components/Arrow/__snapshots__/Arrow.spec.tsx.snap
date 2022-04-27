@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arrow bottom 1`] = `
+<div
+  className="arrow arrow-bottom"
+>
+  <div
+    className="arrow__top"
+  />
+  <div
+    className="arrow__bottom"
+  />
+</div>
+`;
+
+exports[`Arrow left 1`] = `
+<div
+  className="arrow arrow-left"
+>
+  <div
+    className="arrow__top"
+  />
+  <div
+    className="arrow__bottom"
+  />
+</div>
+`;
+
+exports[`Arrow right 1`] = `
+<div
+  className="arrow arrow-right"
+>
+  <div
+    className="arrow__top"
+  />
+  <div
+    className="arrow__bottom"
+  />
+</div>
+`;
+
+exports[`Arrow top 1`] = `
+<div
+  className="arrow arrow-bottom"
+>
+  <div
+    className="arrow__top"
+  />
+  <div
+    className="arrow__bottom"
+  />
+</div>
+`;

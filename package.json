@@ -13,7 +13,7 @@
     "dev": "cross-env webpack-dev-server --env development --mode development --open",
     "start": "cross-env node index.ts",
     "prepare": "cross-env husky install",
-    "pre-commit": "cross-env eslint 'src/**/*.{ts,tsx}'"
+    "pre-commit": "cross-env eslint 'src/**/*.{ts,tsx}' && jest"
   },
   "repository": {
     "type": "git",
