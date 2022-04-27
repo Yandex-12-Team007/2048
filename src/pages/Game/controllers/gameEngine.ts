@@ -8,13 +8,6 @@ import {Direction, ICanMove, IMoveTile, INewTileScheme, ITile} from '../types';
 import gamePainter from './gamePainter';
 import {check, move} from './gameMatrixHelper';
 
-// const TEST_FIELD : number[][] = [
-//   [0, 16, 8, 4],
-//   [16, 8, 4, 8],
-//   [8, 4, 8, 4],
-//   [8, 4, 16, 16],
-// ];
-
 class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
@@ -40,10 +33,6 @@ class GameEngine {
       [Direction.DOWN]: true,
     };
   }
-
-  // private createTestFields() : ITile[][] {
-  //   return this.createTileListFromMatrix(TEST_FIELD);
-  // }
 
   private createTileListFromMatrix(matrix : number[][]) {
     const newTiles : ITile[][] = [];
