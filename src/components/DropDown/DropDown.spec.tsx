@@ -1,0 +1,29 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
+import DropDown, {DropDownItemType, IDropDownItem} from './';
+
+it('hello jest', () => {
+  const options : IDropDownItem[] = [
+    {
+      title: 'test link',
+      type: DropDownItemType.LINK,
+      link: '#',
+    },
+    {
+      title: 'test action',
+      type: DropDownItemType.BUTTON,
+      action: () => console.log('test'),
+    },
+  ];
+
+  const tree = renderer.create(
+      <DropDown options={options}>
+        <h2>Test</h2>
+      </DropDown>
+  ).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('DropDown', () => {
+  expect(1 + 2).toBe(3);
+})

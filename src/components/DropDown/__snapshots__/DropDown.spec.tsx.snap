@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hello jest 1`] = `
+<div
+  className="drop-down"
+>
+  <div
+    className="drop-down__label"
+    onClick={[Function]}
+  >
+    <h2>
+      Test
+    </h2>
+  </div>
+</div>
+`;
