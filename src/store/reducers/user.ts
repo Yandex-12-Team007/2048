@@ -12,7 +12,8 @@ interface IActionType extends Action {
   payload: LoadStatus | IUser;
 }
 
-export function userReducer(state = defaultState, action: IActionType): UserState {
+export function userReducer(state = defaultState, action: IActionType)
+  : UserState {
   switch (action.type) {
     case userActionTypes.SET_STATUS:
       return {

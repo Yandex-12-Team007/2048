@@ -54,10 +54,8 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     const file = current.files[0];
 
     userController.uploadProfileImg(file)
-        .then((res) => {
-
-        })
-        .catch((err) => {
+        .then(() => {})
+        .catch(() => {
           const updatedError = error;
           updatedError[ErrorType.QUERY] = true;
           setError(updatedError);

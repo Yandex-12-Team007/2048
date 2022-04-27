@@ -15,13 +15,15 @@ class GamePainter {
   constructor() {
     this.width = 500;
     this.boardPadding = this.width / (BOARD_SIZE + 1) / (BOARD_SIZE + 1);
-    this.cellWidth = (this.width - (BOARD_SIZE + 1) * this.boardPadding) / BOARD_SIZE;
+    this.cellWidth = (this.width - (BOARD_SIZE + 1) *
+      this.boardPadding) / BOARD_SIZE;
   }
 
   public setWidth(width : number) {
     this.width = width;
     this.boardPadding = this.width / (BOARD_SIZE + 1) / (BOARD_SIZE + 1);
-    this.cellWidth = (this.width - (BOARD_SIZE + 1) * this.boardPadding) / BOARD_SIZE;
+    this.cellWidth = (this.width - (BOARD_SIZE + 1) *
+      this.boardPadding) / BOARD_SIZE;
   }
 
   private calculateX(x) {
@@ -48,8 +50,20 @@ class GamePainter {
   ) {
     this.ctx.beginPath();
     this.ctx.moveTo(x + BOARD_BORDER_RADIUS, y);
-    this.ctx.arcTo(x + width, y, x + width, y + height, BOARD_BORDER_RADIUS);
-    this.ctx.arcTo(x + width, y + height, x, y + height, BOARD_BORDER_RADIUS);
+    this.ctx.arcTo(
+        x + width,
+        y,
+        x + width,
+        y + height,
+        BOARD_BORDER_RADIUS
+    );
+    this.ctx.arcTo(
+        x + width,
+        y + height,
+        x,
+        y + height,
+        BOARD_BORDER_RADIUS
+    );
     this.ctx.arcTo(x, y + height, x, y, BOARD_BORDER_RADIUS);
     this.ctx.arcTo(x, y, x + width, y, BOARD_BORDER_RADIUS);
     this.ctx.closePath();
@@ -86,7 +100,13 @@ class GamePainter {
         const x = this.boardPadding + (this.cellWidth + this.boardPadding) * j;
         const y = this.boardPadding + (this.cellWidth + this.boardPadding) * i;
 
-        this.renderRoundedSquare(x, y, this.cellWidth, this.cellWidth, CELL_GRID_COLOR);
+        this.renderRoundedSquare(
+            x,
+            y,
+            this.cellWidth,
+            this.cellWidth,
+            CELL_GRID_COLOR
+        );
       }
     }
   }
@@ -123,7 +143,7 @@ class GamePainter {
     })
 
     let stepIx = 1; const count = 8;
-    function step(timestamp) {
+    function step() {
       renderBoard();
       renderGrid();
       renderAnimatedTiles(moveList, stepIx, count);
@@ -162,7 +182,7 @@ class GamePainter {
     const renderNewTiles = this.renderNewTiles.bind(this);
 
     let stepIx = 1; const count = 5;
-    function step(timestamp) {
+    function step() {
       renderNewTiles(newTiles, stepIx, count);
 
       if (stepIx < count) {

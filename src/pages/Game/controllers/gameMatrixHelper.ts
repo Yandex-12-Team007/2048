@@ -80,7 +80,9 @@ function moving(
   const jDirection = jStart < jMax;
   const mainDirection = iStart !== 0 && iStart !== MATRIX_SIZE;
 
+  // eslint-disable-next-line max-len
   for (let i = iStart; iDirection ? i < iMax : i >= iMax; iDirection ? i++ : i--) {
+    // eslint-disable-next-line max-len
     for (let j = jStart; jDirection ? j < jMax : j >= jMax; jDirection ? j++ : j--) {
       if (matrix[i][j] !== 0) {
         const mainIndex = mainDirection ? i : j;
@@ -89,13 +91,26 @@ function moving(
           jDirection ? -1 : 1;
 
         let index = mainIndex + direction;
-        while ((index > 0 && index < MATRIX_SIZE - 1) && (mainDirection ? matrix[index][j] === 0 : matrix[i][index] === 0)) {
+        while (
+          (index > 0 && index < MATRIX_SIZE - 1) &&
+          (mainDirection ? matrix[index][j] === 0 : matrix[i][index] === 0)
+        ) {
           index += direction
         }
-        /* Крайний ряд по идее не трогаем, но нужно добавить анимацию стояния на месте =)))
-         * Для начала проверяем что крайний элемент не равен 0 */
+        /* Крайний ряд по идее не трогаем,
+        но нужно добавить анимацию стояния на месте =)))
+        Для начала проверяем что крайний элемент не равен 0 */
 
-        const res = swipe(matrix, i, j, index, mainDirection, direction, moveList);
+        const res = swipe(
+            matrix,
+            i,
+            j,
+            index,
+            mainDirection,
+            direction,
+            moveList
+        );
+
         matrix = res[0];
         moveList = res[1];
       }
@@ -213,7 +228,9 @@ function checkDirection(
   const jDirection = jStart < jMax;
   const mainDirection = iStart !== 0 && iStart !== MATRIX_SIZE;
 
+  // eslint-disable-next-line max-len
   for (let i = iStart; iDirection ? i < iMax : i >= iMax; iDirection ? i++ : i--) {
+    // eslint-disable-next-line max-len
     for (let j = jStart; jDirection ? j < jMax : j >= jMax; jDirection ? j++ : j--) {
       if (matrix[i][j] !== 0) {
         const mainIndex = mainDirection ? i : j;
