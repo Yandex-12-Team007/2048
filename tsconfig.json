@@ -29,6 +29,7 @@
       "Static/*": ["./src/static/*"],
       "Api/*": ["./src/api/*"],
       "Controllers/*": ["./src/controllers/*"]
+      "Store/*": ["./src/store/*"],
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },

@@ -26,6 +26,7 @@ module.exports = (env) => {
         'Static': path.resolve(__dirname, 'src/static'),
         'Api': path.resolve(__dirname, 'src/api'),
         'Controllers': path.resolve(__dirname, 'src/controllers'),
+        'Store': path.resolve(__dirname, 'src/store'),
       },
       extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
