@@ -57,9 +57,8 @@ function moving(
     rules : IMoveParams
 ) {
   const {iStart, iMax, jStart, jMax} = rules;
-  // @ts-ignore
-  let moveList : IMoveTile[] = matrix.reduce((acc, el, i) => {
-    const list = el.map((subEl, j) => {
+  let moveList : IMoveTile[] = matrix.reduce((acc: IMoveTile[], el, i) => {
+    const list : IMoveTile[] = el.map((subEl, j) => {
       return {
         oldPosition: {
           x: j,
@@ -73,7 +72,6 @@ function moving(
         },
       }
     }).filter((el) => el.oldPosition.value !== 0);
-    // @ts-ignore
     acc = acc.concat(list);
     return acc;
   }, []);
@@ -265,13 +263,3 @@ function checkSwipe(matrix, i, j, index, pos, direction) {
 
   return true;
 }
-
-
-// function drowMatrix(matrix : any[][]) {
-//   console.log('_________________');
-//   console.log(`i : | ${[0, 1, 2, 3].join(', ')} | <= j`);
-//   matrix.forEach((el, id) => {
-//     console.log(`${id} : [ ${el.join(', ')} ]`);
-//   })
-//   console.log('_________________');
-// }
