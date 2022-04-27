@@ -77,19 +77,7 @@ module.exports = (env) => {
         navigateFallback: 'index.html',
         runtimeCaching: [
           {
-            urlPattern: ({url}) => {
-              const routeList = [
-                '/',
-                '/game',
-                '/login',
-                '/registration',
-                '/leaderboard',
-                '/forum',
-                '/profile',
-                '/rules',
-              ]
-              return routeList.includes(url.pathname);
-            },
+            urlPattern: (options) => options.sameOrigin && options.request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'pages',
