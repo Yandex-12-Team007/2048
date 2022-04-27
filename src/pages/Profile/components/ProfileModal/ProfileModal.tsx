@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark} from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames';
@@ -31,7 +31,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
   const [isFileUpload, setIsFileUpload] = useState(false);
   const [error, setError] = useState(DEFAULT_ERROR_STATE);
 
-  function changeFile() {
+  const changeFile = useCallback(() => {
     if (avatar.current?.files?.length === 1) {
       setError(_.clone(DEFAULT_ERROR_STATE));
       setIsFileUpload(true);
@@ -41,9 +41,9 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     const updatedError = error;
     updatedError[ErrorType.VALID] = true;
     setError(updatedError);
-  }
+  }, [avatar.current]);
 
-  function uploadFile() {
+  const uploadFile = useCallback(() => {
     const {current} = avatar;
     if (!current?.files) {
       const updatedError = error;
@@ -62,11 +62,9 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
           updatedError[ErrorType.QUERY] = true;
           setError(updatedError);
         })
-  }
+  }, [avatar.current]);
 
-  function close() {
-    setIsOpen(false);
-  }
+  const close = useCallback(() => setIsOpen(false), []);
 
   const titleClass = classNames({
     'profile-modal__title': true,
@@ -81,6 +79,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     'profile-modal__label': true,
     'profile-modal__label_done': isFileUpload,
   });
+
   if (isFileUpload) {
     const {current} = avatar;
     if (!current || !current.files) {
