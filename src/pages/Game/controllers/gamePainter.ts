@@ -35,10 +35,6 @@ class GamePainter {
   public init(ctx: CanvasRenderingContext2D, width : number) {
     this.ctx = ctx;
     this.setWidth(width);
-    console.log('PAINTER INIT');
-    console.log(this.width);
-    console.log(this.boardPadding);
-    console.log(this.cellWidth);
     this.renderBoard();
     this.renderGrid();
   }

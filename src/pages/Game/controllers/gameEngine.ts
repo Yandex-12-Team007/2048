@@ -86,19 +86,15 @@ class GameEngine {
   }
 
   private updateGameState() {
-    console.log(this.moveList);
     this.updatedBoard();
     this.updateMaxResult();
     this.checkMove();
     if (this.checkLose()) {
       this.setGameStatus(GameState.LOSE);
     }
-
-    console.log(this.gameState);
   }
 
   private checkMove() {
-    console.log('checkMove');
     this.canMove = check(this.tileList);
   }
 
@@ -112,13 +108,11 @@ class GameEngine {
   }
 
   private updatedBoard() {
-    console.log('updatedBoard');
     gamePainter.animatedBoardUpdate(this.moveList, this.newList);
   }
 
   private moveCells = (event: KeyboardEvent) => {
     // Обнуляем список сдвигов
-    console.log('moveCells');
     this.moveList = [];
     this.newList = [];
 

@@ -45,7 +45,6 @@ const DIRECTION_RULE : Record<Direction, IMoveParams>= {
 // ];
 
 export function move(tileList : ITile[][], direction :Direction) {
-  console.log(`Helper Move direction : ${direction.toUpperCase()}`);
   return moving(tileToMatrix(tileList), DIRECTION_RULE[direction])
 }
 
@@ -78,7 +77,6 @@ function moving(
     acc = acc.concat(list);
     return acc;
   }, []);
-  drowMatrix(matrix);
 
   const iDirection = iStart < iMax;
   const jDirection = jStart < jMax;
@@ -96,7 +94,6 @@ function moving(
         while ((index > 0 && index < MATRIX_SIZE - 1) && (mainDirection ? matrix[index][j] === 0 : matrix[i][index] === 0)) {
           index += direction
         }
-        console.log(`'Ряд : ${i}, Столбец : ${j}, Значение : ${matrix[i][j]} Индекс : ${index}`)
         /* Крайний ряд по идее не трогаем, но нужно добавить анимацию стояния на месте =)))
          * Для начала проверяем что крайний элемент не равен 0 */
 
@@ -106,7 +103,6 @@ function moving(
       }
     }
   }
-  drowMatrix(matrix);
   return [matrix, moveList];
 }
 
@@ -193,7 +189,6 @@ function swap(matrix, moveList, i, j, swipedI, swipedJ, current, swiped) {
 
 
 export function check(tileList : ITile[][]) : ICanMove {
-  console.log('Check direction');
   const state = {
     [Direction.LEFT]: false,
     [Direction.RIGHT]: false,
@@ -272,11 +267,11 @@ function checkSwipe(matrix, i, j, index, pos, direction) {
 }
 
 
-function drowMatrix(matrix : any[][]) {
-  console.log('_________________');
-  console.log(`i : | ${[0, 1, 2, 3].join(', ')} | <= j`);
-  matrix.forEach((el, id) => {
-    console.log(`${id} : [ ${el.join(', ')} ]`);
-  })
-  console.log('_________________');
-}
+// function drowMatrix(matrix : any[][]) {
+//   console.log('_________________');
+//   console.log(`i : | ${[0, 1, 2, 3].join(', ')} | <= j`);
+//   matrix.forEach((el, id) => {
+//     console.log(`${id} : [ ${el.join(', ')} ]`);
+//   })
+//   console.log('_________________');
+// }
