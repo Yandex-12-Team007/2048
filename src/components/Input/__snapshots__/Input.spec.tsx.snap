@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<div
+  className="input-container"
+>
+  <label
+    className="input-container__label"
+    htmlFor="name"
+  >
+    label name
+  </label>
+  <input
+    className="input test_class"
+    id="name"
+    type="text"
+  />
+  <span
+    className="input__error-message test_error_class"
+  >
+    error message
+  </span>
+</div>
+`;
+
+exports[`Test Input check props 1`] = `
+<div
+  className="input-container"
+>
+  <label
+    className="input-container__label"
+    htmlFor="name"
+  >
+    label name
+  </label>
+  <input
+    className="input test_class"
+    id="name"
+    type="text"
+  />
+  <span
+    className="input__error-message test_error_class"
+  >
+    error message
+  </span>
+</div>
+`;
