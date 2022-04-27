@@ -27,8 +27,12 @@ export default function Game() {
     };
   }, []);
 
-  function restart() {
+  function gameRestart() {
     gameEngine.restart();
+  }
+
+  function gameContinue() {
+    gameEngine.continue();
   }
 
   return (
@@ -53,7 +57,11 @@ export default function Game() {
           />
         </div>
       </div>
-      <GameModal status={gameState} restart={restart}/>
+      <GameModal
+        status={gameState}
+        gameRestart={gameRestart}
+        gameContinue={gameContinue}
+      />
     </Layout>
   );
 }

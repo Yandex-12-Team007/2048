@@ -9,13 +9,12 @@ import gamePainter from './gamePainter';
 import {check, move} from './gameMatrixHelper';
 
 // const TEST_FIELD : number[][] = [
-//   [4, 8, 4, 0],
-//   [4, 8, 4, 8],
+//   [0, 16, 8, 4],
+//   [16, 8, 4, 8],
 //   [8, 4, 8, 4],
-//   [4, 8, 4, 8],
+//   [8, 4, 16, 16],
 // ];
 
-/* TODO: Нормальная проверка на возможность сдвига */
 class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
@@ -284,6 +283,11 @@ class GameEngine {
 
     // Выставляем статус начала игры
     this.setGameStatus(GameState.PLAY);
+  }
+
+  // Продолжаем игру после сбора плитки 2048
+  public continue() {
+    this.setGameStatus(GameState.AFTER_WIN);
   }
 
   public finish() {
