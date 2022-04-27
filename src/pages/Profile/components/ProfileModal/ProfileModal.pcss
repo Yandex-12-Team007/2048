@@ -1,0 +1,70 @@
+.profile-modal {
+  box-sizing: border-box;
+
+  &__title-wrapper {
+    width: 100%;
+    padding: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font: var(--title-font);
+
+    &_error {
+      color: var(--orange);
+    }
+  }
+
+  &__icon {
+    font-size: 24px;
+    color: var(--orange);
+  }
+
+  &__body-wrapper {
+    width: 100%;
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__file {
+    display: none;
+  }
+
+  &__label {
+    color : var(--light-orange);
+    text-decoration-line: underline;
+    text-align: center;
+    cursor: pointer;
+
+    &_done {
+      color: var(--second-text-color);
+    }
+  }
+
+  &__action-wrapper {
+    width: 100%;
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__action {
+    width: 160px;
+    font: var(--title-font);
+  }
+
+  &__error {
+    padding: 15px;
+    font: var(--default-font);
+    color: var(--orange);
+  }
+}
