@@ -13,6 +13,7 @@ import smallSize from 'Static/img/resize/toSmall.svg';
 import fullScreenSvg from 'Static/img/fullscreen/fullscreen.svg';
 
 import './Nav.pcss';
+import IRouteLink from 'Interface/IRouteLink';
 
 export interface INavLink {
   isSmall: boolean,
@@ -32,15 +33,14 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
 
   const resizeIcon = isSmall ? smallSize : fullSize;
 
-  // @ts-ignore
-  const nav: INavLink[] = Array.from(NAV).map((el) => {
-    // @ts-ignore
-    el.isSmall = isSmall;
-    // @ts-ignore
-    el.linkActive = false;
-    // @ts-ignore
-    el.action = null;
-    return el;
+  const nav: INavLink[] = Array.from(NAV).map((el: IRouteLink) => {
+    const navLink : INavLink = {
+      ...el,
+      isSmall: isSmall,
+      linkActive: false,
+      action: null,
+    }
+    return navLink;
   });
 
   const resize = {

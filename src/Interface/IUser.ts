@@ -10,6 +10,12 @@ export default interface IUser {
   password? : string
 }
 
+export interface IUserChangePassword {
+  'oldPassword': 'string',
+  'newPassword': 'string',
+  'reNewPassword'? : 'string'
+}
+
 export interface ILoginUserModel {
   login: string,
   password: string,

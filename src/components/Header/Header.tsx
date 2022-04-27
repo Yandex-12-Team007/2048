@@ -14,7 +14,7 @@ export interface IHeaderProps {
 }
 
 export default function Header({title = '', isSmall = false} : IHeaderProps) {
-  return <div className={'header'}>
+  return <header className={'header'}>
     <ErrorBoundary>
       <div
         className={
@@ -30,5 +30,5 @@ export default function Header({title = '', isSmall = false} : IHeaderProps) {
         <ProfileWidget />
       </div>
     </ErrorBoundary>
-  </div>
+  </header>
 }

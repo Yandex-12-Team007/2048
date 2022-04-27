@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {authController} from '../../controllers/authController';
+import {authController} from 'Controllers/authController';
 import Routes from 'Constants/Routes';
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
@@ -23,7 +23,8 @@ const schema = object({
   email: string().email('Укажите email').required('Укажите значение'),
   password: string().matches(
       /^(?=.*\d)(?=.*[A-Z]).{8,40}$/,
-      'Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и цифру',
+      'Пароль должен содержать от 8 до 40 символов, ' +
+    'хотя бы одну заглавную букву и цифру',
   ),
   phone: string().matches(phoneRegExp, 'Укажите значение'),
 }).required();
@@ -43,9 +44,14 @@ export default function Registration() {
 
   const history = useHistory();
 
-  const handleSignUp = (
-      {login, password, first_name, second_name, email, phone}: IRegistrationUserModel
-  ) => {
+  const handleSignUp = ({
+    login,
+    password,
+    first_name,
+    second_name,
+    email,
+    phone,
+  }: IRegistrationUserModel) => {
     authController.signUp({
       login,
       password,

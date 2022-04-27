@@ -27,7 +27,7 @@ export default function Layout({children, title = 'шаблон'}) {
     <DocumentMeta {...meta}>
       <div className={'container'}>
         <Header title={title} isSmall={isSmall} />
-        <div className={'content-wrapper'}>
+        <main className={'content-wrapper'}>
           <Sidebar
             isSmall={isSmall}
             contentRef={contentRef}
@@ -37,7 +37,7 @@ export default function Layout({children, title = 'шаблон'}) {
             {children}
           </div>
           <Footer/>
-        </div>
+        </main>
       </div>
     </DocumentMeta>
   </ErrorBoundary>

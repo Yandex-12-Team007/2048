@@ -6,6 +6,7 @@ import Layout from 'Components/Layout';
 import ProfileInfo from './components/ProfileInfo';
 import ProfileInfoEditing from './components/ProfileInfoEditing';
 import PasswordInfoEditing from './components/PasswordInfoEditing';
+import ProfileModal from './components/ProfileModal';
 
 import './Profile.pcss';
 
@@ -17,17 +18,20 @@ enum CurrentView {
 
 export default function Profile() {
   const [currentView, setCurrentView] = useState(CurrentView.PROFILE_INFO);
+  const [modalIsOpen, setModalIsOpen] = useState(true);
+
+  const avatarContainerClass = classNames({
+    'profile-container__avatar-container': true,
+    'profile-container__avatar-container--editing':
+      currentView === CurrentView.PROFILE_INFO,
+  })
 
   return (
     <Layout title={'Профиль'}>
       <div className='profile-container'>
         <img
-          className={
-            classNames(
-                'profile-container__avatar-container',
-                {'profile-container__avatar-container--editing': currentView === CurrentView.PROFILE_INFO},
-            )
-          }
+          className={avatarContainerClass}
+          onClick={() => setModalIsOpen(!modalIsOpen)}
           src=""
           alt=""
         />
@@ -53,6 +57,7 @@ export default function Profile() {
           />
         }
       </div>
+      <ProfileModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}/>
     </Layout>
   );
 }
