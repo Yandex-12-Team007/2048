@@ -8,6 +8,10 @@ export const isUserStatusFailedSelector = createSelector(
     },
 );
 
+export const userSelector = (state: IRootState) => {
+  return state.user.model;
+};
+
 export const userNameSelector = (state: IRootState) => {
   return state.user.model?.login || '';
 };

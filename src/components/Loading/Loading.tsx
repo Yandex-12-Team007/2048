@@ -6,6 +6,8 @@ import './Loading.pcss';
 
 export default function Loading() {
   return <div className={'loading'}>
-    <img className={'loading-icon'} src={loadingIcon} alt={'loading...'}/>
+    <div className={'loading__wrapper'}>
+      <img className={'loading__icon'} src={loadingIcon} alt={'loading...'}/>
+    </div>
   </div>
 }

@@ -23,8 +23,8 @@ export default function Header({title = '', isSmall = false} : IHeaderProps) {
       >
         <Logo size={isSmall ? LoginSize.SMALL : LoginSize.MEDIUM} />
       </div>
-      <div className={'header-title'}>
-        {title}
+      <div className={'header-title__wrapper'}>
+        <h1 className={'header-title'}>{title}</h1>
       </div>
       <div className={'header-profile'}>
         <ProfileWidget />

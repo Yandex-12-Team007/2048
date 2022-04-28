@@ -8,9 +8,12 @@ import Input from 'Components/Input/Input';
 
 import {userController} from 'Controllers/userController';
 
+import IUser, {Nullable} from 'Interface/IUser';
+
 import './PasswordInfoEditing.pcss';
 
 interface IPasswordInfoEditingProps {
+  user: Nullable<IUser>
   onSave: () => void;
 }
 
@@ -21,9 +24,8 @@ export const schema = object({
       .oneOf([ref('newPassword'), null], 'Пароли должны совпадать'),
 }).required();
 
-
 const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
-    {onSave}) => {
+    {user, onSave}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {

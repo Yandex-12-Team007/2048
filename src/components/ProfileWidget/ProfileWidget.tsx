@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {useHistory} from 'react-router-dom';
+import classNames from 'classnames';
+import {useSelector} from 'react-redux';
+
 import Arrow, {ArrowDirection} from 'Components/Arrow';
 import DropDown, {IDropDownItem, DropDownItemType} from 'Components/DropDown';
 
 import Routes from 'Constants/Routes';
+import {userAvatarSelector, userNameSelector} from 'Store/selectors';
+
+import {authController} from '../../controllers/authController';
+import {resourseLink} from 'Utils/uploadHelper';
 
 import './ProfileWidget.pcss';
-import {useSelector} from 'react-redux';
-import {userAvatarSelector, userNameSelector} from 'Store/selectors';
-import classNames from 'classnames';
-import {authController} from '../../controllers/authController';
 
 export default function ProfileWidget() {
+  const blockRef = useRef(null);
+
   const userName = useSelector(userNameSelector);
   const userAvatar = useSelector(userAvatarSelector);
 
@@ -34,12 +39,12 @@ export default function ProfileWidget() {
     },
   ];
 
-  return <div className={'profile-widget'}>
+  return <div className={'profile-widget'} ref={blockRef}>
     {
       userAvatar.length > 0 ?
       <img
         className={'profile-widget__image'}
-        src={userAvatar}
+        src={resourseLink(userAvatar)}
         alt={'аватар'}
       /> :
       <div

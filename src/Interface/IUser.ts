@@ -10,6 +10,8 @@ export default interface IUser {
   password? : string
 }
 
+export type Nullable<T> = T | null;
+
 export interface IUserChangePassword {
   'oldPassword': 'string',
   'newPassword': 'string',
