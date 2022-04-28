@@ -17,7 +17,7 @@ it('Dropdown with options', () => {
   ];
 
   const tree = renderer.create(
-      <DropDown options={options}>
+      <DropDown options={options} >
         <h2>Test</h2>
       </DropDown>
   ).toJSON();

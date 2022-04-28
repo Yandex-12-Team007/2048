@@ -9,8 +9,10 @@ import Input from 'Components/Input/Input';
 import {userController} from 'Controllers/userController';
 
 import './ProfileInfoEditing.pcss';
+import IUser, {Nullable} from 'Interface/IUser';
 
 interface IProfileInfoEditingProps {
+  user: Nullable<IUser>
   onSave: () => void;
 }
 
@@ -26,16 +28,16 @@ const schema = object({
 }).required();
 
 const ProfileInfoEditing:
-  FunctionComponent<IProfileInfoEditingProps> = ({onSave}) => {
+  FunctionComponent<IProfileInfoEditingProps> = ({user, onSave}) => {
     const {handleSubmit, formState: {errors}, register} = useForm({
       resolver: yupResolver(schema),
       defaultValues: {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        first_name: 'Иван',
-        second_name: 'Иванов',
-        display_name: 'Ivanya',
-        phone: '79099673030',
+        email: user?.email ?? '',
+        login: user?.login ?? '',
+        first_name: user?.first_name ?? '',
+        second_name: user?.second_name ?? '',
+        display_name: user?.display_name ?? '',
+        phone: user?.phone ?? '',
       },
     });
 

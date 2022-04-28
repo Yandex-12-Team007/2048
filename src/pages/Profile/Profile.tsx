@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 
 import classNames from 'classnames';
 
@@ -7,6 +8,12 @@ import ProfileInfo from './components/ProfileInfo';
 import ProfileInfoEditing from './components/ProfileInfoEditing';
 import PasswordInfoEditing from './components/PasswordInfoEditing';
 import ProfileModal from './components/ProfileModal';
+
+import {userSelector, userAvatarSelector} from 'Store/selectors';
+
+import {resourseLink} from 'Utils/uploadHelper';
+
+import defaultAvatar from 'Static/img/defaultAvatar.png';
 
 import './Profile.pcss';
 
@@ -17,8 +24,11 @@ enum CurrentView {
 }
 
 export default function Profile() {
+  const user = useSelector(userSelector);
+  const userAvatar = useSelector(userAvatarSelector);
+
   const [currentView, setCurrentView] = useState(CurrentView.PROFILE_INFO);
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const avatarContainerClass = classNames({
     'profile-container__avatar-container': true,
@@ -29,15 +39,23 @@ export default function Profile() {
   return (
     <Layout title={'Профиль'}>
       <div className='profile-container'>
-        <img
-          className={avatarContainerClass}
-          onClick={() => setModalIsOpen(!modalIsOpen)}
-          src=""
-          alt=""
-        />
+        <div className={'profile-container__avatar'}>
+          <img
+            className={avatarContainerClass}
+            src={userAvatar.length > 0 ? resourseLink(userAvatar) : defaultAvatar}
+            alt="аватар"
+          />
+          <div
+            className={'profile-container__avatar-change'}
+            onClick={() => setModalIsOpen(!modalIsOpen)}
+          >
+            Поменять аватар
+          </div>
+        </div>
         {
           currentView === CurrentView.PROFILE_INFO &&
           <ProfileInfo
+            user={user}
             onInfoChange={() => setCurrentView(CurrentView.PROFILE_EDITING)}
             onPasswordChange={
               () => setCurrentView(CurrentView.PROFILE_PASSWORD_EDITING)
@@ -47,12 +65,14 @@ export default function Profile() {
         {
           currentView === CurrentView.PROFILE_EDITING &&
           <ProfileInfoEditing
+            user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
           />
         }
         {
           currentView === CurrentView.PROFILE_PASSWORD_EDITING &&
           <PasswordInfoEditing
+            user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
           />
         }
