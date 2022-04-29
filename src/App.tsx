@@ -19,7 +19,7 @@ import {isUserStatusFailedSelector} from './store/selectors';
 const Login = lazy(() => import('Pages/Login'));
 const Registration = lazy(() => import('Pages/Registration'));
 const Game = lazy(() => import('Pages/Game'));
-const Forum = lazy(() => import('Pages/Forum'));
+const Forum = lazy(() => import('pages/Forum/Forum'));
 const Profile = lazy(() => import('Pages/Profile'));
 const Rules = lazy(() => import('Pages/Rules'));
 const Leaderboard = lazy(() => import('Pages/Leaderboard'));
