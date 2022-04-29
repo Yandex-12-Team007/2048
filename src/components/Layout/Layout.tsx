@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, FunctionComponent, ReactNode} from 'react';
 import DocumentMeta from 'react-document-meta';
 
 import Header from 'Components/Header';
@@ -8,8 +8,19 @@ import Sidebar from 'Components/Sidebar';
 
 import './Layout.pcss';
 import {getPageTitle} from 'Utils/getTitle';
+import classNames from 'classnames';
 
-export default function Layout({children, title = 'шаблон'}) {
+interface ILayoutProps {
+  title: string;
+  contentClassName?: string;
+  children?: ReactNode;
+}
+
+const Layout: FunctionComponent<ILayoutProps> = ({
+  contentClassName,
+  children,
+  title,
+}) => {
   /** TODO: Позже будем использовать хуки на размер окна и состояния из Redux */
   const [isSmall, setSmall] = useState(true);
   const contentRef = useRef(null);
@@ -33,7 +44,10 @@ export default function Layout({children, title = 'шаблон'}) {
             contentRef={contentRef}
             changeSize={changeSize}
           />
-          <div className={'content'} ref={contentRef}>
+          <div
+            className={classNames('content', contentClassName)}
+            ref={contentRef}
+          >
             {children}
           </div>
           <Footer/>
@@ -42,3 +56,5 @@ export default function Layout({children, title = 'шаблон'}) {
     </DocumentMeta>
   </ErrorBoundary>
 }
+
+export default Layout;

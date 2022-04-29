@@ -15,6 +15,7 @@ import './App.pcss';
 import {getUser} from './store/actionCreators/user';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
+import ForumTheme from 'Pages/ForumTheme';
 
 const DELAY_TIME = 300;
 
@@ -117,6 +118,12 @@ function App() {
               exact
               path={Routes.HOME}
               component={Home}
+              loggedIn={!isUserStatusFailed}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.FORUM_THEME}
+              component={ForumTheme}
               loggedIn={!isUserStatusFailed}
             />
             <Route component={Error}/>
