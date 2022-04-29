@@ -23,9 +23,6 @@ export default function GameModal({
   gameRestart,
   gameContinue,
 } : GameModalProps) {
-  console.log('GameModal');
-  console.log(status);
-
   const isLose = status === GameState.LOSE;
   const isOpen = status === GameState.LOSE || status === GameState.WIN;
 

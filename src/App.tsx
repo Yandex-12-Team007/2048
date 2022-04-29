@@ -1,12 +1,12 @@
-import React, {Suspense, lazy, useEffect} from 'react';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import React, {lazy, Suspense, useEffect} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
-import Loading from './components/Loading';
+import Loading from 'Components/Loading';
 
 import Routes from 'Constants/Routes';
 
@@ -16,14 +16,62 @@ import {getUser} from './store/actionCreators/user';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
 
-const Login = lazy(() => import('Pages/Login'));
-const Registration = lazy(() => import('Pages/Registration'));
-const Game = lazy(() => import('Pages/Game'));
-const Forum = lazy(() => import('pages/Forum/Forum'));
-const Profile = lazy(() => import('Pages/Profile'));
-const Rules = lazy(() => import('Pages/Rules'));
-const Leaderboard = lazy(() => import('Pages/Leaderboard'));
-const Error = lazy(() => import('Pages/Error'));
+const DELAY_TIME = 300;
+
+const Login = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Login')), DELAY_TIME);
+  });
+});
+const Registration = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Registration')), DELAY_TIME);
+  });
+});
+const Game = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Game')), DELAY_TIME);
+  });
+});
+const Home = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Home')), DELAY_TIME);
+  });
+});
+const Forum = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Forum')), DELAY_TIME);
+  });
+});
+const Profile = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Profile')), DELAY_TIME);
+  });
+});
+const Rules = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Rules')), DELAY_TIME);
+  });
+});
+const Leaderboard = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Leaderboard')), DELAY_TIME);
+  });
+});
+const Error = lazy(() => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    setTimeout(() => resolve(import('Pages/Error')), DELAY_TIME);
+  });
+});
 
 function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
@@ -65,9 +113,12 @@ function App() {
               component={Profile}
               loggedIn={!isUserStatusFailed}
             />
-            <Route exact path='/'>
-              <Redirect to={Routes.GAME} />
-            </Route>
+            <PrivateRoute
+              exact
+              path={Routes.HOME}
+              component={Home}
+              loggedIn={!isUserStatusFailed}
+            />
             <Route component={Error}/>
           </Switch>
         </Suspense>

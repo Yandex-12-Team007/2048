@@ -3,35 +3,46 @@
   width: 510px;
   padding: 60px 0;
 
-  &__avatar-container {
+  &__avatar {
     position: relative;
-    display: block;
-    margin: 0 auto;
-    border-radius: 50%;
+    margin: 0 auto 20px;
     width: 130px;
     height: 130px;
-    margin-bottom: 20px;
-  }
 
-  &__avatar-container--editing {
-    cursor: pointer;
+    &-container {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
 
-    &::before {
-      display: none;
-      content: "Поменять аватар";
+    &-container--editing {
+      position: relative;
+    }
+
+    &-change {
+      opacity: 0;
       position: absolute;
       top: 0;
-      bottom: 0;
-      margin: auto;
-      height: fit-content;
+      left: 0;
       width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      color: var(--white);
-      font-size: 13px;
+      font: var(--default-font);
+      font-size: 18px;
+      color: #fff;
+      transition: opacity 0.3s, visibility 0s linear 0.3s;
+      background: rgb(124 116 107 / 75%);
+      border-radius: 50%;
+      cursor: pointer;
     }
-  }
 
-  &__avatar-container:hover::before {
-    display: block;
+    &:hover .profile-container__avatar-change {
+      opacity: 1;
+    }
   }
 }

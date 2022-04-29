@@ -1,7 +1,9 @@
+const API_URL = 'https://ya-praktikum.tech/api/v2';
+
 class ApiModule {
   private baseUrl: string;
 
-  constructor(url = 'https://ya-praktikum.tech/api/v2') {
+  constructor(url = API_URL) {
     this.baseUrl = url;
   }
 
@@ -46,5 +48,7 @@ class ApiModule {
 }
 
 const apiModule = new ApiModule();
+
+export {API_URL};
 
 export default apiModule;

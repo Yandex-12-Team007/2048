@@ -7,7 +7,7 @@ import './DropDown.pcss';
 
 export default function DropDown({children, options} : {
   children,
-  options : IDropDownItem[]
+  options : IDropDownItem[],
 }) {
   const [isOpen, setOpen] = useState(false);
 

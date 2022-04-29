@@ -1,8 +1,4 @@
-import {
-  BOARD_SIZE,
-  GameState,
-  KeyCodes,
-} from 'Constants/game';
+import {BOARD_SIZE, GameState, KeyCodes} from 'Constants/game';
 import {Direction, ICanMove, IMoveTile, INewTileScheme, ITile} from '../types';
 
 import gamePainter from './gamePainter';
@@ -93,6 +89,7 @@ class GameEngine {
         return false;
       }
     }
+    this.removeListeners();
     return true;
   }
 
@@ -101,35 +98,35 @@ class GameEngine {
   }
 
   private moveCells = (event: KeyboardEvent) => {
-    // Обнуляем список сдвигов
-    this.moveList = [];
-    this.newList = [];
-
     let res;
-
+    // TODO: сделать проверку на движение отдельно я полагаю
     switch (event.code) {
       case KeyCodes.LEFT:
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
+        this.clearTilesAndMove();
         res = move(this.tileList, Direction.LEFT)
         break;
       case KeyCodes.RIGHT:
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
+        this.clearTilesAndMove();
         res = move(this.tileList, Direction.RIGHT)
         break;
       case KeyCodes.DOWN:
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
+        this.clearTilesAndMove();
         res = move(this.tileList, Direction.DOWN)
         break;
       case KeyCodes.UP:
         if (!this.canMove[Direction.UP]) {
           return;
         }
+        this.clearTilesAndMove();
         res = move(this.tileList, Direction.UP)
         break;
     }
@@ -142,6 +139,12 @@ class GameEngine {
     this.addTile();
 
     this.updateGameState();
+  }
+
+  private clearTilesAndMove() {
+    // Обнуляем список сдвигов
+    this.moveList = [];
+    this.newList = [];
   }
 
   private addTile() {
@@ -211,7 +214,7 @@ class GameEngine {
     }, 0)
     this.updateScoreCallback(currentScore);
     // Обновляем рекорд
-    if (currentScore > this.record) {
+    if (currentScore >= this.record) {
       this.record = currentScore;
       this.updateRecordCallback(this.record);
     }
@@ -240,12 +243,12 @@ class GameEngine {
     this.updateScoreCallback = updateScoreCallback;
     this.updateRecordCallback = updateRecordCallback;
     this.updateGameStateCallback = updateGameStateCallback;
-    this.record = record;
 
-    this.tileList = this.createEmptyTiles();
-    // this.tileList = this.createTestFields();
-    // Добавляем ячейки
-    this.addStartTiles();
+    if (this.gameState === GameState.INIT) {
+      this.record = record;
+      this.tileList = this.createEmptyTiles();
+      this.addStartTiles();
+    }
     // Рисуем
     this.updateGameState();
     // Выставляем статус начала игры
@@ -266,6 +269,8 @@ class GameEngine {
 
     // Выставляем статус начала игры
     this.setGameStatus(GameState.PLAY);
+    // Вешаем обработчик
+    this.addListeners();
   }
 
   // Продолжаем игру после сбора плитки 2048
