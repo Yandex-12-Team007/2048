@@ -1,6 +1,6 @@
 import Layout from 'Components/Layout';
 import React from 'react';
-import ForumCard from './Components/ForumCard';
+import ForumCard from './components/ForumCard';
 import './ForumTheme.pcss';
 
 const answerList = [
