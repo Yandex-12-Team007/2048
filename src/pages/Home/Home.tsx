@@ -20,7 +20,7 @@ export default function Home() {
           <h3 className={'home__subtitle'}>Выберите раздел :</h3>
         </div>
         <div className={'home__link-wrapper'}>
-          {Nav.map((el) => <div className={'home__link-block'}>
+          {Nav.map((el) => <div className={'home__link-block'} key={el.link}>
             <Link className={'home__link'} to={el.link}>{el.title}</Link>
           </div>)}
         </div>

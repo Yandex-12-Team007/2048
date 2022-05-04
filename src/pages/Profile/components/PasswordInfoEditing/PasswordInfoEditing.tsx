@@ -11,6 +11,7 @@ import {userController} from 'Controllers/userController';
 import IUser, {Nullable} from 'Interface/IUser';
 
 import './PasswordInfoEditing.pcss';
+import {useDispatch} from 'react-redux';
 
 interface IPasswordInfoEditingProps {
   user: Nullable<IUser>
@@ -36,12 +37,16 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
     },
   });
 
+  const dispatch = useDispatch();
+
   const handleInfoSave = async (data) => {
-    const res = await userController.changePassword(data);
-    if (!res) {
-      throw new Error('Bad http request');
+    const res = await userController.changePassword(dispatch, data);
+
+    if (res === 'OK') {
+      onSave();
     }
-    onSave();
+
+    // TODO: Тут обработку ошибок
   }
 
   return (

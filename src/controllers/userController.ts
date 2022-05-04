@@ -7,7 +7,7 @@ class UserController {
     return dispatch(updateUser(model));
   }
 
-  public changePassword(model : IUserChangePassword) {
+  public changePassword(dispatch, model : IUserChangePassword) {
     return userApi.changePassword(model);
   }
 

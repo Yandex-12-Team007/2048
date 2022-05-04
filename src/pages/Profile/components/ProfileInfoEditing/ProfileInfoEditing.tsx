@@ -115,7 +115,6 @@ const ProfileInfoEditing:
             className='profile-info-editing__submit-button'
             text='Сохранить'
             type='submit'
-            onClick={handleInfoSave}
           />
           <Button
             className={'profile-info-editing__back-button'}
