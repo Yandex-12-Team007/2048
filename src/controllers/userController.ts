@@ -1,9 +1,10 @@
 import {userApi} from 'Api/userApi';
+import {updateUser} from 'Store/actionCreators/user';
 import IUser, {IUserChangePassword} from 'Interface/IUser';
 
 class UserController {
-  public changeProfile(model : IUser) {
-    return userApi.changeProfile(model);
+  public changeProfile(dispatch, model : IUser) {
+    return dispatch(updateUser(model));
   }
 
   public changePassword(model : IUserChangePassword) {

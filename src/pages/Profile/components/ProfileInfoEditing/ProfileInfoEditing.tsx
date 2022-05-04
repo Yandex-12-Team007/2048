@@ -10,6 +10,7 @@ import {userController} from 'Controllers/userController';
 
 import './ProfileInfoEditing.pcss';
 import IUser, {Nullable} from 'Interface/IUser';
+import {useDispatch} from 'react-redux';
 
 interface IProfileInfoEditingProps {
   user: Nullable<IUser>
@@ -46,12 +47,10 @@ const ProfileInfoEditing:
       },
     });
 
+    const dispatch = useDispatch();
 
     const handleInfoSave = async (data) => {
-      const res = await userController.changeProfile(data);
-      if (!res) {
-        throw new Error('Bad http request');
-      }
+      await userController.changeProfile(dispatch, data);
       onSave();
     }
 

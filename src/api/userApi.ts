@@ -10,7 +10,8 @@ enum UserSubpath {
 
 class UserApi {
   public changeProfile(model : IUser) {
-    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PROFILE, model);
+    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PROFILE, model)
+        .then((response) => response.json());
   }
 
   public changePassword(model : IUserChangePassword) {
