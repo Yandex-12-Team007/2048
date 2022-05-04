@@ -15,6 +15,7 @@ import './PasswordInfoEditing.pcss';
 interface IPasswordInfoEditingProps {
   user: Nullable<IUser>
   onSave: () => void;
+  back: () => void;
 }
 
 export const schema = object({
@@ -25,7 +26,7 @@ export const schema = object({
 }).required();
 
 const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
-    {user, onSave}) => {
+    {user, onSave, back}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -86,11 +87,19 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
           />
         </li>
       </ul>
-      <Button
-        className='profile-info-editing__submit-button'
-        text='Сохранить'
-        type='submit'
-      />
+      <div className='profile-info-editing__action-wrapper'>
+        <Button
+          className='profile-info-editing__submit-button'
+          text='Сохранить'
+          type='submit'
+        />
+        <Button
+          className={'profile-info-editing__back-button'}
+          text={'Назад'}
+          type={'button'}
+          onClick={back}
+        />
+      </div>
     </form>
   )
 }

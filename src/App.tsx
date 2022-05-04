@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useEffect} from 'react';
+import React, {ComponentType, lazy, Suspense, useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
@@ -9,6 +9,7 @@ import ErrorBoundary from 'Components/ErrorBoundary';
 import Loading from 'Components/Loading';
 
 import Routes from 'Constants/Routes';
+import Error from 'Pages/Error';
 
 import './App.pcss';
 
@@ -18,60 +19,26 @@ import {isUserStatusFailedSelector} from './store/selectors';
 
 const DELAY_TIME = 300;
 
-const Login = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Login')), DELAY_TIME);
-  });
-});
-const Registration = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Registration')), DELAY_TIME);
-  });
-});
-const Game = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Game')), DELAY_TIME);
-  });
-});
-const Home = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Home')), DELAY_TIME);
-  });
-});
-const Forum = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Forum')), DELAY_TIME);
-  });
-});
-const Profile = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Profile')), DELAY_TIME);
-  });
-});
-const Rules = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Rules')), DELAY_TIME);
-  });
-});
-const Leaderboard = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Leaderboard')), DELAY_TIME);
-  });
-});
-const Error = lazy(() => {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    setTimeout(() => resolve(import('Pages/Error')), DELAY_TIME);
-  });
-});
+export const lazyLoading = <T extends ComponentType<any>>(
+  factory: () => Promise<{ default: T }>,
+  minLoadTimeMs = DELAY_TIME
+) => {
+  return lazy(() =>
+    Promise.all([
+      factory(),
+      new Promise((resolve) => setTimeout(resolve, minLoadTimeMs))])
+        .then(([moduleExports]) => moduleExports)
+  );
+}
+
+const Login = lazyLoading(() => import('Pages/Login'));
+const Registration = lazyLoading(() => import('Pages/Registration'));
+const Game = lazyLoading(() => import('Pages/Game'));
+const Home = lazyLoading(() => import('Pages/Home'));
+const Forum = lazyLoading(() => import('Pages/Forum'));
+const Profile = lazyLoading(() => import('Pages/Profile'));
+const Rules = lazyLoading(() => import('Pages/Rules'));
+const Leaderboard = lazyLoading(() => import('Pages/Leaderboard'));
 
 function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)

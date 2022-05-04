@@ -30,6 +30,10 @@ export default function Profile() {
   const [currentView, setCurrentView] = useState(CurrentView.PROFILE_INFO);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  function back() {
+    setCurrentView(CurrentView.PROFILE_INFO);
+  }
+
   const avatarContainerClass = classNames({
     'profile-container__avatar-container': true,
     'profile-container__avatar-container--editing':
@@ -67,6 +71,7 @@ export default function Profile() {
           <ProfileInfoEditing
             user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
+            back={back}
           />
         }
         {
@@ -74,6 +79,7 @@ export default function Profile() {
           <PasswordInfoEditing
             user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
+            back={back}
           />
         }
       </div>

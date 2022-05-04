@@ -8,7 +8,7 @@ import Nav from 'Constants/Nav';
 import './Home.pcss';
 
 export default function Home() {
-  return <Layout title={'2048'}>
+  return <Layout title={'Главная'}>
     <div className={'home'}>
       <div className={'home__wrapper'}>
         <div className={'home__title-wrapper'}>
