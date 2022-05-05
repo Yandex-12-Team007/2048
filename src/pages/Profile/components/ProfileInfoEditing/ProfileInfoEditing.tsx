@@ -10,10 +10,12 @@ import {userController} from 'Controllers/userController';
 
 import './ProfileInfoEditing.pcss';
 import IUser, {Nullable} from 'Interface/IUser';
+import {useDispatch} from 'react-redux';
 
 interface IProfileInfoEditingProps {
   user: Nullable<IUser>
-  onSave: () => void;
+  onSave: () => void
+  back: () => void
 }
 
 const schema = object({
@@ -28,7 +30,11 @@ const schema = object({
 }).required();
 
 const ProfileInfoEditing:
-  FunctionComponent<IProfileInfoEditingProps> = ({user, onSave}) => {
+  FunctionComponent<IProfileInfoEditingProps> = ({
+    user,
+    onSave,
+    back,
+  }) => {
     const {handleSubmit, formState: {errors}, register} = useForm({
       resolver: yupResolver(schema),
       defaultValues: {
@@ -41,12 +47,10 @@ const ProfileInfoEditing:
       },
     });
 
+    const dispatch = useDispatch();
 
     const handleInfoSave = async (data) => {
-      const res = await userController.changeProfile(data);
-      if (!res) {
-        throw new Error('Bad http request');
-      }
+      await userController.changeProfile(dispatch, data);
       onSave();
     }
 
@@ -106,12 +110,19 @@ const ProfileInfoEditing:
             />
           </li>
         </ul>
-        <Button
-          className='profile-info-editing__submit-button'
-          text='Сохранить'
-          type='submit'
-          onClick={handleInfoSave}
-        />
+        <div className='profile-info-editing__action-wrapper'>
+          <Button
+            className='profile-info-editing__submit-button'
+            text='Сохранить'
+            type='submit'
+          />
+          <Button
+            className={'profile-info-editing__back-button'}
+            text={'Назад'}
+            type={'button'}
+            onClick={back}
+          />
+        </div>
       </form>
     )
   }

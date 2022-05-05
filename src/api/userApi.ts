@@ -10,11 +10,14 @@ enum UserSubpath {
 
 class UserApi {
   public changeProfile(model : IUser) {
-    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PROFILE, model);
+    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PROFILE, model)
+        .then((response) => response.json())
   }
 
   public changePassword(model : IUserChangePassword) {
-    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PASSWORD, model);
+    return apiModule.put(USER_PATH + UserSubpath.CHANGE_PASSWORD, model)
+        .then((response) => response.text())
+        .catch((err) => err)
   }
 
   public uploadProfileImg(formData : FormData) {
