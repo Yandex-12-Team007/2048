@@ -4,6 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transition: 1s;
 
   &__wrapper {
     max-width: 640px;
@@ -14,4 +16,9 @@
     width: 100%;
     height: 100%;
   }
+}
+
+.loading_active {
+  opacity: 1;
+  transition: 1s;
 }

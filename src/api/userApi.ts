@@ -29,7 +29,8 @@ class UserApi {
       },
       method: 'put',
       body: formData,
-    });
+    })
+        .then((res) => res.json());
   }
 }
 
