@@ -1,5 +1,5 @@
 import {userApi} from 'Api/userApi';
-import {updateUser} from 'Store/actionCreators/user';
+import {updateAvatar, updateUser} from 'Store/actionCreators/user';
 import IUser, {IUserChangePassword} from 'Interface/IUser';
 
 class UserController {
@@ -11,10 +11,10 @@ class UserController {
     return userApi.changePassword(model);
   }
 
-  public uploadProfileImg(file : File) {
+  public async uploadProfileImg(dispatch, file : File) {
     const formData = new FormData();
     formData.append('avatar', file);
-    return userApi.uploadProfileImg(formData);
+    return dispatch(updateAvatar(formData));
   }
 }
 

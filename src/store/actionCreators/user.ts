@@ -1,7 +1,7 @@
 import {authApi} from 'Api/auth-api';
 import {userApi} from 'Api/userApi';
 import {Dispatch} from 'redux';
-import IUser, {IUserChangePassword} from 'Interface/IUser';
+import IUser from 'Interface/IUser';
 
 export const userActionTypes = {
   SET_STATUS: 'SET_STATUS',
@@ -26,8 +26,9 @@ export const updateUser = (model : IUser) => (dispatch : Dispatch) => {
   })
 }
 
-export const updatePassword = (model : IUserChangePassword) => (dispatch : Dispatch) => {
-  return userApi.changePassword(model).then((response) => {
+export const updateAvatar = (formData : FormData) => (dispatch : Dispatch) => {
+  return userApi.uploadProfileImg(formData).then((response) => {
+    dispatch({type: userActionTypes.SET_USER, payload: response});
     dispatch({type: userActionTypes.SET_STATUS, payload: 'success'});
   }).catch(() => {
     dispatch({type: userActionTypes.SET_STATUS, payload: 'failed'});

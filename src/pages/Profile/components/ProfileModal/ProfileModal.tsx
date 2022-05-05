@@ -9,6 +9,7 @@ import Button from 'Components/Button/Button';
 import {userController} from 'Controllers/userController';
 
 import './ProfileModal.pcss';
+import {useDispatch} from 'react-redux';
 
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const _ = require('lodash');
@@ -30,6 +31,8 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
   const avatar = useRef<HTMLInputElement>(null);
   const [isFileUpload, setIsFileUpload] = useState(false);
   const [error, setError] = useState(DEFAULT_ERROR_STATE);
+
+  const dispatch = useDispatch();
 
   const changeFile = useCallback(() => {
     if (avatar.current?.files?.length === 1) {
@@ -53,7 +56,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     }
     const file = current.files[0];
 
-    userController.uploadProfileImg(file)
+    userController.uploadProfileImg(dispatch, file)
         .then(() => {
           close();
         })
