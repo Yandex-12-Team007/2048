@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 const path = require('path');
 
 const PORT = 3000;
@@ -10,7 +10,7 @@ const host = process.env.IP || HOST;
 
 app.use(express.static('dist'));
 
-//Стартовая страница
+// Стартовая страница
 app.get('*', function(req, res) {
   res.status(200).sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });

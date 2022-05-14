@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useDispatch, useSelector} from 'react-redux';
+
 import Layout from 'Components/Layout';
 import GameModal from './components/GameModal';
 
@@ -7,16 +9,23 @@ import {GameState} from 'Constants/game';
 
 import gameEngine from './controllers/gameEngine';
 
+import {leaderboardSelector, userSelector} from 'Store/selectors';
+import {leaderboardController} from 'Controllers/leaderboardController';
+
 import './Game.pcss';
 
 export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  const user = useSelector(userSelector)
+  const leaderboard = useSelector(leaderboardSelector)
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState(GameState.INIT);
   const [width] = useState(450);
-  const [record, setRecord] = useState(0);
+  const [record, setRecord] = useState(leaderboard.score);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
@@ -34,6 +43,17 @@ export default function Game() {
   function gameContinue() {
     gameEngine.continue();
   }
+
+  // Обновляем рекорд при смене статуса игры
+  useEffect(() => {
+    if (GameState.WIN || GameState.LOSE) {
+      leaderboardController.addRecord(
+          dispatch,
+          score,
+          user
+      );
+    }
+  }, [gameState, record])
 
   return (
     <Layout title={'Игра'}>
