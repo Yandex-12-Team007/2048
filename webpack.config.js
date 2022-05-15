@@ -72,17 +72,5 @@ module.exports = (env) => {
         minify: true,
       }),
     ],
-    devServer: {
-      client: {
-        progress: true,
-      },
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
-      historyApiFallback: true,
-      hot: true,
-      compress: true,
-      port: 9000,
-    },
   }
 };

@@ -1,6 +1,6 @@
 /** API React v 18 > */
 import React from 'react';
-import * as ReactDOMClient from 'react-dom/client';
+import {hydrateRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import App from './App';
 import {configureStore} from './store';
@@ -13,8 +13,8 @@ if (!container) {
 
 const store = configureStore();
 
-const root = ReactDOMClient.createRoot(container);
-root.render(
+hydrateRoot(
+    container,
     <Provider store={store}>
       <App />
     </Provider>
