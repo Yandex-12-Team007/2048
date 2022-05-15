@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 const Dotenv = require('dotenv-webpack');
 
@@ -71,6 +72,7 @@ module.exports = (env) => {
         },
         minify: true,
       }),
+      new NodePolyfillPlugin(),
     ],
     devServer: {
       client: {
