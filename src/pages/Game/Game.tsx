@@ -44,16 +44,16 @@ export default function Game() {
     gameEngine.continue();
   }
 
-  // Обновляем рекорд при смене статуса игры
+  // Обновляем рекорд при превышении текущего
   useEffect(() => {
-    if (GameState.WIN || GameState.LOSE) {
+    if (leaderboard.score < score) {
       leaderboardController.addRecord(
           dispatch,
           score,
           user
       );
     }
-  }, [gameState, record])
+  }, [record])
 
   return (
     <Layout title={'Игра'}>

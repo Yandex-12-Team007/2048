@@ -89,6 +89,7 @@ function App() {
     leaderboardController.getRecords(dispatch)
   }, []);
 
+  // Уязвимое место, иногда рекорды приходят после пользователя
   useEffect(() => {
     console.log('user effect');
     if (user && leaderboard.score === 0 && !isUserStatusFailed) {
