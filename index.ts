@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const middleware = require('webpack-dev-middleware');
 
+// TODO: Тут сделать обработку из строки
 const ENV = 'development';
 
 const webpackConfig = require('./webpack.config')(ENV);
