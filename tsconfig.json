@@ -34,6 +34,7 @@
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
   "include": [
+    "index.ts",
     "src",
     "typings/**/*.d.ts",
     "./node_modules/@types"

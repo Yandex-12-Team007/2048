@@ -7,6 +7,8 @@ const ENV = 'development';
 const webpackConfig = require('./webpack.config')(ENV);
 const compiler = webpack(webpackConfig);
 
+const ssrMiddleware = require('./src/server/middleware/server-render-middleware');
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -23,11 +25,15 @@ app.use(
     })
 );
 
+app.use(ssrMiddleware);
+
+/*
 app.use(express.static('dist'));
 
 // Стартовая страница
 app.get('*', function(req, res) {
   res.status(200).sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
+*/
 
 app.listen(port, host, () => console.log(`Server started on port ${port}`));
