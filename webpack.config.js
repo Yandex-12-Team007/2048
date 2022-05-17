@@ -2,15 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const Dotenv = require('dotenv-webpack');
-
-// const TITLE = require(path.resolve(__dirname, 'src/constants/title.ts'));
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = (env) => {
-  const envType = env.development ? 'development' : 'production';
+  const envType = env.mode ? 'development' : 'production';
 
   return {
     entry: './src/index.tsx',
+    mode: envType,
     output: {
       publicPath: ASSET_PATH,
       filename: '[name].bundle.js',
@@ -72,17 +71,5 @@ module.exports = (env) => {
         minify: true,
       }),
     ],
-    devServer: {
-      client: {
-        progress: true,
-      },
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
-      historyApiFallback: true,
-      hot: true,
-      compress: true,
-      port: 9000,
-    },
   }
 };
