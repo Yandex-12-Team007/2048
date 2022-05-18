@@ -2,9 +2,14 @@ import path from 'path';
 import {Configuration} from 'webpack';
 
 import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 
+import LoadablePlugin from '@loadable/webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+/*
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+*/
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -12,14 +17,15 @@ const envType = IS_DEV ? 'development' : 'production';
 
 const config: Configuration = {
   name: 'client',
-  entry: './src/index.tsx',
+  entry: path.join(SRC_DIR, 'client'),
   mode: envType,
   output: {
-    publicPath: ASSET_PATH,
     filename: '[name].bundle.js',
     path: DIST_DIR,
+    publicPath: ASSET_PATH,
   },
   resolve: {
+    modules: ['src', 'node_modules'],
     alias: {
       '~': path.resolve(SRC_DIR),
       'Pages': path.resolve(SRC_DIR, 'pages'),
@@ -36,9 +42,9 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
+        use: {loader: 'babel-loader'},
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -54,8 +60,9 @@ const config: Configuration = {
       },
       {
         test: /\.pcss$/i,
+        sideEffects: true,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
         ],
@@ -63,16 +70,10 @@ const config: Configuration = {
     ],
   },
   plugins: [
-    new Dotenv({
-      path: `./.env.${envType}`,
-    }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      favicon: path.resolve(SRC_DIR, 'static/img/favicon.ico'),
-      meta: {},
-      minify: true,
-    }),
+    new MiniCssExtractPlugin({filename: '[name].css'}),
+    new LoadablePlugin() as { apply(...args: any[]): void; },
   ],
+  devtool: 'source-map',
 }
 
 export default config;

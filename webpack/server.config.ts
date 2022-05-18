@@ -3,7 +3,7 @@ import {Configuration} from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 
 import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -38,9 +38,9 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
+        use: {loader: 'babel-loader'},
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -48,7 +48,7 @@ const config: Configuration = {
       },
       {
         test: /\.svg$/,
-        loader: 'null-loader',
+        loader: 'svg-inline-loader',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -61,17 +61,10 @@ const config: Configuration = {
       },
     ],
   },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      favicon: path.resolve(SRC_DIR, 'static/img/favicon.ico'),
-      meta: {},
-      minify: true,
-    }),
-  ],
-
-  externals: [nodeExternals({allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i]})],
+  devtool: 'source-map',
+  plugins: [],
+  externals: ['@loadable/component', nodeExternals({allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i]})],
+  optimization: {nodeEnv: false},
 }
 
 export default config;
