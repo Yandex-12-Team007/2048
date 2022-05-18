@@ -34,7 +34,6 @@ function getHtml(reactHtml: string, reduxState = {}) {
         </head>
         <body>
             <div id="mount">${reactHtml}</div>
-            <script src="/main.js"></script>
         </body>
         </html>
     `;

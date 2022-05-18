@@ -33,13 +33,18 @@
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "include": [
-    "index.ts",
+    "webpack.config.ts",
     "src",
     "typings/**/*.d.ts",
     "./node_modules/@types"
   ],
   "exclude": [
     "**/*.js"
-  ]
+  ],
 }
