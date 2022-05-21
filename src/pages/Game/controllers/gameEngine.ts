@@ -77,6 +77,8 @@ class GameEngine {
     if (this.checkLose()) {
       this.setGameStatus(GameState.LOSE);
     }
+    const audio = new Audio('./audio/moving_sound.mp3');
+    audio.play();
   }
 
   private checkMove() {

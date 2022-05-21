@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const Dotenv = require('dotenv-webpack');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
@@ -69,6 +70,11 @@ module.exports = (env) => {
 
         },
         minify: true,
+      }),
+      new CopyPlugin({
+        patterns: [
+          {from: './src/static/audio/**.mp3', to: 'audio/[name][ext]'},
+        ],
       }),
     ],
   }
