@@ -7,6 +7,13 @@ import App from './App';
 import {loadableReady} from '@loadable/component';
 
 import {configureStore} from './store';
+import {IRootState} from './Interface/IRootState';
+
+declare global {
+  interface Window {
+      __INITIAL_STATE__?: IRootState;
+  }
+}
 
 const container = document.getElementById('root');
 
@@ -14,7 +21,10 @@ if (!container) {
   throw new Error('Can\'t find root !');
 }
 
-const store = configureStore();
+const initialState = window.__INITIAL_STATE__;
+delete window.__INITIAL_STATE__;
+
+const store = configureStore(initialState);
 
 loadableReady(() => {
   hydrateRoot(

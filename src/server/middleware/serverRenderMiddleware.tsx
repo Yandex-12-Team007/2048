@@ -8,13 +8,15 @@ import {StaticRouterContext} from 'react-router';
 import {ChunkExtractor} from '@loadable/server';
 import App from '../../App';
 import path from 'path';
+import {getInitialState, IRootState} from '../../Interface/IRootState';
+import {renderObject} from 'Utils/renderObject';
 
 // В этой middleware мы формируем первичное состояние приложения на стороне сервера
 // Попробуйте её подебажить, чтобы лучше разобраться, как она работает
 export default function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
   const context: StaticRouterContext = {};
-  const store = configureStore();
+  const store = configureStore(getInitialState());
 
   const statsFile = path.resolve('./dist/loadable-stats.json');
   const chunkExtractor = new ChunkExtractor({statsFile});
@@ -28,8 +30,8 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
   );
 
   const reactHtml = renderToString(jsx);
+  const reduxState = store.getState();
 
-  // const reduxState = store.getState();
 
   if (context.url) {
     res.redirect(context.url);
@@ -38,10 +40,10 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
 
   res
       .status(context.statusCode || 200)
-      .send(getHtml(reactHtml, chunkExtractor));
+      .send(getHtml(reactHtml, reduxState, chunkExtractor));
 }
 
-function getHtml(reactHtml: string, chunkExtractor: ChunkExtractor) {
+function getHtml(reactHtml: string, reduxState: IRootState, chunkExtractor: ChunkExtractor) {
   const scriptTags = chunkExtractor.getScriptTags();
   const linkTags = chunkExtractor.getLinkTags();
   const styleTags = chunkExtractor.getStyleTags();
@@ -66,6 +68,9 @@ function getHtml(reactHtml: string, chunkExtractor: ChunkExtractor) {
     You need to enable JavaScript to run this app.
 </noscript>
   <div id="root">${reactHtml}</div>
+  <script>
+    window.__INITIAL_STATE__ = ${renderObject(reduxState)}
+  </script>
   ${scriptTags}
 </body>
 </html>
