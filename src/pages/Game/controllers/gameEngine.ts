@@ -81,11 +81,10 @@ class GameEngine {
     if (this.checkLose()) {
       this.setGameStatus(GameState.LOSE);
     }
-    this.playAudio();
   }
 
   private playAudio = () => {
-    if (localStorage.getItem('isAudioEnabled') === 'true') {
+    if (this.isSoundEnabled) {
       this.audioFile.play();
     }
   }
@@ -116,6 +115,7 @@ class GameEngine {
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.LEFT)
         break;
@@ -123,6 +123,7 @@ class GameEngine {
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.RIGHT)
         break;
@@ -130,6 +131,7 @@ class GameEngine {
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.DOWN)
         break;
@@ -137,6 +139,7 @@ class GameEngine {
         if (!this.canMove[Direction.UP]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.UP)
         break;

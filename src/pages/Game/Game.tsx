@@ -8,7 +8,7 @@ import {GameState} from 'Constants/game';
 import gameEngine from './controllers/gameEngine';
 
 import './Game.pcss';
-import {SoundButton} from 'components/SoundButton/SoundButton';
+import {SoundButton} from 'Components/SoundButton/SoundButton';
 
 export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -43,7 +43,10 @@ export default function Game() {
   return (
     <Layout title={'Игра'}>
       <div className="game-container">
-        <SoundButton onStateChange={setSoundState} />
+        <SoundButton
+          className="game-container__sound-button"
+          onStateChange={setSoundState}
+        />
         <div className={'game-info'}>
           <div className="game-score">
             <p className="game-score__caption">Счет</p>
