@@ -10,7 +10,7 @@ import Routes from 'Constants/Routes';
 import {userAvatarSelector, userNameSelector} from 'Store/selectors';
 
 import {authController} from '../../controllers/authController';
-import {resourseLink} from 'Utils/uploadHelper';
+import {resourceLink} from 'Utils/uploadHelper';
 
 import './ProfileWidget.pcss';
 
@@ -44,7 +44,7 @@ export default function ProfileWidget() {
       userAvatar.length > 0 ?
       <img
         className={'profile-widget__image'}
-        src={resourseLink(userAvatar)}
+        src={resourceLink(userAvatar)}
         alt={'аватар'}
       /> :
       <div

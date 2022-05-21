@@ -1,0 +1,30 @@
+.forum-card {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  background-color: var(--second-bg);
+  border-radius: 5px;
+  color: var(--main-text-color);
+
+  &__user-info,
+  &__message {
+    padding: 15px;
+  }
+
+  &__user-info {
+    width: 100px;
+    text-align: center;
+  }
+
+  &__user-avatar {
+    min-width: 80px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+
+    &--empty {
+      background-color: var(--light-gray);
+    }
+  }
+}
