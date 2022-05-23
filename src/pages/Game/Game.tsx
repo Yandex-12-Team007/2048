@@ -32,7 +32,7 @@ export default function Game() {
   useEffect(() => {
     console.log('useEffect');
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
-    gameEngine.init(ctx, width, record, setScore, setGameState);
+    gameEngine.init(ctx, width, setScore, setGameState);
 
     // @ts-ignore
     dispatch(setScoreByUser(user));
