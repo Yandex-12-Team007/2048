@@ -13,8 +13,6 @@ class GameEngine {
   private canMove: ICanMove;
   private isSoundEnabled: boolean;
 
-  private audioFile = new Audio('./audio/moving_sound.mp3');
-
   private updateScoreCallback!: (score: number) => void;
   private updateRecordCallback!: (score: number) => void;
   private updateGameStateCallback!: (score: number) => void;
@@ -85,7 +83,10 @@ class GameEngine {
 
   private playAudio = () => {
     if (this.isSoundEnabled) {
-      this.audioFile.play();
+      const audio = new Audio('./audio/moving_sound.mp3');
+      audio.oncanplaythrough = () => {
+        audio.play();
+      };
     }
   }
 
