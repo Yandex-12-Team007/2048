@@ -27,7 +27,17 @@ export default function Game() {
   const [width] = useState(450);
 
   const dispatch = useDispatch();
-  const record = leaderboard.score;
+  // Берем рекорд из хранилища
+  let record = leaderboard.score;
+  // Если счет больше - фиксим баг с последним обновлением
+  if (score > record) {
+    record = score;
+    // @ts-ignore
+    dispatch(updateScore({
+      score: score,
+      user: user,
+    }));
+  }
 
   useEffect(() => {
     console.log('useEffect');
@@ -41,17 +51,6 @@ export default function Game() {
       gameEngine.finish();
     };
   }, []);
-
-  useEffect(() => {
-    console.log('useEffect score|record');
-    if (leaderboard.score < score) {
-      // @ts-ignore
-      dispatch(updateScore({
-        score: score,
-        user: user,
-      }));
-    }
-  }, [score])
 
   function gameRestart() {
     gameEngine.restart();
