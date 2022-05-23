@@ -4,8 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 
-import {leaderboardController} from 'Controllers/leaderboardController';
-
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
 import Loading from 'Components/Loading';
@@ -15,11 +13,9 @@ import Routes from 'Constants/Routes';
 import './App.pcss';
 
 import {getUser} from './store/actionCreators/user';
+import {getLeaderboard} from './store/actionCreators/leaderboard';
 import {IRootState} from 'Interface/IRootState';
-import {
-  isUserStatusFailedSelector, leaderboardSelector,
-  userSelector,
-} from './store/selectors';
+import {isUserStatusFailedSelector} from './store/selectors';
 
 const DELAY_TIME = 300;
 
@@ -80,22 +76,12 @@ const Error = lazy(() => {
 
 function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
-  const user = useSelector(userSelector);
-  const leaderboard = useSelector(leaderboardSelector);
 
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   useEffect(() => {
     dispatch(getUser());
-    leaderboardController.getRecords(dispatch)
+    dispatch(getLeaderboard());
   }, []);
-
-  // Уязвимое место, иногда рекорды приходят после пользователя
-  useEffect(() => {
-    console.log('user effect');
-    if (user && leaderboard.score === 0 && !isUserStatusFailed) {
-      leaderboardController.getScoreFromUser(dispatch, user);
-    }
-  }, [user, isUserStatusFailed])
 
   return <ErrorBoundary>
     <div className={'app'}>

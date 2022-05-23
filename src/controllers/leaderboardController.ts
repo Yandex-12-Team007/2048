@@ -1,14 +1,16 @@
+/*
 import {leaderboardApi} from 'Api/leaderboardApi';
 import {ILeaderboardData} from 'Interface/ILeaderboard';
 import {
   setScore,
-  setLeaderboard,
   updateScore,
   setScoreByUser,
 } from 'Store/actionCreators/leaderboard'
 import IUser, {Nullable} from 'Interface/IUser';
+*/
 
 class LeaderboardController {
+  /*
   public async addRecord(dispatch, score : number, user : Nullable<IUser>) {
     const model : ILeaderboardData = {
       score: score,
@@ -17,9 +19,8 @@ class LeaderboardController {
 
     const res = await leaderboardApi.addRecord(model)
         .then((data) => data.ok);
-    /* Если все ок - обнавляем Redux */
+
     if (res) {
-      dispatch(setScore(model.score));
       dispatch(updateScore(model));
     }
 
@@ -44,6 +45,7 @@ class LeaderboardController {
       dispatch(setScoreByUser(user))
     }
   }
+   */
 }
 
 export const leaderboardController = new LeaderboardController();

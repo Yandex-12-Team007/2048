@@ -10,11 +10,13 @@ import {GameState} from 'Constants/game';
 import gameEngine from './controllers/gameEngine';
 
 import {leaderboardSelector, userSelector} from 'Store/selectors';
-import {leaderboardController} from 'Controllers/leaderboardController';
+import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 
 import './Game.pcss';
 
 export default function Game() {
+  console.log('Game');
+
   const ref = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -23,18 +25,33 @@ export default function Game() {
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState(GameState.INIT);
   const [width] = useState(450);
-  const [record, setRecord] = useState(leaderboard.score);
 
   const dispatch = useDispatch();
+  const record = leaderboard.score;
 
   useEffect(() => {
+    console.log('useEffect');
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
-    gameEngine.init(ctx, width, record, setScore, setRecord, setGameState);
+    gameEngine.init(ctx, width, record, setScore, setGameState);
+
+    // @ts-ignore
+    dispatch(setScoreByUser(user));
 
     return () => {
       gameEngine.finish();
     };
   }, []);
+
+  useEffect(() => {
+    console.log('useEffect score|record');
+    if (leaderboard.score < score) {
+      // @ts-ignore
+      dispatch(updateScore({
+        score: score,
+        user: user,
+      }));
+    }
+  }, [score])
 
   function gameRestart() {
     gameEngine.restart();
@@ -43,17 +60,6 @@ export default function Game() {
   function gameContinue() {
     gameEngine.continue();
   }
-
-  // Обновляем рекорд при превышении текущего
-  useEffect(() => {
-    if (leaderboard.score < score) {
-      leaderboardController.addRecord(
-          dispatch,
-          score,
-          user
-      );
-    }
-  }, [record])
 
   return (
     <Layout title={'Игра'}>

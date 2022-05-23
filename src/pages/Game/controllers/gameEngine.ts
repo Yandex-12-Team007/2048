@@ -13,7 +13,6 @@ class GameEngine {
   private canMove: ICanMove;
 
   private updateScoreCallback!: (score: number) => void;
-  private updateRecordCallback!: (score: number) => void;
   private updateGameStateCallback!: (score: number) => void;
 
   constructor() {
@@ -216,7 +215,6 @@ class GameEngine {
     // Обновляем рекорд
     if (currentScore >= this.record) {
       this.record = currentScore;
-      this.updateRecordCallback(this.record);
     }
     // Если игра в стадии Play - проверяем на 2048
     // eslint-disable-next-line max-len
@@ -236,12 +234,10 @@ class GameEngine {
       width: number,
       record = 0,
       updateScoreCallback: (score: number) => void,
-      updateRecordCallback: (score: number) => void,
       updateGameStateCallback: (score: number) => void,
   ) {
     gamePainter.init(ctx, width);
     this.updateScoreCallback = updateScoreCallback;
-    this.updateRecordCallback = updateRecordCallback;
     this.updateGameStateCallback = updateGameStateCallback;
 
     if (this.gameState === GameState.INIT) {
