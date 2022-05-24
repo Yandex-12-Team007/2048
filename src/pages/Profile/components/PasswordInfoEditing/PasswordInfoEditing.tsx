@@ -11,10 +11,12 @@ import {userController} from 'Controllers/userController';
 import IUser, {Nullable} from 'Interface/IUser';
 
 import './PasswordInfoEditing.pcss';
+import {useDispatch} from 'react-redux';
 
 interface IPasswordInfoEditingProps {
   user: Nullable<IUser>
   onSave: () => void;
+  back: () => void;
 }
 
 export const schema = object({
@@ -25,7 +27,7 @@ export const schema = object({
 }).required();
 
 const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
-    {user, onSave}) => {
+    {user, onSave, back}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -35,12 +37,16 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
     },
   });
 
+  const dispatch = useDispatch();
+
   const handleInfoSave = async (data) => {
-    const res = await userController.changePassword(data);
-    if (!res) {
-      throw new Error('Bad http request');
+    const res = await userController.changePassword(dispatch, data);
+
+    if (res === 'OK') {
+      onSave();
     }
-    onSave();
+
+    // TODO: Тут обработку ошибок
   }
 
   return (
@@ -86,11 +92,19 @@ const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
           />
         </li>
       </ul>
-      <Button
-        className='profile-info-editing__submit-button'
-        text='Сохранить'
-        type='submit'
-      />
+      <div className='profile-info-editing__action-wrapper'>
+        <Button
+          className='profile-info-editing__submit-button'
+          text='Сохранить'
+          type='submit'
+        />
+        <Button
+          className={'profile-info-editing__back-button'}
+          text={'Назад'}
+          type={'button'}
+          onClick={back}
+        />
+      </div>
     </form>
   )
 }

@@ -16,6 +16,7 @@ import './App.pcss';
 import {getUser} from './store/actionCreators/user';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
+import ForumTheme from 'Pages/ForumTheme';
 
 const Login = loadable(() => import('Pages/Login'));
 const Registration = loadable(() => import('Pages/Registration'));

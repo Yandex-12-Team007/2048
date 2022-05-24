@@ -11,7 +11,7 @@ import ProfileModal from './components/ProfileModal';
 
 import {userSelector, userAvatarSelector} from 'Store/selectors';
 
-import {resourseLink} from 'Utils/uploadHelper';
+import {resourceLink} from 'Utils/uploadHelper';
 
 import defaultAvatar from 'Static/img/defaultAvatar.png';
 
@@ -30,6 +30,10 @@ export default function Profile() {
   const [currentView, setCurrentView] = useState(CurrentView.PROFILE_INFO);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  function back() {
+    setCurrentView(CurrentView.PROFILE_INFO);
+  }
+
   const avatarContainerClass = classNames({
     'profile-container__avatar-container': true,
     'profile-container__avatar-container--editing':
@@ -42,7 +46,7 @@ export default function Profile() {
         <div className={'profile-container__avatar'}>
           <img
             className={avatarContainerClass}
-            src={userAvatar.length > 0 ? resourseLink(userAvatar) : defaultAvatar}
+            src={userAvatar.length > 0 ? resourceLink(userAvatar) : defaultAvatar}
             alt="аватар"
           />
           <div
@@ -67,6 +71,7 @@ export default function Profile() {
           <ProfileInfoEditing
             user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
+            back={back}
           />
         }
         {
@@ -74,6 +79,7 @@ export default function Profile() {
           <PasswordInfoEditing
             user={user}
             onSave={() => setCurrentView(CurrentView.PROFILE_INFO)}
+            back={back}
           />
         }
       </div>
