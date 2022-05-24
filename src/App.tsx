@@ -1,5 +1,5 @@
-import React, {ComponentType, lazy, Suspense, useEffect} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
@@ -7,12 +7,13 @@ import queryString from 'query-string';
 
 import {authController} from 'Controllers/authController';
 
+import loadable from '@loadable/component';
+
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
-import Loading from 'Components/Loading';
+// import Loading from 'Components/Loading';
 
 import Routes from 'Constants/Routes';
-import Error from 'Pages/Error';
 
 import './App.pcss';
 
@@ -20,27 +21,17 @@ import {getUser} from './store/actionCreators/user';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
 
-const DELAY_TIME = 300;
-export const lazyLoading = <T extends ComponentType<any>>(
-  factory: () => Promise<{ default: T }>,
-  minLoadTimeMs = DELAY_TIME
-) => {
-  return lazy(() =>
-    Promise.all([
-      factory(),
-      new Promise((resolve) => setTimeout(resolve, minLoadTimeMs))])
-        .then(([moduleExports]) => moduleExports)
-  );
-}
 
-const Login = lazyLoading(() => import('Pages/Login'));
-const Registration = lazyLoading(() => import('Pages/Registration'));
-const Game = lazyLoading(() => import('Pages/Game'));
-const Home = lazyLoading(() => import('Pages/Home'));
-const Forum = lazyLoading(() => import('Pages/Forum'));
-const Profile = lazyLoading(() => import('Pages/Profile'));
-const Rules = lazyLoading(() => import('Pages/Rules'));
-const Leaderboard = lazyLoading(() => import('Pages/Leaderboard'));
+const Login = loadable(() => import('Pages/Login'));
+const Registration = loadable(() => import('Pages/Registration'));
+const Game = loadable(() => import('Pages/Game'));
+const Home = loadable(() => import('Pages/Home'));
+const Forum = loadable(() => import('Pages/Forum'));
+const Profile = loadable(() => import('Pages/Profile'));
+const Rules = loadable(() => import('Pages/Rules'));
+const Leaderboard = loadable(() => import('Pages/Leaderboard'));
+const ForumTheme = loadable(() => import('Pages/ForumTheme'));
+const Error = loadable(() => import('Pages/Error'));
 
 function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
@@ -63,46 +54,48 @@ function App() {
 
   return <ErrorBoundary>
     <div className={'app'}>
-      <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-          <Switch>
-            <Route exact path={Routes.LOGIN} component={Login}/>
-            <Route exact path={Routes.REGISTRATION} component={Registration}/>
-            <PrivateRoute
-              exact
-              path={Routes.GAME}
-              component={Game}
-              loggedIn={!isUserStatusFailed}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.FORUM}
-              component={Forum}
-              loggedIn={!isUserStatusFailed}
-            />
-            <Route exact path={Routes.RULES} component={Rules}/>
-            <PrivateRoute
-              exact
-              path={Routes.LEADERBOARD}
-              component={Leaderboard}
-              loggedIn={!isUserStatusFailed}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.PROFILE}
-              component={Profile}
-              loggedIn={!isUserStatusFailed}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.HOME}
-              component={Home}
-              loggedIn={!isUserStatusFailed}
-            />
-            <Route component={Error}/>
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
+      <Switch>
+        <Route exact path={Routes.LOGIN} component={Login}/>
+        <Route exact path={Routes.REGISTRATION} component={Registration}/>
+        <PrivateRoute
+          exact
+          path={Routes.GAME}
+          component={Game}
+          loggedIn={!isUserStatusFailed}
+        />
+        <PrivateRoute
+          exact
+          path={Routes.FORUM}
+          component={Forum}
+          loggedIn={!isUserStatusFailed}
+        />
+        <Route exact path={Routes.RULES} component={Rules}/>
+        <PrivateRoute
+          exact
+          path={Routes.LEADERBOARD}
+          component={Leaderboard}
+          loggedIn={!isUserStatusFailed}
+        />
+        <PrivateRoute
+          exact
+          path={Routes.PROFILE}
+          component={Profile}
+          loggedIn={!isUserStatusFailed}
+        />
+        <PrivateRoute
+          exact
+          path={Routes.HOME}
+          component={Home}
+          loggedIn={!isUserStatusFailed}
+        />
+        <PrivateRoute
+          exact
+          path={Routes.FORUM_THEME}
+          component={ForumTheme}
+          loggedIn={!isUserStatusFailed}
+        />
+        <Route component={Error}/>
+      </Switch>
     </div>
   </ErrorBoundary>
 }

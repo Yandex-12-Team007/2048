@@ -1,12 +1,26 @@
 import {composeWithDevTools} from '@redux-devtools/extension';
-import {applyMiddleware, createStore} from 'redux';
+import {IRootState} from 'Interface/IRootState';
+import {applyMiddleware, createStore, compose} from 'redux';
 import thunk from 'redux-thunk'
 import rootReducer from './reducers';
 
-export function configureStore() {
+export const isServer = !(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
+
+function getComposeEnhancers() {
+  return process.env.NODE_ENV !== 'production' && !isServer ? composeWithDevTools : compose;
+}
+
+export function configureStore(initialState?: IRootState) {
+  const composeEnhancers = getComposeEnhancers();
   const store = createStore(
       rootReducer,
-      composeWithDevTools(applyMiddleware(thunk),
+      initialState,
+      composeEnhancers(applyMiddleware(thunk),
       ));
+
   return store;
 }

@@ -10,7 +10,7 @@ import DropDown, {IDropDownItem, DropDownItemType} from 'Components/DropDown';
 
 import {authController} from 'Controllers/authController';
 
-import {resourseLink} from 'Utils/uploadHelper';
+import {resourceLink} from 'Utils/uploadHelper';
 
 import {userAvatarSelector, userNameSelector} from 'Store/selectors';
 import {logout} from 'Store/actionCreators/user';
@@ -53,7 +53,7 @@ export default function ProfileWidget() {
       userAvatar.length > 0 ?
       <img
         className={'profile-widget__image'}
-        src={resourseLink(userAvatar)}
+        src={resourceLink(userAvatar)}
         alt={'аватар'}
       /> :
       <div
