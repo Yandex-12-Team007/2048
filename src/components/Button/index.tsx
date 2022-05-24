@@ -1,5 +1,5 @@
-import Button, {ButtonAppearance, IButtonProps} from './Button';
+import Button, {ButtonAppearance} from './Button';
 
-export {ButtonAppearance, IButtonProps}
+export {ButtonAppearance}
 
 export default Button;

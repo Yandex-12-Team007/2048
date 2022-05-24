@@ -18,3 +18,10 @@ export interface IRootState {
   user: UserState,
   leaderboard : LeaderboardState
 }
+
+export const getInitialState = (): IRootState => ({
+  user: {
+    model: null,
+    status: 'pending',
+  },
+});

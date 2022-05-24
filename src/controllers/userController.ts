@@ -1,19 +1,20 @@
 import {userApi} from 'Api/userApi';
+import {updateAvatar, updateUser} from 'Store/actionCreators/user';
 import IUser, {IUserChangePassword} from 'Interface/IUser';
 
 class UserController {
-  public changeProfile(model : IUser) {
-    return userApi.changeProfile(model);
+  public changeProfile(dispatch, model : IUser) {
+    return dispatch(updateUser(model));
   }
 
-  public changePassword(model : IUserChangePassword) {
+  public changePassword(dispatch, model : IUserChangePassword) {
     return userApi.changePassword(model);
   }
 
-  public uploadProfileImg(file : File) {
+  public async uploadProfileImg(dispatch, file : File) {
     const formData = new FormData();
     formData.append('avatar', file);
-    return userApi.uploadProfileImg(formData);
+    return dispatch(updateAvatar(formData));
   }
 }
 

@@ -33,12 +33,19 @@
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "es6"
+    }
+  },
   "include": [
+    "webpack.config.ts",
     "src",
     "typings/**/*.d.ts",
     "./node_modules/@types"
   ],
   "exclude": [
     "**/*.js"
-  ]
+  ],
 }
