@@ -16,7 +16,6 @@ function getComposeEnhancers() {
 
 export function configureStore(initialState?: IRootState) {
   const composeEnhancers = getComposeEnhancers();
-  console.log(composeEnhancers, isServer);
   const store = createStore(
       rootReducer,
       initialState,
