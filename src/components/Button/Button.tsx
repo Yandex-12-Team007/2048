@@ -7,7 +7,7 @@ export enum ButtonAppearance {
   TEXT,
 }
 
-export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   appearance?: ButtonAppearance;
   className?: string;

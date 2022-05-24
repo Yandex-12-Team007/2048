@@ -12,7 +12,7 @@ const LOSE_CONTENT = 'В следующий раз точно получится
 const WIN_CONTENT = 'УРА ПОБЕДА ! Если хотите поразить всех своим рекордом' +
   'нажмите продолжить и собирайте кубики дальше !'
 
-export interface GameModalProps {
+interface GameModalProps {
   status : GameState
   gameRestart : () => void
   gameContinue : () => void
