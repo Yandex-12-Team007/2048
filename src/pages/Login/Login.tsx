@@ -88,8 +88,8 @@ export default function Login() {
             Зарегистрироваться
           </Link>
         </div>
-        <button onClick={authController.Oauth}>Oauth</button>
       </form>
+      <button onClick={authController.Oauth}>Oauth</button>
     </LoginLayout>
   )
 }

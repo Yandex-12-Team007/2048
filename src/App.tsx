@@ -3,6 +3,9 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
+import queryString from 'query-string';
+
+import {authController} from 'Controllers/authController';
 
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
@@ -18,7 +21,6 @@ import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
 
 const DELAY_TIME = 300;
-
 export const lazyLoading = <T extends ComponentType<any>>(
   factory: () => Promise<{ default: T }>,
   minLoadTimeMs = DELAY_TIME
@@ -42,8 +44,15 @@ const Leaderboard = lazyLoading(() => import('Pages/Leaderboard'));
 
 function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
-
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
+
+  const parse = queryString.parse(window.location.search);
+  if (parse.code) {
+    // @ts-ignore
+    authController.loginWithCode(parse.code);
+    dispatch(getUser());
+  }
+
   useEffect(() => {
     dispatch(getUser());
   }, []);

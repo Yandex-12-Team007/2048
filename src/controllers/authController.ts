@@ -25,9 +25,20 @@ export class AuthController {
     if (!res) {
       throw new Error('Can\'t get service_id');
     }
+
+    const redirectUrl = window.origin;
+    const OauthUrl = AuthController.createOauthUrl(res.service_id, redirectUrl);
+
+    window.location.replace(OauthUrl);
+  }
+
+  public async loginWithCode(code : string) {
+    const res = await OAuthApi.singIn(code);
     console.log(res);
-    const singInRes = await OAuthApi.singIn(res.service_id);
-    console.log(singInRes);
+  }
+
+  private static createOauthUrl(serviceId, redirectUrl) {
+    return `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${redirectUrl}`;
   }
 }
 

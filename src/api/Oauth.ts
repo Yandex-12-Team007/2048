@@ -19,9 +19,9 @@ class OauthApi {
         .then((response) => response.json())
   }
 
-  public singIn(serviceId : string) {
+  public singIn(code : string) {
     const model = {
-      code: serviceId,
+      code: code,
       redirect_uri: this.redirect_uri,
     }
 
