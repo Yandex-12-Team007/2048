@@ -50,7 +50,6 @@ function App() {
   if (parse.code) {
     // @ts-ignore
     authController.loginWithCode(parse.code);
-    dispatch(getUser());
   }
 
   useEffect(() => {
