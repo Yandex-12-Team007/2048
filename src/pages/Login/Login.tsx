@@ -7,11 +7,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 
-import {authController} from '../../controllers/authController';
-
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
 import Button from 'Components/Button/Button';
+
+import {authController} from 'Controllers/authController';
 
 import {IRootState} from 'Interface/IRootState';
 
@@ -101,7 +101,6 @@ export default function Login() {
           </Link>
         </div>
       </form>
-      <button onClick={authController.Oauth}>Oauth</button>
     </LoginLayout>
   )
 }

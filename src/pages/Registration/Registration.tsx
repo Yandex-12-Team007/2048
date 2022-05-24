@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Redirect, Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -12,6 +12,9 @@ import Button from 'Components/Button/Button';
 import './Registration.pcss';
 import {IRegistrationUserModel} from 'Interface/IUser';
 import {phoneRegExp} from './constants';
+import {useSelector} from 'react-redux';
+import {IRootState} from '../../Interface/IRootState';
+import {userSelector} from '../../store/selectors';
 
 const schema = object({
   login: string().matches(
@@ -43,6 +46,12 @@ export default function Registration() {
   });
 
   const history = useHistory();
+
+  const user = useSelector<IRootState>(userSelector);
+
+  if (user !== null) {
+    return <Redirect to={Routes.HOME} />
+  }
 
   const handleSignUp = ({
     login,
