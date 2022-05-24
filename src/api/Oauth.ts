@@ -26,7 +26,9 @@ class OauthApi {
     }
 
     return apiModule.post(OAUTH_PATH, model)
-        .then((response) => response.json())
+        .then((response) => {
+          return response.ok;
+        })
   }
 }
 

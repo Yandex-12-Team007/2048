@@ -33,8 +33,7 @@ export class AuthController {
   }
 
   public async loginWithCode(code : string) {
-    const res = await OAuthApi.singIn(code);
-    console.log(res);
+    return OAuthApi.singIn(code);
   }
 
   private static createOauthUrl(serviceId, redirectUrl) {
