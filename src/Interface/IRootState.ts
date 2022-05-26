@@ -11,3 +11,10 @@ export interface UserState {
 export interface IRootState {
   user: UserState,
 }
+
+export const getInitialState = (): IRootState => ({
+  user: {
+    model: null,
+    status: 'pending',
+  },
+});
