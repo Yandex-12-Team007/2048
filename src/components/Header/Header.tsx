@@ -1,12 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import classNames from 'classnames';
 
 import ErrorBoundary from 'Components/ErrorBoundary';
 import Logo from 'Components/Logo';
 import ProfileWidget from 'Components/ProfileWidget';
+import {LoginSize} from 'Components/Logo/Logo';
+
+import Routes from 'Constants/Routes';
 
 import './Header.pcss';
-import classNames from 'classnames';
-import {LoginSize} from 'Components/Logo/Logo';
 
 export interface IHeaderProps {
   title? : string
@@ -16,13 +19,14 @@ export interface IHeaderProps {
 export default function Header({title = '', isSmall = false} : IHeaderProps) {
   return <header className={'header'}>
     <ErrorBoundary>
-      <div
+      <Link
+        to={Routes.HOME}
         className={
           classNames('logo-container', {'logo-container--wide': !isSmall})
         }
       >
         <Logo size={isSmall ? LoginSize.SMALL : LoginSize.MEDIUM} />
-      </div>
+      </Link>
       <div className={'header-title__wrapper'}>
         <h1 className={'header-title'}>{title}</h1>
       </div>
