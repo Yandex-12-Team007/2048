@@ -37,15 +37,17 @@ function App() {
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
-  const parse = queryString.parse(window.location.search);
-  if (parse.code) {
-    // @ts-ignore
-    authController.loginWithCode(parse.code)
-        .then((res) => {
-          if (res) {
-            dispatch(getUser());
-          }
-        })
+  if (typeof window !== 'undefined') {
+    const parse = queryString.parse(window.location.search);
+    if (parse.code) {
+      // @ts-ignore
+      authController.loginWithCode(parse.code)
+          .then((res) => {
+            if (res) {
+              dispatch(getUser());
+            }
+          })
+    }
   }
 
   useEffect(() => {
