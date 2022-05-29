@@ -15,8 +15,6 @@ import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 import './Game.pcss';
 
 export default function Game() {
-  console.log('Game');
-
   const ref = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +38,6 @@ export default function Game() {
   }
 
   useEffect(() => {
-    console.log('useEffect');
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
     gameEngine.init(ctx, width, setScore, setGameState);
 

@@ -41,14 +41,12 @@ export function leaderboardReducer(
       return state;
     }
     case LeaderboardActionTypes.GET_SCORE_BY_USER: {
-      console.log('GET_SCORE_BY_USER')
       const user = action.payload;
       // Есть смысл только если существует хотя бы 1 рекорд
       if (state.model !== null && state.model.length !== 0) {
         // @ts-ignore
         const find = state.model.find((el) => el.user.id === user.id)
         // Если такая запись есть
-        console.log('FIND')
         console.log(find)
         if (find) {
           return {
