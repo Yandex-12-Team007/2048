@@ -40,7 +40,6 @@ function App() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const parse = queryString.parse(window.location.search)
-      console.log(parse);
       if (parse && parse.code) {
         // @ts-ignore
         authController.loginWithCode(parse.code)
@@ -49,9 +48,9 @@ function App() {
                 dispatch(getUser());
               }
             })
+      } else {
+        dispatch(getUser());
       }
-    } else {
-      dispatch(getUser());
     }
   }, []);
 

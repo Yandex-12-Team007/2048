@@ -12,7 +12,6 @@ class OauthApi {
   private redirect_uri = typeof window !== 'undefined' ? window.location.origin : null;
 
   public getServiceId() {
-    console.log(`OauthApi getServiceId ${this.redirect_uri}`);
     const params = queryString.stringify({
       redirect_uri: this.redirect_uri,
     })
@@ -21,7 +20,6 @@ class OauthApi {
   }
 
   public singIn(code : string) {
-    console.log(`OauthApi singIn ${this.redirect_uri}`);
     const model = {
       code: code,
       redirect_uri: this.redirect_uri,
