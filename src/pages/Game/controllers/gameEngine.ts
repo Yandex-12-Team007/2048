@@ -11,6 +11,7 @@ class GameEngine {
   private record: number;
   private gameState: GameState;
   private canMove: ICanMove;
+  private isSoundEnabled: boolean;
 
   private updateScoreCallback!: (score: number) => void;
   private updateRecordCallback!: (score: number) => void;
@@ -28,6 +29,7 @@ class GameEngine {
       [Direction.UP]: true,
       [Direction.DOWN]: true,
     };
+    this.isSoundEnabled = true;
   }
 
   private createTileListFromMatrix(matrix : number[][]) {
@@ -79,6 +81,15 @@ class GameEngine {
     }
   }
 
+  private playAudio = () => {
+    if (this.isSoundEnabled) {
+      const audio = new Audio('./audio/moving_sound.mp3');
+      audio.oncanplaythrough = () => {
+        audio.play();
+      };
+    }
+  }
+
   private checkMove() {
     this.canMove = check(this.tileList);
   }
@@ -105,6 +116,7 @@ class GameEngine {
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.LEFT)
         break;
@@ -112,6 +124,7 @@ class GameEngine {
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.RIGHT)
         break;
@@ -119,6 +132,7 @@ class GameEngine {
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.DOWN)
         break;
@@ -126,6 +140,7 @@ class GameEngine {
         if (!this.canMove[Direction.UP]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.UP)
         break;
@@ -280,6 +295,10 @@ class GameEngine {
 
   public finish() {
     this.removeListeners();
+  }
+
+  public setSoundState(isSoundEnabled: boolean) {
+    this.isSoundEnabled = isSoundEnabled;
   }
 }
 
