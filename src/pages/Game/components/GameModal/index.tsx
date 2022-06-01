@@ -1,5 +1,3 @@
-import GameModal, {GameModalProps} from './GameModal';
-
-export {GameModalProps};
+import GameModal from './GameModal';
 
 export default GameModal;

@@ -11,7 +11,7 @@ import ProfileModal from './components/ProfileModal';
 
 import {userSelector, userAvatarSelector} from 'Store/selectors';
 
-import {resourseLink} from 'Utils/uploadHelper';
+import {resourceLink} from 'Utils/uploadHelper';
 
 import defaultAvatar from 'Static/img/defaultAvatar.png';
 
@@ -40,13 +40,15 @@ export default function Profile() {
       currentView === CurrentView.PROFILE_INFO,
   })
 
+  console.log(user);
+
   return (
     <Layout title={'Профиль'}>
       <div className='profile-container'>
         <div className={'profile-container__avatar'}>
           <img
             className={avatarContainerClass}
-            src={userAvatar.length > 0 ? resourseLink(userAvatar) : defaultAvatar}
+            src={userAvatar.length > 0 ? resourceLink(userAvatar) : defaultAvatar}
             alt="аватар"
           />
           <div

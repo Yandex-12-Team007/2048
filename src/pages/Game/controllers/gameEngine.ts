@@ -8,19 +8,17 @@ class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
   private newList: ITile[];
-  private record: number;
   private gameState: GameState;
   private canMove: ICanMove;
+  private isSoundEnabled: boolean;
 
   private updateScoreCallback!: (score: number) => void;
-  private updateRecordCallback!: (score: number) => void;
   private updateGameStateCallback!: (score: number) => void;
 
   constructor() {
     this.gameState = GameState.INIT;
     this.tileList = new Array(BOARD_SIZE).fill(new Array(BOARD_SIZE));
     this.moveList = [];
-    this.record = 0;
     this.newList = [];
     this.canMove = {
       [Direction.LEFT]: true,
@@ -28,6 +26,7 @@ class GameEngine {
       [Direction.UP]: true,
       [Direction.DOWN]: true,
     };
+    this.isSoundEnabled = true;
   }
 
   private createTileListFromMatrix(matrix : number[][]) {
@@ -79,6 +78,15 @@ class GameEngine {
     }
   }
 
+  private playAudio = () => {
+    if (this.isSoundEnabled) {
+      const audio = new Audio('./audio/moving_sound.mp3');
+      audio.oncanplaythrough = () => {
+        audio.play();
+      };
+    }
+  }
+
   private checkMove() {
     this.canMove = check(this.tileList);
   }
@@ -105,6 +113,7 @@ class GameEngine {
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.LEFT)
         break;
@@ -112,6 +121,7 @@ class GameEngine {
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.RIGHT)
         break;
@@ -119,6 +129,7 @@ class GameEngine {
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.DOWN)
         break;
@@ -126,6 +137,7 @@ class GameEngine {
         if (!this.canMove[Direction.UP]) {
           return;
         }
+        this.playAudio();
         this.clearTilesAndMove();
         res = move(this.tileList, Direction.UP)
         break;
@@ -213,11 +225,6 @@ class GameEngine {
       return acc;
     }, 0)
     this.updateScoreCallback(currentScore);
-    // Обновляем рекорд
-    if (currentScore >= this.record) {
-      this.record = currentScore;
-      this.updateRecordCallback(this.record);
-    }
     // Если игра в стадии Play - проверяем на 2048
     // eslint-disable-next-line max-len
     if (this.gameState === GameState.PLAY && Math.max(...tileValueList) >= 2048) {
@@ -234,18 +241,14 @@ class GameEngine {
   public init(
       ctx: CanvasRenderingContext2D,
       width: number,
-      record = 0,
       updateScoreCallback: (score: number) => void,
-      updateRecordCallback: (score: number) => void,
       updateGameStateCallback: (score: number) => void,
   ) {
     gamePainter.init(ctx, width);
     this.updateScoreCallback = updateScoreCallback;
-    this.updateRecordCallback = updateRecordCallback;
     this.updateGameStateCallback = updateGameStateCallback;
 
     if (this.gameState === GameState.INIT) {
-      this.record = record;
       this.tileList = this.createEmptyTiles();
       this.addStartTiles();
     }
@@ -280,6 +283,10 @@ class GameEngine {
 
   public finish() {
     this.removeListeners();
+  }
+
+  public setSoundState(isSoundEnabled: boolean) {
+    this.isSoundEnabled = isSoundEnabled;
   }
 }
 
