@@ -20,12 +20,12 @@ class OauthApi {
   }
 
   public singIn(code : string) {
-    const model = {
+    const params = {
       code: code,
       redirect_uri: this.redirect_uri,
     }
 
-    return apiModule.post(OAUTH_PATH, model)
+    return apiModule.post(OAUTH_PATH, params)
         .then((response) => {
           return response.ok;
         })

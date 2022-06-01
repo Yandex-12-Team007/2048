@@ -38,19 +38,16 @@ function App() {
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const parse = queryString.parse(window.location.search)
-      if (parse && parse.code) {
-        // @ts-ignore
-        authController.loginWithCode(parse.code)
-            .then((res) => {
-              if (res) {
-                dispatch(getUser());
-              }
-            })
-      } else {
-        dispatch(getUser());
-      }
+    const parse = queryString.parse(window.location.search)
+    if (parse && parse.code && typeof parse.code === 'string') {
+      authController.loginWithCode(parse.code)
+          .then((res) => {
+            if (res) {
+              dispatch(getUser());
+            }
+          })
+    } else {
+      dispatch(getUser());
     }
   }, []);
 
