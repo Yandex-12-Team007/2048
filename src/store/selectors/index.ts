@@ -19,3 +19,7 @@ export const userNameSelector = (state: IRootState) => {
 export const userAvatarSelector = (state: IRootState) => {
   return state.user.model?.avatar || '';
 };
+
+export const leaderboardSelector = (state: IRootState) => {
+  return state?.leaderboard || '';
+};

@@ -1,11 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useDispatch, useSelector} from 'react-redux';
+
 import Layout from 'Components/Layout';
 import GameModal from './components/GameModal';
 
 import {GameState} from 'Constants/game';
 
 import gameEngine from './controllers/gameEngine';
+
+import {leaderboardSelector, userSelector} from 'Store/selectors';
+import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 
 import './Game.pcss';
 import {SoundButton} from 'Components/SoundButton/SoundButton';
@@ -14,19 +19,40 @@ export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  const user = useSelector(userSelector)
+  const leaderboard = useSelector(leaderboardSelector)
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState(GameState.INIT);
   const [width] = useState(450);
-  const [record, setRecord] = useState(0);
+
+  const dispatch = useDispatch();
+  // Берем рекорд из хранилища
+  let record = leaderboard.score;
+  // Если счет больше - фиксим баг с последним обновлением
+  console.log(score, record, leaderboard.score, user);
+  if (score > record && user !== null) {
+    record = score;
+    // @ts-ignore
+    dispatch(updateScore({
+      score: score,
+      user: user,
+    }));
+  }
 
   useEffect(() => {
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
-    gameEngine.init(ctx, width, record, setScore, setRecord, setGameState);
+    gameEngine.init(ctx, width, setScore, setGameState);
 
     return () => {
       gameEngine.finish();
     };
   }, []);
+
+  // Есть смысл запрашивать рекорд только при не null пользователе
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(setScoreByUser(user));
+  }, [user]);
 
   function gameRestart() {
     gameEngine.restart();

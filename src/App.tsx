@@ -18,9 +18,10 @@ import Routes from 'Constants/Routes';
 import './App.pcss';
 
 import {getUser} from './store/actionCreators/user';
+import {getLeaderboard} from './store/actionCreators/leaderboard';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
-
+// import ForumTheme from 'Pages/ForumTheme';
 
 const Login = loadable(() => import('Pages/Login'));
 const Registration = loadable(() => import('Pages/Registration'));
@@ -38,6 +39,7 @@ function App() {
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
   useEffect(() => {
+    dispatch(getLeaderboard());
     const parse = queryString.parse(window.location.search)
     if (parse && parse.code && typeof parse.code === 'string') {
       authController.loginWithCode(parse.code)
