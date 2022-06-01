@@ -1,0 +1,14 @@
+verison: "3"
+
+services:
+  server-app:
+    # Этим ключом мы скажем docker-compose, чтобы он собирал Dockerfile, который
+    # находится в папке рядом с docker-compose.yaml
+    build:
+      context: .
+      # Проброс порта так же, как в командной строке — на какой порт хоста какой порт контейнера
+    ports:
+      - "4000:3000"
+        # Проброс файлов, откуда с хоста, куда в контейнер
+        volumes:
+      - ./shared:/var/www/shared
