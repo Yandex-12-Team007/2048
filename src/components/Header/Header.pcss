@@ -29,6 +29,8 @@
 }
 
 .logo-container {
+  position: relative;
+  z-index: 1001;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,6 +38,8 @@
   height: 64px;
   background: var(--second-bg);
   transition: var(--change-width);
+  cursor: pointer;
+  text-decoration: none;
 
   &--wide {
     width: 280px;

@@ -5,6 +5,7 @@ import './LoginLayout.pcss';
 import Logo from 'Components/Logo';
 import {LoginSize} from 'Components/Logo/Logo';
 import {getPageTitle} from 'Utils/getTitle';
+import Oauth from 'Components/Oauth';
 
 export default function LoginLayout({children, title = 'Авторизация'}) {
   const meta = {
@@ -19,6 +20,7 @@ export default function LoginLayout({children, title = 'Авторизация'}
         <div className='login-layout__content'>
           {children}
         </div>
+        <Oauth />
       </div>
     </div>
   </DocumentMeta>

@@ -18,7 +18,9 @@ export default function Logo(
     'logo--large': size === LoginSize.LARGE,
   });
 
-  return <div className={classNames(logoClass, className)}>
+  return <div
+    className={classNames(logoClass, className)}
+  >
     <span className={'logo-orange'}>20</span>
     <span className={'logo-light-orange'}>48</span>
   </div>
