@@ -13,6 +13,7 @@ import {leaderboardSelector, userSelector} from 'Store/selectors';
 import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 
 import './Game.pcss';
+import {SoundButton} from 'Components/SoundButton/SoundButton';
 
 export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -28,6 +29,7 @@ export default function Game() {
   // Берем рекорд из хранилища
   let record = leaderboard.score;
   // Если счет больше - фиксим баг с последним обновлением
+  console.log(score, record, leaderboard.score, user);
   if (score > record && user !== null) {
     record = score;
     // @ts-ignore
@@ -60,9 +62,17 @@ export default function Game() {
     gameEngine.continue();
   }
 
+  function setSoundState(isSoundEnabled: boolean) {
+    gameEngine.setSoundState(isSoundEnabled);
+  }
+
   return (
     <Layout title={'Игра'}>
       <div className="game-container">
+        <SoundButton
+          className="game-container__sound-button"
+          onStateChange={setSoundState}
+        />
         <div className={'game-info'}>
           <div className="game-score">
             <p className="game-score__caption">Счет</p>

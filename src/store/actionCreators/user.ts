@@ -6,7 +6,12 @@ import IUser from 'Interface/IUser';
 export const userActionTypes = {
   SET_STATUS: 'SET_STATUS',
   SET_USER: 'SET_USER',
+  LOGOUT: 'LOGOUT',
 };
+
+export const logout = () => (dispatch: Dispatch) => {
+  return dispatch({type: userActionTypes.LOGOUT, payload: {}});
+}
 
 export const getUser = () => (dispatch: Dispatch) => {
   return authApi.get().then((response) => {
