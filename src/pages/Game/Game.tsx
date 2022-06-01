@@ -28,7 +28,7 @@ export default function Game() {
   // Берем рекорд из хранилища
   let record = leaderboard.score;
   // Если счет больше - фиксим баг с последним обновлением
-  if (score > record) {
+  if (score > record && user !== null) {
     record = score;
     // @ts-ignore
     dispatch(updateScore({
@@ -41,13 +41,16 @@ export default function Game() {
     const ctx = ref.current?.getContext('2d') as CanvasRenderingContext2D;
     gameEngine.init(ctx, width, setScore, setGameState);
 
-    // @ts-ignore
-    dispatch(setScoreByUser(user));
-
     return () => {
       gameEngine.finish();
     };
   }, []);
+
+  // Есть смысл запрашивать рекорд только при не null пользователе
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(setScoreByUser(user));
+  }, [user]);
 
   function gameRestart() {
     gameEngine.restart();

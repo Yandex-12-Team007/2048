@@ -31,15 +31,19 @@ export function leaderboardReducer(
     case LeaderboardActionTypes.UPDATE_SCORE: {
       // @ts-ignore - Проблема с 3-й типом входных данных
       const {user, score} = action.payload;
-      if (state.model !== null && state.model.length !== 0) {
-        const find = state?.model.find((el) => el?.user?.id === user.id);
+      const nextState = {...state}
+      // Защита от перезаписи рекорда на более маленький
+      let newScore = score;
+      if (nextState.model !== null && nextState.model.length !== 0) {
+        const find = nextState?.model.find((el) => el?.user?.id === user.id);
         if (find) {
-          find.score = score;
+          newScore = find.score < score ? score : find.score;
+          find.score = newScore;
         }
       }
       return {
-        ...state,
-        score: score,
+        ...nextState,
+        score: newScore,
       };
     }
     case LeaderboardActionTypes.GET_SCORE_BY_USER: {
@@ -50,8 +54,6 @@ export function leaderboardReducer(
         const find = state.model.find(
             (el) => el.user !== null && el.user.id === user.id
         );
-        // Если такая запись есть
-        console.log(find)
         if (find) {
           return {
             ...state,
