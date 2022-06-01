@@ -29,23 +29,27 @@ export function leaderboardReducer(
         score: action.payload,
       }
     case LeaderboardActionTypes.UPDATE_SCORE: {
-      // @ts-ignore
+      // @ts-ignore - Проблема с 3-й типом входных данных
       const {user, score} = action.payload;
-      state.score = score;
       if (state.model !== null && state.model.length !== 0) {
         const find = state?.model.find((el) => el?.user?.id === user.id);
         if (find) {
           find.score = score;
         }
       }
-      return state;
+      return {
+        ...state,
+        score: score,
+      };
     }
     case LeaderboardActionTypes.GET_SCORE_BY_USER: {
-      const user = action.payload;
+      // @ts-ignore - Проблема с 3-й типом входных данных
+      const user : IUser = action.payload;
       // Есть смысл только если существует хотя бы 1 рекорд
       if (state.model !== null && state.model.length !== 0) {
-        // @ts-ignore
-        const find = state.model.find((el) => el.user.id === user.id)
+        const find = state.model.find(
+            (el) => el.user !== null && el.user.id === user.id
+        );
         // Если такая запись есть
         console.log(find)
         if (find) {
