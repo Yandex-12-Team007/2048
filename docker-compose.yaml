@@ -1,14 +1,52 @@
-verison: "3"
+version: "3"
 
 services:
-  server-app:
-    # Этим ключом мы скажем docker-compose, чтобы он собирал Dockerfile, который
-    # находится в папке рядом с docker-compose.yaml
+  server:
     build:
       context: .
-      # Проброс порта так же, как в командной строке — на какой порт хоста какой порт контейнера
+    env_file:
+      - .env
+    depends_on:
+      - postgres
     ports:
-      - "4000:3000"
-        # Проброс файлов, откуда с хоста, куда в контейнер
-        volumes:
-      - ./shared:/var/www/shared
+      - "5500:5500"
+    restart: always
+    networks:
+      - awesome
+  postgres:
+    container_name: postgres
+    image: postgres:14.3
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: "${DB_NAME}"
+    ports:
+      - "${DB_PORT_FORWARDING}:${DB_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    volumes:
+      - "./docker/init.sql:/docker-entrypoint-initdb.d/init.sql"
+    networks:
+      - awesome
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PG_ADMIN_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
+      PGADMIN_LISTEN_PORT: "${PG_ADMIN_PORT}"
+    ports:
+      - "${PG_ADMIN_PORT_FORWARDING}:${PG_ADMIN_PORT}"
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+
+networks:
+  awesome:
+    driver: bridge

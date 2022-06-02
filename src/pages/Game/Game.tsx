@@ -29,7 +29,6 @@ export default function Game() {
   // Берем рекорд из хранилища
   let record = leaderboard.score;
   // Если счет больше - фиксим баг с последним обновлением
-  console.log(score, record, leaderboard.score, user);
   if (score > record && user !== null) {
     record = score;
     // @ts-ignore
