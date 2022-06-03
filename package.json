@@ -15,6 +15,9 @@
     "dev:express": "cross-env nodemon index.ts --watch dist/server.js",
     "dev": "NODE_ENV=development npm-run-all --print-label --parallel dev:*",
     "start": "NODE_ENV=production npm run build && cross-env nodemon index.ts",
+    "composeReBuild": "docker-compose rm -f && docker-compose",
+    "composeDev": "NODE_ENV=development docker-compose --env-file ./.env.development up",
+    "composeProd": "NODE_ENV=production docker-compose --env-file ./.env.production up",
     "prepare": "cross-env husky install",
     "pre-commit": "cross-env eslint 'src/**/*.{ts,tsx}'"
   },

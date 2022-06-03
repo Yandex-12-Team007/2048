@@ -11,6 +11,24 @@
 - Вид компонентов : `Функциональные компоненты`
 - CSS : `PostCSS + Autoprefixer + postcss-nested`
 - ОС команды : `MacOS, Linux`
+- Настроить `.env` файл
+
+### Пример `.env` файла
+```dotenv
+PORT=5500
+
+DB_NAME=game
+DB_USER=serveruser
+DB_PASSWORD=l!j@cneg
+DB_HOST=postgres
+DB_PORT=5432
+DB_PORT_FORWARDING=54321
+
+PG_ADMIN_EMAIL=admin@admin.com
+PG_ADMIN_PASSWORD=secret
+PG_ADMIN_PORT=88
+PG_ADMIN_PORT_FORWARDING=8888
+```
 
 ## Команды для разработки :
 `dev` - запуск сервера разработки webpack-dev-server

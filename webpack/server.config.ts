@@ -10,7 +10,7 @@ import Dotenv from 'dotenv-webpack';
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
-// TODO: Тут было разделение на DEV и RPODUCTION env ...
+// const envPath = IS_DEV ? './.env.development' : './.env.production';
 const envPath = IS_DEV ? './.env' : './.env';
 
 const config: Configuration = {

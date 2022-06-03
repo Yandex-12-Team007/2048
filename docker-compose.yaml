@@ -4,12 +4,10 @@ services:
   server:
     build:
       context: .
-    env_file:
-      - .env
     depends_on:
       - postgres
     ports:
-      - "5500:5500"
+      - "${PORT}:${PORT}"
     restart: always
     networks:
       - awesome
@@ -31,6 +29,7 @@ services:
     restart: always
     volumes:
       - "./docker/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "postgres:/data/postgres"
     networks:
       - awesome
   pgadmin:
@@ -44,9 +43,16 @@ services:
       - "${PG_ADMIN_PORT_FORWARDING}:${PG_ADMIN_PORT}"
     depends_on:
       - postgres
+    volumes:
+      - pgadmin:/root/.pgadmin
+      - ./docker/servers.json:/pgadmin4/servers.json
     networks:
       - awesome
 
 networks:
   awesome:
     driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

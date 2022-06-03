@@ -7,15 +7,10 @@ import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import Dotenv from 'dotenv-webpack';
 
-/*
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
-*/
-
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
-// TODO: Тут было разделение на DEV и RPODUCTION env ...
+// const envPath = IS_DEV ? './.env.development' : './.env.production';
 const envPath = IS_DEV ? './.env' : './.env';
 
 const config: Configuration = {
