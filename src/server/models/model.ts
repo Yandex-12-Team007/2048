@@ -3,7 +3,8 @@ import {DataTypes} from 'sequelize';
 
 const Topic = sequelize.define('topic', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  content: {type: DataTypes.STRING, unique: true},
+  title: {type: DataTypes.STRING, allowNull: false, unique: true},
+  content: {type: DataTypes.STRING, allowNull: false},
   author: {type: DataTypes.STRING},
 });
 
@@ -16,7 +17,7 @@ const Comment = sequelize.define('comment', {
 Comment.hasOne(Comment);
 
 Topic.hasMany(Comment);
-Comment.hasOne(Topic);
+Comment.belongsTo(Topic);
 
 export {
   Topic,

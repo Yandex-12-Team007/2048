@@ -1,31 +1,23 @@
-import React, {useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
+
 import Layout from 'Components/Layout';
+
+import {topicApi} from 'Api/topicApi';
+
+import {ITopic} from 'Interface/ITopic';
+// import ServerApi from 'Api/server';
+
 import './Forum.pcss';
 
-const mockThemeList = [
-  {
-    id: 1,
-    themeName: 'Новые игры',
-    answersCount: 20333,
-    author: 'Иван',
-  },
-  {
-    id: 2,
-    themeName: 'Геймдизайнеры',
-    answersCount: 20333,
-    author: 'Иван',
-  },
-  {
-    id: 3,
-    themeName: 'Технологии',
-    answersCount: 20333,
-    author: 'Иван',
-  },
-];
-
 export default function Forum() {
+  const [topic] = useState<ITopic[]>([]);
   const history = useHistory();
+
+  useEffect(() => {
+    topicApi.getAll()
+        .then((res) => console.log(res))
+  }, []);
 
   return (
     <Layout
@@ -35,6 +27,8 @@ export default function Forum() {
       <div className='forum-header'>
         <span className='forum-header__caption'>Топ</span>
         <button className='forum-header__add-button' />
+        <button>GET</button>
+        <button>POST</button>
       </div>
       <div className='forum-content'>
         <table className='forum-table'>
@@ -47,7 +41,7 @@ export default function Forum() {
           </thead>
           <tbody>
             {
-              mockThemeList.map((theme, index) => (
+              topic.map((theme, index) => (
                 <tr
                   className='forum-table__row'
                   key={index}
@@ -55,9 +49,9 @@ export default function Forum() {
                     useCallback(() => history.push(`/forum/${theme.id}`), [])
                   }
                 >
-                  <td>{theme.themeName}</td>
+                  <td>{theme.title}</td>
                   <td className='forum-table__answer-count-cell'>
-                    {theme.answersCount}
+                    {0}
                   </td>
                   <td className='forum-table__author-cell'>{theme.author}</td>
                 </tr>
