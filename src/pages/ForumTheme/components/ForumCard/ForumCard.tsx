@@ -1,25 +1,42 @@
-import React, {FunctionComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import classNames from 'classnames';
+
+import {userApi} from 'Api/userApi';
+
+import {IComment} from 'Interface/IComment';
+import IUser, {Nullable} from 'Interface/IUser';
+
+import {resourceLink} from 'Utils/uploadHelper';
+
 import './ForumCard.pcss';
 
 interface IForumCardProps {
-  userName: string;
-  userAvatar: string;
-  text: string;
   className?: string;
+  comment: IComment
 }
 
-const ForumCard: FunctionComponent<IForumCardProps> = ({
-  userName, userAvatar, text, className,
-}) => {
-  return (
-    <div className={classNames('forum-card', className)}>
-      <div className='forum-card__user-info'>
-        {
-          userAvatar.length > 0 ?
+const ForumCard = ({
+  comment, className,
+} : IForumCardProps) => {
+  const [user, setUser] = useState<Nullable<IUser>>(null);
+  const {author, content, commentId} = comment;
+
+  useEffect(() => {
+    userApi.getUserById(author)
+        .then((res) => res.json())
+        .then((res) => setUser(res))
+  }, [])
+
+
+  return <div className={classNames('forum-card', className)}>
+    <div className='forum-card__user-info'>
+      {
+        // @ts-ignore
+        user !== null && user.avatar.length > 0 ?
           <img
             className='forum-card__user-avatar'
-            src={userAvatar}
+            // @ts-ignore
+            src={resourceLink(user.avatar)}
             alt={'аватар'}
           /> :
           <div
@@ -30,12 +47,12 @@ const ForumCard: FunctionComponent<IForumCardProps> = ({
               )
             }
           />
-        }
-        <span className='forum-card__user-name'>{userName}</span>
-      </div>
-      <div className='forum-card__message'>{text}</div>
+      }
+      <span className='forum-card__user-name'>{user !== null ? user.first_name : ''}</span>
     </div>
-  )
+    {commentId !== null ? <div>Ответ на сообщение : {commentId}</div> : null}
+    <div className='forum-card__message'>{content}</div>
+  </div>
 }
 
 export default ForumCard;

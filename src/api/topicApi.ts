@@ -1,12 +1,12 @@
 import ServerApi from './serverApi';
-import {ITopic} from 'Interface/ITopic';
+import {ITopicCreate} from 'Interface/ITopic';
 
 const TOPIC_PATH = '/topic/';
 
 // enum TopicSubpath {};
 
 class TopicApi {
-  public create(topic : ITopic) {
+  public create(topic : ITopicCreate) {
     return ServerApi.post(TOPIC_PATH, topic)
         .then((res) => res.json());
   }

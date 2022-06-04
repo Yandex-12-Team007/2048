@@ -1,4 +1,4 @@
-import {IRootState, LoadStatus} from 'Interface/IRootState';
+import {IForumState, IRootState, LoadStatus} from 'Interface/IRootState';
 import {createSelector} from 'reselect';
 
 export const isUserStatusFailedSelector = createSelector(
@@ -22,4 +22,8 @@ export const userAvatarSelector = (state: IRootState) => {
 
 export const leaderboardSelector = (state: IRootState) => {
   return state?.leaderboard || '';
+};
+
+export const forumSelector = (state: IRootState) => {
+  return state?.forum;
 };

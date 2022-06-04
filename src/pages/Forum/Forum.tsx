@@ -1,22 +1,35 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Layout from 'Components/Layout';
 
-import {topicApi} from 'Api/topicApi';
+import {getForumState} from 'Store/actionCreators/forum';
+import {forumSelector} from 'Store/selectors';
 
-import {ITopic} from 'Interface/ITopic';
+import {IForumState, IRootState} from 'Interface/IRootState';
+
+import {routeReplace} from 'Utils/routeReplace';
+
+import Routes from 'Constants/Routes';
+
+// import {ITopic} from 'Interface/ITopic';
 // import ServerApi from 'Api/server';
 
 import './Forum.pcss';
 
+
 export default function Forum() {
-  const [topic] = useState<ITopic[]>([]);
-  const history = useHistory();
+  const dispatch = useDispatch();
+  // @ts-ignore
+  const forum : IForumState = useSelector<IRootState>(forumSelector);
+  const {topic, comment, topicComment} = forum;
 
   useEffect(() => {
-    topicApi.getAll()
-        .then((res) => console.log(res))
+    if (topic.length === 0) {
+      // @ts-ignore
+      dispatch(getForumState());
+    }
   }, []);
 
   return (
@@ -27,8 +40,6 @@ export default function Forum() {
       <div className='forum-header'>
         <span className='forum-header__caption'>Топ</span>
         <button className='forum-header__add-button' />
-        <button>GET</button>
-        <button>POST</button>
       </div>
       <div className='forum-content'>
         <table className='forum-table'>
@@ -41,20 +52,21 @@ export default function Forum() {
           </thead>
           <tbody>
             {
-              topic.map((theme, index) => (
-                <tr
-                  className='forum-table__row'
-                  key={index}
-                  onClick={
-                    useCallback(() => history.push(`/forum/${theme.id}`), [])
-                  }
+              forum.topic.map((theme, index) => (
+                <Link
+                  className='forum-table__row table-row'
+                  key={theme.id}
+                  to={routeReplace(Routes.FORUM_THEME, 'topicId', ''+theme.id)}
                 >
                   <td>{theme.title}</td>
                   <td className='forum-table__answer-count-cell'>
-                    {0}
+                    {
+                      // @ts-ignore
+                      topicComment[theme.id].length
+                    }
                   </td>
                   <td className='forum-table__author-cell'>{theme.author}</td>
-                </tr>
+                </Link>
               ))
             }
           </tbody>
