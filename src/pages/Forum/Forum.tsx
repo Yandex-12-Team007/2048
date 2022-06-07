@@ -23,7 +23,7 @@ export default function Forum() {
   const dispatch = useDispatch();
   // @ts-ignore
   const forum : IForumState = useSelector<IRootState>(forumSelector);
-  const {topic, comment, topicComment} = forum;
+  const {topic, topicComment} = forum;
 
   useEffect(() => {
     if (topic.length === 0) {

@@ -1,4 +1,4 @@
-import {IForumState, IRootState, LoadStatus} from 'Interface/IRootState';
+import {IRootState, LoadStatus} from 'Interface/IRootState';
 import {createSelector} from 'reselect';
 
 export const isUserStatusFailedSelector = createSelector(
