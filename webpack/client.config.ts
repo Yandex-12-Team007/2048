@@ -7,14 +7,14 @@ import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const CopyPlugin = require("copy-webpack-plugin");
 
-/*
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
-*/
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
+// const envPath = IS_DEV ? './.env.development' : './.env.production';
+const envPath = IS_DEV ? './.env' : './.env';
 
 const config: Configuration = {
   name: 'client',
@@ -73,6 +73,7 @@ const config: Configuration = {
   plugins: [
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
+    new Dotenv({path: envPath}),
     new CopyPlugin({
       patterns: [
         {from: './src/static/audio/**.mp3', to: 'audio/[name][ext]'},

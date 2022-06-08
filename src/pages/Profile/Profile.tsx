@@ -40,8 +40,6 @@ export default function Profile() {
       currentView === CurrentView.PROFILE_INFO,
   })
 
-  console.log(user);
-
   return (
     <Layout title={'Профиль'}>
       <div className='profile-container'>

@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "${PORT}:${PORT}"
+    restart: always
+    networks:
+      - awesome
+  postgres:
+    container_name: postgres
+    image: postgres:14.3
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: "${DB_NAME}"
+    ports:
+      - "${DB_PORT_FORWARDING}:${DB_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    volumes:
+      - "./docker/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "postgres:/data/postgres"
+    networks:
+      - awesome
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PG_ADMIN_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
+      PGADMIN_LISTEN_PORT: "${PG_ADMIN_PORT}"
+    ports:
+      - "${PG_ADMIN_PORT_FORWARDING}:${PG_ADMIN_PORT}"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin:/root/.pgadmin
+      - ./docker/servers.json:/pgadmin4/servers.json
+    networks:
+      - awesome
+
+networks:
+  awesome:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

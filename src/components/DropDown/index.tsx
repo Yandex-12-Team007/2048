@@ -1,8 +1,7 @@
 import DropDown from './DropDown';
-import {IDropDownItem, DropDownItemType} from './IDropDownItem';
+import {DropDownItemType} from './IDropDownItem';
 
 export {
-  IDropDownItem,
   DropDownItemType,
 };
 

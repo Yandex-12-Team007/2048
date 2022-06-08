@@ -49,6 +49,6 @@ class ApiModule {
 
 const apiModule = new ApiModule();
 
-export {API_URL};
+export {API_URL, ApiModule};
 
 export default apiModule;
