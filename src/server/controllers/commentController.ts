@@ -15,7 +15,7 @@ class CommentController {
 
   async getByTopicId(req, res) {
     const {topicId} = req.params
-    const topicComments = await Comment.findAll(
+    const topicComments = await Comment.findOne(
         {
           where: {topicId: topicId},
         }
