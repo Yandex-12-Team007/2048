@@ -14,6 +14,7 @@
   /* Colour */
   --main-bg: #fbf8f1;
   --second-bg: #eee4da;
+  --third-bg: #72685d;
   --gray: #7c746b;
   --light-orange: #f0b17b;
   --middle-orange: #f59565;
@@ -22,6 +23,8 @@
   --second-text-color: #999;
   --error-text-color: #ff2f2f;
   --light-gray: #efefef;
+  --icon-background: #000;
+  --icon-background-hover: #fff;
 
   /* Fotn */
   --default-font: normal 14px inter, sans-serif;
@@ -60,8 +63,25 @@ a:hover,  /* при наведении */ {
 }
 
 .app {
+  position: relative;
   width: 100%;
   height: 100%;
+
+  &__theme-switcher {
+    position: absolute;
+    right: 10px;
+    top: 80px;
+    z-index: 1;
+  }
+
+  &--dark-theme {
+    --main-bg: #444;
+    --second-bg: #333;
+    --main-text-color: #fbf8f1;
+    --second-text-color: #ddd;
+    --icon-background: #fff;
+    --icon-background-hover: #ddd;
+  }
 }
 
 html {
