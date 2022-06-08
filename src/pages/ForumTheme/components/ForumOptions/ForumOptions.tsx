@@ -27,7 +27,10 @@ export default function ForumOptions({user, author, commentId, setCommentId} : I
           commentId={commentId}
         />
       </> :
-      <AuthorOptions />
+      <UserOptions
+        setCommentId={setCommentId}
+        commentId={commentId}
+      />
     }
   </div>
 }

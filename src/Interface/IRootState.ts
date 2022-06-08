@@ -11,6 +11,10 @@ export interface UserState {
   status: LoadStatus;
 }
 
+export interface IUsersStore {
+  [id: number] : IUser
+}
+
 export interface LeaderboardState {
   model: Nullable<ILeaderboardData[]>
   score : number
@@ -24,6 +28,7 @@ export interface IForumState {
 
 export interface IRootState {
   user: UserState,
+  users: IUsersStore,
   leaderboard : LeaderboardState,
   forum : IForumState
 }
@@ -33,6 +38,7 @@ export const getInitialState = (): IRootState => ({
     model: null,
     status: 'pending',
   },
+  users: {},
   leaderboard: {
     model: null,
     score: 0,

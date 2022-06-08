@@ -1,39 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import classNames from 'classnames';
-import {useSelector} from 'react-redux';
-
-import {userSelector} from 'Store/selectors';
-
 import ForumBadge from '../ForumBadge';
 import ForumMessage from '../ForumMessage';
 import ForumOptions from '../ForumOptions';
 
-import {userApi} from 'Api/userApi';
+import {formaDate, formatFullDate} from 'Utils/dateHelper';
 
 import {IComment} from 'Interface/IComment';
-import IUser, {Nullable} from 'Interface/IUser';
-import {IRootState} from 'Interface/IRootState';
+import IUser from 'Interface/IUser';
+
+import _ from 'lodash';
 
 import './ForumCard.pcss';
+
 
 interface IForumCardProps {
   className?: string;
   comment: IComment,
+  user: IUser,
+  commentUser: null | IUser,
   setCommentId: (number) => void
 }
 
 const ForumCard = ({
-  comment, className, setCommentId,
+  className,
+  comment,
+  user,
+  commentUser,
+  setCommentId,
 } : IForumCardProps) => {
-  const user = useSelector<IRootState>(userSelector)
-  const [commentUser, setCommentUser] = useState<Nullable<IUser>>(null);
+  console.log(`ForumCard ${comment.id}`);
   const {author, content, createdAt, commentId} = comment;
-
-  useEffect(() => {
-    userApi.getUserById(author)
-        .then((res) => res.json())
-        .then((res) => setCommentUser(res))
-  }, [])
 
   const img = commentUser !== null &&
   commentUser.avatar &&
@@ -50,7 +47,7 @@ const ForumCard = ({
         />
         <div className={'forum-card__message-wrapper'}>
           <div className={'forum-card__time-wrapper'}>
-            {createdAt}
+            {formaDate(createdAt)}
           </div>
           <ForumMessage
             commentId={commentId}
@@ -68,4 +65,11 @@ const ForumCard = ({
   </div>
 }
 
-export default ForumCard;
+function areEqual(prevProps, nextProps) {
+  return _.isEqual(prevProps.comment, nextProps.comment) &&
+    _.isEqual(prevProps.commentUser, nextProps.commentUser)
+}
+
+const MemoForumCard = React.memo(ForumCard, areEqual);
+
+export default MemoForumCard;

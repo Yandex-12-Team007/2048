@@ -1,7 +1,7 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import './DefaultModal.pcss';
-import classNames from 'classnames';
 
 export default function DefaultModal({
   isOpen = true,

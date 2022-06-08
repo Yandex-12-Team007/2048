@@ -2,19 +2,21 @@ import React from 'react';
 import {object, string, number} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useSelector} from 'react-redux';
-import {commentApi} from 'Api/commentApi';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Button from 'Components/Button';
 import ForumMessage from '../ForumMessage';
 
 import {forumSelector, userSelector} from 'Store/selectors';
+import {addComment} from 'Store/actionCreators/forum';
 
 import {IComment, ICommentCreate} from 'Interface/IComment';
 import {IForumState, IRootState} from 'Interface/IRootState';
 
 
 import './CommentForm.pcss';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 
 const schema = object({
   content: string().min(
@@ -35,7 +37,13 @@ export default function CommentForm({
   unsetCommentId,
   topicId,
 } : IContentFormProps) {
-  const {handleSubmit, formState: {errors}, register} = useForm({
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
+  const {
+    resetField,
+    handleSubmit,
+    formState: {errors},
+    register,
+  } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       content: '',
@@ -53,7 +61,7 @@ export default function CommentForm({
   }
 
   const handleComment = (
-      {content}: { comment: string, commentId : number}
+      {content}: { comment: string }
   ) => {
     let commentId = null;
     if (comment !== null) {
@@ -67,8 +75,11 @@ export default function CommentForm({
       commentId: commentId,
     }
 
-    commentApi.create(newComment)
-        .then((res) => console.log(res))
+    console.log(newComment);
+
+    dispatch(addComment(newComment))
+    unsetCommentId();
+    resetField('content');
   }
 
   return <div className={'comment-form'}>
@@ -125,6 +136,7 @@ export default function CommentForm({
       <div className={'comment-form__btn-wrapper'}>
         <Button
           className={'comment-form__btn'}
+          type={'submit'}
           text={'Отправить'}
         />
       </div>

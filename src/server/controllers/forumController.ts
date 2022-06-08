@@ -17,7 +17,7 @@ class ForumController {
     // @ts-ignore
     const [comment, topic] : [IComment[], ITopic[]] = data;
 
-    return res.json({
+    const response = {
       topic: topic,
       comment: comment.reduce<Record<number, IComment>>((acc, el) => {
         if (el.id) {
@@ -34,7 +34,15 @@ class ForumController {
 
         return acc;
       }, {}),
-    });
+    };
+    // TODO: Hotfix для пустых тем
+    topic.forEach((el) => {
+      if (!response.topicComment[el.id]) {
+        response.topicComment[el.id] = []
+      }
+    })
+
+    return res.json(response);
   }
 }
 

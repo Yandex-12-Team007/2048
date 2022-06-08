@@ -8,6 +8,10 @@ export const isUserStatusFailedSelector = createSelector(
     },
 );
 
+export const usersSelector = (state: IRootState) => {
+  return state.users;
+};
+
 export const userSelector = (state: IRootState) => {
   return state.user.model;
 };

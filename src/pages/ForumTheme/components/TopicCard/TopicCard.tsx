@@ -4,6 +4,8 @@ import ForumBadge from '../ForumBadge';
 
 import {userApi} from 'Api/userApi';
 
+import {formaDate} from 'Utils/dateHelper';
+
 import {ITopic} from 'Interface/ITopic';
 import IUser, {Nullable} from 'Interface/IUser';
 
@@ -36,7 +38,7 @@ export default function TopicCard({topic} : ITopicCardProps) {
     />
     <div className={'topic-card__message-wrapper'}>
       <div className={'topic-card__time-wrapper'}>
-        {createdAt}
+        {formaDate(createdAt)}
       </div>
       <h2>{content}</h2>
     </div>
