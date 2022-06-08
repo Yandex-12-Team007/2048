@@ -11,7 +11,9 @@ import './Leaderboard.pcss';
 export default function Leaderboard() {
   const leaderboard = useSelector(leaderboardSelector);
 
+  const data = leaderboard.model !== null ? leaderboard.model : [];
+
   return <Layout title={'Таблица лидеров'}>
-    <LeaderboardTable data={leaderboard.model} />
+    <LeaderboardTable data={data} />
   </Layout>
 }

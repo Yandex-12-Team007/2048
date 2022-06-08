@@ -13,7 +13,7 @@ export default function LeaderboardTable({data}) {
       </thead>
       <tbody>
         {data.map((el, id) => <tr>
-          <td>{`${id}. ${el.user.login}`}</td>
+          <td>{`${id + 1}. ${el.user.login}`}</td>
           <td>{el.score}</td>
         </tr>)}
       </tbody>

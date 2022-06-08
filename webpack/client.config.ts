@@ -5,9 +5,8 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
