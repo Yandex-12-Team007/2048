@@ -5,6 +5,9 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+const CopyPlugin = require("copy-webpack-plugin");
+
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
@@ -71,6 +74,11 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: envPath}),
+    new CopyPlugin({
+      patterns: [
+        {from: './src/static/audio/**.mp3', to: 'audio/[name][ext]'},
+      ],
+    }),
   ],
   devtool: 'source-map',
 }
