@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
@@ -21,6 +21,8 @@ import {getUser} from './store/actionCreators/user';
 import {getLeaderboard} from './store/actionCreators/leaderboard';
 import {IRootState} from 'Interface/IRootState';
 import {isUserStatusFailedSelector} from './store/selectors';
+import ThemeSwitcher from 'Components/ThemeSwitcher';
+import classNames from 'classnames';
 // import ForumTheme from 'Pages/ForumTheme';
 
 const Login = loadable(() => import('Pages/Login'));
@@ -35,6 +37,8 @@ const ForumTheme = loadable(() => import('Pages/ForumTheme'));
 const Error = loadable(() => import('Pages/Error'));
 
 function App() {
+  const [darkThemeState, setDarkThemeState] = useState<'on' | 'off'>('off');
+
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
@@ -51,10 +55,23 @@ function App() {
     } else {
       dispatch(getUser());
     }
+
+    const savedDarkThemeState = localStorage.getItem('darkThemeState') as 'on' | 'off' | null;
+    setDarkThemeState(savedDarkThemeState ?? 'off');
   }, []);
 
+  const handleThemeSwitch = (state: 'on' | 'off') => {
+    setDarkThemeState(state);
+    localStorage.setItem('darkThemeState', state);
+  }
+
   return <ErrorBoundary>
-    <div className={'app'}>
+    <div className={classNames('app', {'app--dark-theme': darkThemeState === 'on'})}>
+      <ThemeSwitcher
+        className='app__theme-switcher'
+        state={darkThemeState}
+        onChange={handleThemeSwitch}
+      />
       <Switch>
         <Route exact path={Routes.LOGIN} component={Login}/>
         <Route exact path={Routes.REGISTRATION} component={Registration}/>
