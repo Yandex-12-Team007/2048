@@ -1,10 +1,19 @@
 .forum-theme-container {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
   padding: 50px 35px 50px 100px;
 }
 
 .forum-theme {
   &__card {
     margin-bottom: 20px;
+  }
+
+  &__scroll {
+    width: 100%;
+    height: 85vh;
+    overflow-y: auto;
   }
 }

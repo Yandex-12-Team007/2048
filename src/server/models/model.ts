@@ -10,7 +10,7 @@ const Topic = sequelize.define('topic', {
 
 const Comment = sequelize.define('comment', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  content: {type: DataTypes.STRING},
+  content: {type: DataTypes.STRING, allowNull: false},
   author: {type: DataTypes.STRING},
 });
 

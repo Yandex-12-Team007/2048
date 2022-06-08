@@ -9,6 +9,10 @@ enum UserSubpath {
 }
 
 class UserApi {
+  public getUserById(userId : number) {
+    return apiModule.get(USER_PATH + userId)
+  }
+
   public changeProfile(model : IUser) {
     return apiModule.put(USER_PATH + UserSubpath.CHANGE_PROFILE, model)
         .then((response) => response.json())

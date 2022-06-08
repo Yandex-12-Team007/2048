@@ -51,15 +51,6 @@
     font-weight: bold;
   }
 
-  &__row {
-    background-color: var(--second-bg);
-    cursor: pointer;
-
-    &:hover {
-      background-color: #cdc1b3;
-    }
-  }
-
   td {
     padding: 15px;
     border-radius: 5px;
@@ -74,4 +65,41 @@
 .forum-content {
   max-width: 1000px;
   margin: 0 auto;
+
+  &__header {
+    width: 100%;
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__row {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--second-bg);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  &__body &__row {
+    &:hover {
+      background-color: #cdc1b3;
+    }
+  }
+
+  &__cell {
+    padding: 15px;
+    width: 33%;
+    border-right: 3px solid var(--main-bg);
+  }
+}
+
+.table-row,
+.table-row:active,
+.table-row:hover {
+  text-decoration: none;
+  color: inherit;
 }

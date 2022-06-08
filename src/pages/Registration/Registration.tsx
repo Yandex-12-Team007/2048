@@ -14,7 +14,7 @@ import {IRegistrationUserModel} from 'Interface/IUser';
 import {phoneRegExp} from './constants';
 import {useSelector} from 'react-redux';
 import {IRootState} from '../../Interface/IRootState';
-import {userSelector} from '../../store/selectors';
+import {userSelector} from '../../Store/selectors';
 
 const schema = object({
   login: string().matches(

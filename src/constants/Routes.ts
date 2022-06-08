@@ -10,8 +10,8 @@ enum Routes {
     LEADERBOARD = '/leaderboard',
     // Форум
     FORUM = '/forum',
-    FORUM_THEME = '/forum/:theme_id',
-    FORUM_CARD = '/forum/:theme_id/:card_id',
+    FORUM_THEME = '/forum/:topicId',
+    FORUM_CARD = '/forum/:topicId/:card_id',
     // Профиль
     PROFILE = '/profile',
     // Ошибки

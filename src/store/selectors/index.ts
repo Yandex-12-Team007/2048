@@ -8,6 +8,10 @@ export const isUserStatusFailedSelector = createSelector(
     },
 );
 
+export const usersSelector = (state: IRootState) => {
+  return state.users;
+};
+
 export const userSelector = (state: IRootState) => {
   return state.user.model;
 };
@@ -22,4 +26,8 @@ export const userAvatarSelector = (state: IRootState) => {
 
 export const leaderboardSelector = (state: IRootState) => {
   return state?.leaderboard || '';
+};
+
+export const forumSelector = (state: IRootState) => {
+  return state?.forum;
 };
