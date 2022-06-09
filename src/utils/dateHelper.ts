@@ -74,6 +74,10 @@ export function formatFullDate(date : Date) : string {
   return date.getDate() + ' ' + getMonth(date) + ' ' + date.getFullYear();
 }
 
+export function formatFullDateWithTime(date : Date) : string {
+  return `${date.getDate()} ${getMonth(date)} ${date.getFullYear()} ${date.getHours()}: ${date.getMinutes()}`;
+}
+
 /** formaDate
  * @description Форматирует дату в зависимости от прошедшего времени
  * @param {string} dateString
@@ -91,5 +95,5 @@ export function formaDate(dateString : string) : string {
   //   return getDayOfWeek(date);
   // }
   /** Более недели */
-  return formatFullDate(date);
+  return formatFullDateWithTime(date);
 }

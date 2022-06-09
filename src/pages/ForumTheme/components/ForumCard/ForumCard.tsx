@@ -36,7 +36,7 @@ const ForumCard = ({
   commentUser.avatar &&
   commentUser.avatar.length > 0 ? commentUser.avatar : null;
 
-  const name = commentUser !== null ? commentUser.login : '';
+  const name = commentUser !== null ? commentUser.first_name : '';
 
   return <div className={classNames('forum-card', className)}>
     <div className={'forum-card__card-wrapper'}>

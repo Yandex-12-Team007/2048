@@ -5,7 +5,6 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-const CopyPlugin = require('copy-webpack-plugin');
 
 import Dotenv from 'dotenv-webpack';
 
@@ -51,6 +50,10 @@ const config: Configuration = {
         loader: 'file-loader',
       },
       {
+        test: /\.(mp3)$/i,
+        loader: 'file-loader',
+      },
+      {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
       },
@@ -73,11 +76,6 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: envPath}),
-    new CopyPlugin({
-      patterns: [
-        {from: './src/static/audio/**.mp3', to: 'audio/[name][ext]'},
-      ],
-    }),
   ],
   devtool: 'source-map',
 }

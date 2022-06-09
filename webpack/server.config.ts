@@ -51,6 +51,10 @@ const config: Configuration = {
         loader: 'null-loader',
       },
       {
+        test: /\.(mp3)$/i,
+        loader: 'file-loader',
+      },
+      {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
       },

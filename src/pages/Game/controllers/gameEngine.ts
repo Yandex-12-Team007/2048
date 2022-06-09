@@ -4,6 +4,8 @@ import {Direction, ICanMove, IMoveTile, INewTileScheme, ITile} from '../types';
 import gamePainter from './gamePainter';
 import {check, move} from './gameMatrixHelper';
 
+import audioMove from 'Static/audio/moving-sound_short.mp3';
+
 class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
@@ -80,7 +82,8 @@ class GameEngine {
 
   private playAudio = () => {
     if (this.isSoundEnabled) {
-      const audio = new Audio('./audio/moving_sound.mp3');
+      console.log(audioMove);
+      const audio = new Audio(audioMove);
       audio.oncanplaythrough = () => {
         audio.play();
       };
@@ -106,44 +109,43 @@ class GameEngine {
   }
 
   private moveCells = (event: KeyboardEvent) => {
-    let res;
-    // TODO: сделать проверку на движение отдельно я полагаю
+    let direction : Direction | null = null;
     switch (event.code) {
       case KeyCodes.LEFT:
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
-        this.playAudio();
-        this.clearTilesAndMove();
-        res = move(this.tileList, Direction.LEFT)
+        direction = Direction.LEFT;
         break;
       case KeyCodes.RIGHT:
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
-        this.playAudio();
-        this.clearTilesAndMove();
-        res = move(this.tileList, Direction.RIGHT)
+        direction = Direction.RIGHT;
         break;
       case KeyCodes.DOWN:
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
-        this.playAudio();
-        this.clearTilesAndMove();
-        res = move(this.tileList, Direction.DOWN)
+        direction = Direction.DOWN;
         break;
       case KeyCodes.UP:
         if (!this.canMove[Direction.UP]) {
           return;
         }
-        this.playAudio();
-        this.clearTilesAndMove();
-        res = move(this.tileList, Direction.UP)
+        direction = Direction.UP;
         break;
     }
 
-    const [matrix, moveList] = res;
+    if (direction === null) {
+      return;
+    }
+
+    this.playAudio();
+    this.clearTilesAndMove();
+    const res = move(this.tileList, direction)
+
+    const {matrix, moveList} = res;
 
     this.moveList = moveList;
     this.tileList = this.createTileListFromMatrix(matrix)

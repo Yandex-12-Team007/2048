@@ -130,6 +130,7 @@ export default function CommentForm({
         </label>
         <textarea
           id={'content'}
+          rows={4}
           className={'comment-form__textarea'}
           {...register('content')}
         />

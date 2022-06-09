@@ -1,9 +1,11 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {forumSelector} from 'Store/selectors';
+import {forumSelector, usersSelector} from 'Store/selectors';
 import classNames from 'classnames';
 
-import {IForumState, IRootState} from 'Interface/IRootState';
+import {formaDate} from 'Utils/dateHelper';
+
+import {IForumState, IRootState, IUsersStore} from 'Interface/IRootState';
 import {IComment} from 'Interface/IComment';
 
 import './ForumMessage.pcss';
@@ -25,20 +27,32 @@ export default function ForumMessage({content, commentId, isAnswer = false}
 
   const forumMessageClass = classNames({
     'forum-message': true,
-    'forum-message_answer': isAnswer,
+    'forum-message__answer': isAnswer,
   });
 
   return <div className={forumMessageClass}>
     {answer !== null ?
-      <div className={'forum-message__answer-wrapper'}>
-        <ForumMessage
-          content={answer.content}
-          commentId={answer.commentId}
-          isAnswer={true}
-        />
-      </div> :
+      <Answer answer={answer}/> :
       null
     }
-    {content}
+    <p className={'forum-message__message'}>{content}</p>
   </div>
+}
+
+function Answer({answer} : {answer : IComment}) {
+  const users:IUsersStore = useSelector<IRootState, IUsersStore>(usersSelector);
+  const author = users[answer.author] ?
+    users[answer.author].first_name :
+    answer.author;
+
+  return <fieldset className={'forum-message__answer-wrapper'}>
+    <legend>
+      {`${formaDate(answer.createdAt)} от: ${author}`}
+    </legend>
+    <ForumMessage
+      content={answer.content}
+      commentId={answer.commentId}
+      isAnswer={true}
+    />
+  </fieldset>
 }

@@ -13,7 +13,7 @@ import './ForumBadge.pcss';
 export default function ForumBadge({name, img} : IForumBadgeProps) {
   return <div className={'forum-badge'}>
     {img !== null ? <AvatarImg img={img} /> : <EmptyImg />}
-    <span className='forum-card__user-name'>{name !== null ? name : ''}</span>
+    <span className='forum-badge__user-name'>{name !== null ? name : ''}</span>
   </div>
 }
 
