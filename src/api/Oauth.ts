@@ -9,7 +9,9 @@ enum OauthSubpath {
 }
 
 class OauthApi {
-  private redirect_uri = typeof window !== 'undefined' ? window.location.origin : null;
+  private redirect_uri = typeof window !== 'undefined' ?
+    window.location.origin :
+    null;
 
   public getServiceId() {
     const params = queryString.stringify({

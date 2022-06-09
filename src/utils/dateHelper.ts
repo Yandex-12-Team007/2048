@@ -1,12 +1,12 @@
-enum Days {
-  'Вс',
-  'Пн',
-  'Вт',
-  'Ср',
-  'Чт',
-  'Пт',
-  'Сб'
-}
+// enum Days {
+//   'Вс',
+//   'Пн',
+//   'Вт',
+//   'Ср',
+//   'Чт',
+//   'Пт',
+//   'Сб'
+// }
 
 enum Months {
   'Января',
@@ -23,7 +23,7 @@ enum Months {
   'Декабрь'
 }
 
-const DAY = 86400000;
+// const DAY = 86400000;
 
 /** createDate
  * @description Не помню зачем писал =)
@@ -39,22 +39,22 @@ function createDate(time : string) : Date {
  * @param {Date} date
  * @return {string}
  */
-function getDayOfWeek(date : Date) {
-  return Days[date.getDay()];
-}
+// function getDayOfWeek(date : Date) {
+//   return Days[date.getDay()];
+// }
 
 /** getTime
  * @description Получаем время из даты в формате hh:mm
  * @param {Date} date
  * @return {string}
  */
-function getTime(date : Date) : string {
-  let m = String(date.getMinutes());
-  if (Number(m) < 10) {
-    m = '0' + m;
-  }
-  return date.getHours() + ':' + m;
-}
+// function getTime(date : Date) : string {
+//   let m = String(date.getMinutes());
+//   if (Number(m) < 10) {
+//     m = '0' + m;
+//   }
+//   return date.getHours() + ':' + m;
+// }
 
 /** getMonth
  * @description Получаем строковое представление месяца

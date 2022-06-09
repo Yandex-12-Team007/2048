@@ -1,19 +1,24 @@
-import {ForumState} from 'Interface/IRootState';
+import {IForumState} from 'Interface/IRootState';
 import {Action} from 'redux';
 import {ForumActionTypes} from '../actionCreators/forum'
+// import {ITopic} from 'Interface/ITopic';
+// import {IComment} from 'Interface/IComment';
 
-const defaultState: ForumState = {
+const defaultState: IForumState = {
   topic: [],
-  comment: [],
-  topicComment: [],
+  comment: {},
+  topicComment: {},
 };
 
 interface IActionType extends Action {
+  // payload: IForumState | ITopic | IComment;
   payload: any;
 }
 
-export function forumReducer(state = defaultState, action : IActionType)
-  : ForumState {
+export function forumReducer(
+    state = defaultState,
+    action : IActionType
+) : IForumState {
   switch (action.type) {
     case ForumActionTypes.GET_STATE:
       return {
@@ -28,9 +33,7 @@ export function forumReducer(state = defaultState, action : IActionType)
       return newState;
     }
     case ForumActionTypes.ADD_NEW_COMMENT: {
-      console.log('ADD_NEW_COMMENT');
       const comment = action.payload;
-      console.log(comment);
       const newState = {...state};
       newState.comment[comment.id] = comment;
       newState.topicComment[comment.topicId].push(comment);

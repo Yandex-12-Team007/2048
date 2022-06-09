@@ -11,7 +11,9 @@ export const isServer = !(
 );
 
 function getComposeEnhancers() {
-  return process.env.NODE_ENV !== 'production' && !isServer ? composeWithDevTools : compose;
+  return process.env.NODE_ENV !== 'production' && !isServer ?
+    composeWithDevTools :
+    compose;
 }
 
 export function configureStore(initialState?: IRootState) {

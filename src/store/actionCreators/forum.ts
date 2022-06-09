@@ -32,9 +32,10 @@ export const createTopic = (newTopic : ITopicCreate) =>
         })
   };
 
-export const addComment = (newComment : ICommentCreate) => (dispatch: Dispatch) => {
-  commentApi.create(newComment)
-      .then((res) => {
-        dispatch({type: ForumActionTypes.ADD_NEW_COMMENT, payload: res})
-      })
-}
+export const addComment = (newComment : ICommentCreate) =>
+  (dispatch: Dispatch) => {
+    commentApi.create(newComment)
+        .then((res) => {
+          dispatch({type: ForumActionTypes.ADD_NEW_COMMENT, payload: res})
+        })
+  }

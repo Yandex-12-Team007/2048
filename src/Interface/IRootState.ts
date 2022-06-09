@@ -23,7 +23,7 @@ export interface LeaderboardState {
 export interface IForumState {
   topic: ITopic[],
   comment: Record<number, IComment>
-  topicComment: Record<number, IComment>
+  topicComment: Record<number, IComment[]>
 }
 
 export interface IRootState {
@@ -45,7 +45,7 @@ export const getInitialState = (): IRootState => ({
   },
   forum: {
     topic: [],
-    comment: [],
-    topicComment: [],
+    comment: {},
+    topicComment: {},
   },
 });

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from 'Components/Button';
+
 import IUser from 'Interface/IUser';
 
 import './ForumOptions.pcss';
@@ -11,7 +13,12 @@ interface IForumOptions {
   setCommentId : (number) => void,
 }
 
-export default function ForumOptions({user, author, commentId, setCommentId} : IForumOptions) {
+export default function ForumOptions({
+  user,
+  author,
+  commentId,
+  setCommentId,
+} : IForumOptions) {
   if (user === null) {
     return null
   }
@@ -37,17 +44,23 @@ export default function ForumOptions({user, author, commentId, setCommentId} : I
 
 function AuthorOptions() {
   return <>
-    <div>Изменить</div>
-    <div>Удалить</div>
+    <Button
+      className={'forum-options__btn'}
+      text={'Изменить'}
+    />
+    <Button
+      className={'forum-options__btn'}
+      text={'Удалить'}
+    />
   </>
 }
 
 function UserOptions({setCommentId, commentId}) {
   return <>
-    <div
+    <Button
+      className={'forum-options__btn'}
+      text={'Ответить'}
       onClick={() => setCommentId(commentId)}
-    >
-      Ответить
-    </div>
+    />
   </>
 }

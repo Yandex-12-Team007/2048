@@ -1,5 +1,5 @@
-import {authApi} from '../api/auth-api';
-import {OAuthApi} from '../api/Oauth';
+import {authApi} from 'Api/auth-api';
+import {OAuthApi} from 'Api/Oauth';
 import {ILoginUserModel, IRegistrationUserModel} from 'Interface/IUser';
 
 export class AuthController {
@@ -37,6 +37,7 @@ export class AuthController {
   }
 
   private static createOauthUrl(serviceId, redirectUrl) {
+    // eslint-disable-next-line max-len
     return `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${redirectUrl}`;
   }
 }

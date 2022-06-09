@@ -37,7 +37,8 @@ const ForumTheme = loadable(() => import('Pages/ForumTheme'));
 const Error = loadable(() => import('Pages/Error'));
 
 function App() {
-  const [darkThemeState, setDarkThemeState] = useState<'on' | 'off'>('off');
+  const [darkThemeState, setDarkThemeState] =
+    useState<'on' | 'off'>('off');
 
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
@@ -56,7 +57,8 @@ function App() {
       dispatch(getUser());
     }
 
-    const savedDarkThemeState = localStorage.getItem('darkThemeState') as 'on' | 'off' | null;
+    const savedDarkThemeState =
+      localStorage.getItem('darkThemeState') as 'on' | 'off' | null;
     setDarkThemeState(savedDarkThemeState ?? 'off');
   }, []);
 
@@ -66,7 +68,12 @@ function App() {
   }
 
   return <ErrorBoundary>
-    <div className={classNames('app', {'app--dark-theme': darkThemeState === 'on'})}>
+    <div className={
+      classNames(
+          'app',
+          {'app--dark-theme': darkThemeState === 'on'}
+      )}
+    >
       <ThemeSwitcher
         className='app__theme-switcher'
         state={darkThemeState}

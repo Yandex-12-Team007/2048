@@ -44,7 +44,6 @@
   width: 100%;
   border-collapse: initial;
   border-spacing: 10px;
-  color: var(--main-text-color);
   font-size: 20px;
 
   thead {
@@ -82,6 +81,12 @@
     background-color: var(--second-bg);
     cursor: pointer;
     border-radius: 10px;
+
+    color: var(--main-text-color);
+  }
+
+  &__header &__row {
+    background-color: var(--orange);
   }
 
   &__body &__row {
@@ -94,6 +99,11 @@
     padding: 15px;
     width: 33%;
     border-right: 3px solid var(--main-bg);
+    color: var(--main-text-color);
+  }
+
+  &__header &__row &__cell {
+    color: var(--main-bg);
   }
 }
 

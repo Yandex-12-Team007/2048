@@ -19,7 +19,14 @@ export const ThemeSwitcher: FunctionComponent<IThemeSwitcherProps> = ({
   }
 
   return (
-    <div className={classNames('theme-switcher', {['theme-switcher--dark']: state === 'on'}, className)}>
+    <div
+      className={
+        classNames(
+            'theme-switcher',
+            {['theme-switcher--dark']: state === 'on'},
+            className)
+      }
+    >
       <input
         type="checkbox"
         id="themeSwitch"

@@ -4,10 +4,10 @@ import ForumBadge from '../ForumBadge';
 import ForumMessage from '../ForumMessage';
 import ForumOptions from '../ForumOptions';
 
-import {formaDate, formatFullDate} from 'Utils/dateHelper';
+import {formaDate} from 'Utils/dateHelper';
 
 import {IComment} from 'Interface/IComment';
-import IUser from 'Interface/IUser';
+import IUser, {Nullable} from 'Interface/IUser';
 
 import _ from 'lodash';
 
@@ -17,7 +17,7 @@ import './ForumCard.pcss';
 interface IForumCardProps {
   className?: string;
   comment: IComment,
-  user: IUser,
+  user: Nullable<IUser>,
   commentUser: null | IUser,
   setCommentId: (number) => void
 }

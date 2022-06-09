@@ -16,8 +16,7 @@ interface IForumMessageProps {
 
 export default function ForumMessage({content, commentId, isAnswer = false}
   : IForumMessageProps) {
-  // @ts-ignore
-  const forum : IForumState = useSelector<IRootState>(forumSelector);
+  const forum:IForumState = useSelector<IRootState, IForumState>(forumSelector);
   let answer : IComment | null = null;
 
   if (commentId !== null) {
