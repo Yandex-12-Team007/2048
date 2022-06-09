@@ -26,7 +26,6 @@ export interface INavLink {
 
 export default function Nav({isSmall = true, changeSize, contentRef}) {
   const location = useLocation();
-  console.log(location);
   const navClass = classNames({
     'nav': true,
     'nav_full': !isSmall,

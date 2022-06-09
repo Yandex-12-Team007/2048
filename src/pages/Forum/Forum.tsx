@@ -63,8 +63,6 @@ export default function Forum() {
     dispatch(createTopic(newTopic))
   }
 
-  console.log(forum);
-
   return (
     <Layout
       contentClassName='forum-container'

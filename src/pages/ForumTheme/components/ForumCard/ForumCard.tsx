@@ -29,7 +29,6 @@ const ForumCard = ({
   commentUser,
   setCommentId,
 } : IForumCardProps) => {
-  console.log(`ForumCard ${comment.id}`);
   const {author, content, createdAt, commentId} = comment;
 
   const img = commentUser !== null &&

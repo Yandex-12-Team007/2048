@@ -82,7 +82,6 @@ class GameEngine {
 
   private playAudio = () => {
     if (this.isSoundEnabled) {
-      console.log(audioMove);
       const audio = new Audio(audioMove);
       audio.oncanplaythrough = () => {
         audio.play();
