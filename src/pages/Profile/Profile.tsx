@@ -46,7 +46,10 @@ export default function Profile() {
         <div className={'profile-container__avatar'}>
           <img
             className={avatarContainerClass}
-            src={userAvatar.length > 0 ? resourceLink(userAvatar) : defaultAvatar}
+            src={userAvatar.length > 0 ?
+              resourceLink(userAvatar) :
+              defaultAvatar
+            }
             alt="аватар"
           />
           <div

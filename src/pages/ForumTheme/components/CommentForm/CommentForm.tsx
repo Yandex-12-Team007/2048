@@ -11,6 +11,7 @@ import {forumSelector, userSelector} from 'Store/selectors';
 import {addComment} from 'Store/actionCreators/forum';
 
 import {IComment, ICommentCreate} from 'Interface/IComment';
+import IUser, {Nullable} from 'Interface/IUser';
 import {IForumState, IRootState} from 'Interface/IRootState';
 
 
@@ -50,10 +51,12 @@ export default function CommentForm({
       commentId: commentId,
     },
   });
-  const user = useSelector<IRootState>(userSelector)
+  const user : Nullable<IUser> = useSelector<
+    IRootState,
+    Nullable<IUser>
+    >(userSelector)
 
-  // @ts-ignore
-  const forum : IForumState = useSelector<IRootState>(forumSelector);
+  const forum:IForumState = useSelector<IRootState, IForumState>(forumSelector);
   let comment : IComment | null = null;
 
   if (commentId !== 0) {
@@ -61,21 +64,24 @@ export default function CommentForm({
   }
 
   const handleComment = (
-      {content}: { comment: string }
+      {content}: { content: string}
   ) => {
-    let commentId = null;
+    let realCommentId : number | null = null;
     if (comment !== null) {
-      commentId = comment.id;
+      realCommentId = comment.id;
+    }
+
+    // TODO: При отсутствии пользователя - выдавать ошибку
+    if (user === null) {
+      return;
     }
 
     const newComment : ICommentCreate = {
       content: content,
       topicId: topicId,
       author: user.id,
-      commentId: commentId,
+      commentId: realCommentId,
     }
-
-    console.log(newComment);
 
     dispatch(addComment(newComment))
     unsetCommentId();
@@ -124,6 +130,7 @@ export default function CommentForm({
         </label>
         <textarea
           id={'content'}
+          rows={4}
           className={'comment-form__textarea'}
           {...register('content')}
         />

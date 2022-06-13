@@ -14,9 +14,9 @@ import {userApi} from 'Api/userApi';
 import {getForumState} from 'Store/actionCreators/forum';
 import {forumSelector, usersSelector, userSelector} from 'Store/selectors';
 
-import {IForumState, IRootState} from 'Interface/IRootState';
+import {IForumState, IRootState, IUsersStore} from 'Interface/IRootState';
 import {IComment} from 'Interface/IComment';
-import IUser from 'Interface/IUser';
+import IUser, {Nullable} from 'Interface/IUser';
 
 import Routes from 'Constants/Routes';
 
@@ -25,23 +25,21 @@ import {
   setUsersFromData,
 } from 'Store/actionCreators/users';
 
-export default function ForumTheme(props) {
-  console.log(`ForumTheme`);
+export default function ForumTheme() {
   // eslint-disable-next-line camelcase
   const {topicId} = useParams();
   const [answerId, setAnswerId] = useState(0);
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
-  // @ts-ignore
-  const forum : IForumState = useSelector<IRootState>(forumSelector);
-  // @ts-ignore
-  const users : IForumState = useSelector<IRootState>(usersSelector);
-  // @ts-ignore
-  const user : IUser = useSelector<IRootState>(userSelector);
+  const forum: IForumState = useSelector<IRootState, IForumState>(forumSelector)
+  const users: IUsersStore = useSelector<IRootState, IUsersStore>(usersSelector)
+  const user : Nullable<IUser> = useSelector<
+    IRootState,
+    Nullable<IUser>
+  >(userSelector);
   const {topic, topicComment} : IForumState = forum;
 
   useEffect(() => {
     if (topic.length === 0) {
-      // @ts-ignore
       dispatch(getForumState());
     }
   }, []);
@@ -58,24 +56,24 @@ export default function ForumTheme(props) {
 
   // Переменная для отсеивания дубликатов пользователей
   const newUsersList = {};
-
-  Promise.all(topicComment[currentTopic.id].filter((comment) => {
-    if (!users[comment.author] && !newUsersList[comment.author]) {
-      // Заполняем словать дублей
-      newUsersList[comment.author] = true;
-      return true;
-    }
-    return false;
-  }).map((comment) => {
-    return userApi.getUserById(comment.author)
-        .then((res) => res.json())
-  }))
-      .then((res) => {
-        dispatch(setUsersFromData(res));
-      })
-
-  // @ts-ignore
   const comments : IComment[] = topicComment[currentTopic.id] ?? [];
+
+  if (Array.isArray(comments) && comments.length > 0) {
+    Promise.all(comments.filter((comment) => {
+      if (!users[comment.author] && !newUsersList[comment.author]) {
+        // Заполняем словать дублей
+        newUsersList[comment.author] = true;
+        return true;
+      }
+      return false;
+    }).map((comment) => {
+      return userApi.getUserById(comment.author)
+          .then((res) => res.json())
+    }))
+        .then((res) => {
+          dispatch(setUsersFromData(res));
+        })
+  }
 
   function unsetCommentId() {
     setAnswerId(0);

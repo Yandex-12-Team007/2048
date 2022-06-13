@@ -8,13 +8,10 @@ import Input from 'Components/Input/Input';
 
 import {userController} from 'Controllers/userController';
 
-import IUser, {Nullable} from 'Interface/IUser';
-
 import './PasswordInfoEditing.pcss';
 import {useDispatch} from 'react-redux';
 
 interface IPasswordInfoEditingProps {
-  user: Nullable<IUser>
   onSave: () => void;
   back: () => void;
 }
@@ -27,7 +24,7 @@ export const schema = object({
 }).required();
 
 const PasswordInfoEditing: FunctionComponent<IPasswordInfoEditingProps> = (
-    {user, onSave, back}) => {
+    {onSave, back}) => {
   const {handleSubmit, formState: {errors}, register} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {

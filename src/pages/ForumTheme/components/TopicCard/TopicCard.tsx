@@ -29,7 +29,7 @@ export default function TopicCard({topic} : ITopicCardProps) {
   topicUser.avatar &&
   topicUser.avatar.length > 0 ? topicUser.avatar : null;
 
-  const name = topicUser !== null ? topicUser.login : '';
+  const name = topicUser !== null ? topicUser.first_name : '';
 
   return <div className={'topic-card'}>
     <ForumBadge

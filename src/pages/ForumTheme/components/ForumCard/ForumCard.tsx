@@ -4,10 +4,10 @@ import ForumBadge from '../ForumBadge';
 import ForumMessage from '../ForumMessage';
 import ForumOptions from '../ForumOptions';
 
-import {formaDate, formatFullDate} from 'Utils/dateHelper';
+import {formaDate} from 'Utils/dateHelper';
 
 import {IComment} from 'Interface/IComment';
-import IUser from 'Interface/IUser';
+import IUser, {Nullable} from 'Interface/IUser';
 
 import _ from 'lodash';
 
@@ -17,7 +17,7 @@ import './ForumCard.pcss';
 interface IForumCardProps {
   className?: string;
   comment: IComment,
-  user: IUser,
+  user: Nullable<IUser>,
   commentUser: null | IUser,
   setCommentId: (number) => void
 }
@@ -29,14 +29,13 @@ const ForumCard = ({
   commentUser,
   setCommentId,
 } : IForumCardProps) => {
-  console.log(`ForumCard ${comment.id}`);
   const {author, content, createdAt, commentId} = comment;
 
   const img = commentUser !== null &&
   commentUser.avatar &&
   commentUser.avatar.length > 0 ? commentUser.avatar : null;
 
-  const name = commentUser !== null ? commentUser.login : '';
+  const name = commentUser !== null ? commentUser.first_name : '';
 
   return <div className={classNames('forum-card', className)}>
     <div className={'forum-card__card-wrapper'}>

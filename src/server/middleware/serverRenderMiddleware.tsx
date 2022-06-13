@@ -11,8 +11,7 @@ import path from 'path';
 import {getInitialState, IRootState} from '../../Interface/IRootState';
 import {renderObject} from 'Utils/renderObject';
 
-// В этой middleware мы формируем первичное состояние приложения на стороне сервера
-// Попробуйте её подебажить, чтобы лучше разобраться, как она работает
+// В тут мы формируем первичное состояние приложения на стороне сервера
 export default function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
   const context: StaticRouterContext = {};
@@ -43,7 +42,12 @@ export default function serverRenderMiddleware(req: Request, res: Response) {
       .send(getHtml(reactHtml, reduxState, chunkExtractor));
 }
 
-function getHtml(reactHtml: string, reduxState: IRootState, chunkExtractor: ChunkExtractor) {
+function getHtml(
+    reactHtml: string,
+    reduxState: IRootState,
+    chunkExtractor:
+    ChunkExtractor
+) {
   const scriptTags = chunkExtractor.getScriptTags();
   const linkTags = chunkExtractor.getLinkTags();
   const styleTags = chunkExtractor.getStyleTags();

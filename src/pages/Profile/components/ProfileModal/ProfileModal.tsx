@@ -1,7 +1,9 @@
 import React, {useRef, useState, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark} from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames';
+import _ from 'lodash';
 
 import DefaultModal from 'Components/Modal/DefaultModal';
 import Button from 'Components/Button/Button';
@@ -9,10 +11,6 @@ import Button from 'Components/Button/Button';
 import {userController} from 'Controllers/userController';
 
 import './ProfileModal.pcss';
-import {useDispatch} from 'react-redux';
-
-/* eslint @typescript-eslint/no-var-requires: "off" */
-const _ = require('lodash');
 
 enum ErrorType {
   VALID,

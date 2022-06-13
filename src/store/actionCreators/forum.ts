@@ -25,16 +25,16 @@ export const getForumState = () =>
 
 export const createTopic = (newTopic : ITopicCreate) =>
   (dispatch: Dispatch) => {
-    console.log(newTopic);
     return topicApi.create(newTopic)
         .then((res) => {
           dispatch({type: ForumActionTypes.ADD_TOPIC, payload: res})
         })
   };
 
-export const addComment = (newComment : ICommentCreate) => (dispatch: Dispatch) => {
-  commentApi.create(newComment)
-      .then((res) => {
-        dispatch({type: ForumActionTypes.ADD_NEW_COMMENT, payload: res})
-      })
-}
+export const addComment = (newComment : ICommentCreate) =>
+  (dispatch: Dispatch) => {
+    commentApi.create(newComment)
+        .then((res) => {
+          dispatch({type: ForumActionTypes.ADD_NEW_COMMENT, payload: res})
+        })
+  }

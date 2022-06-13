@@ -19,21 +19,24 @@ import Routes from 'Constants/Routes';
 
 import './Forum.pcss';
 import {ITopicCreate} from 'Interface/ITopic';
+import IUser, {Nullable} from 'Interface/IUser';
 
 
 export default function Forum() {
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
-  // @ts-ignore
-  const forum : IForumState = useSelector<IRootState>(forumSelector);
-  // @ts-ignore
-  const users : IUsersStore = useSelector<IRootState>(usersSelector);
-  const user : IUsersStore = useSelector<IRootState>(userSelector);
+  const forum: IForumState = useSelector<IRootState, IForumState>(forumSelector)
+  const users: IUsersStore = useSelector<IRootState, IUsersStore>(usersSelector)
+
+  const user: Nullable<IUser> = useSelector<
+    IRootState,
+    Nullable<IUser>
+  >(userSelector);
+
   const [modal, setModal] = useState(false);
   const {topic, topicComment} = forum;
 
   useEffect(() => {
     if (topic.length === 0) {
-      // @ts-ignore
       dispatch(getForumState());
     }
   }, []);
@@ -47,6 +50,10 @@ export default function Forum() {
   }, [topic])
 
   function createTopicFunc(title : string, content : string) {
+    if (user === null) {
+      return;
+    }
+
     const newTopic : ITopicCreate = {
       title: title,
       content: content,
@@ -56,8 +63,6 @@ export default function Forum() {
     dispatch(createTopic(newTopic))
   }
 
-  console.log(forum);
-
   return (
     <Layout
       contentClassName='forum-container'
@@ -65,7 +70,12 @@ export default function Forum() {
     >
       <div className='forum-header'>
         <span className='forum-header__caption'>Топ</span>
-        <button onClick={() => setModal(true)} className='forum-header__add-button'/>
+        <button
+          onClick={
+            () => setModal(true)
+          }
+          className='forum-header__add-button'
+        />
       </div>
       <div className='forum-content'>
         <div className='forum-content__header'>
@@ -76,14 +86,18 @@ export default function Forum() {
           </div>
         </div>
         <div className='forum-content__body'>
-          {forum.topic.map((theme, index) => <Link
+          {forum.topic.map((theme) => <Link
             className='forum-content__row table-row'
             key={theme.id}
             to={routeReplace(Routes.FORUM_THEME, 'topicId', ''+theme.id)}
           >
             <div className={'forum-content__cell'}>{theme.title}</div>
-            <div className={'forum-content__cell'}>{topicComment[theme.id] ? topicComment[theme.id].length : 0}</div>
-            <div className={'forum-content__cell'}>{users[theme.author] ? users[theme.author].login : theme.author}</div>
+            <div className={'forum-content__cell'}>
+              {topicComment[theme.id] ? topicComment[theme.id].length : 0}
+            </div>
+            <div className={'forum-content__cell'}>
+              {users[theme.author] ? users[theme.author].login : theme.author}
+            </div>
           </Link>
           )}
         </div>

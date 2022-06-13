@@ -1,7 +1,9 @@
 class ApiError extends Error {
+  public status: number;
+  public message: string;
+
   constructor(status, message) {
     super();
-    // @ts-ignore
     this.status = status
     this.message = message
   }

@@ -2,7 +2,6 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import sequalize from './server/db';
-// @ts-ignore
 import * as models from './server/models/model';
 import router from './server/routes/index';
 import compression from 'compression';

@@ -13,8 +13,8 @@ import './Registration.pcss';
 import {IRegistrationUserModel} from 'Interface/IUser';
 import {phoneRegExp} from './constants';
 import {useSelector} from 'react-redux';
-import {IRootState} from '../../Interface/IRootState';
-import {userSelector} from '../../Store/selectors';
+import {IRootState} from 'Interface/IRootState';
+import {userSelector} from 'Store/selectors';
 
 const schema = object({
   login: string().matches(

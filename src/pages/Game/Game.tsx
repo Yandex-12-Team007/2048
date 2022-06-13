@@ -14,6 +14,9 @@ import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 
 import './Game.pcss';
 import {SoundButton} from 'Components/SoundButton/SoundButton';
+import {ThunkDispatch} from 'redux-thunk';
+import {IRootState} from 'Interface/IRootState';
+import {AnyAction} from 'redux';
 
 export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -25,13 +28,12 @@ export default function Game() {
   const [gameState, setGameState] = useState(GameState.INIT);
   const [width] = useState(450);
 
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   // Берем рекорд из хранилища
   let record = leaderboard.score;
   // Если счет больше - фиксим баг с последним обновлением
   if (score > record && user !== null) {
     record = score;
-    // @ts-ignore
     dispatch(updateScore({
       score: score,
       user: user,
@@ -49,7 +51,6 @@ export default function Game() {
 
   // Есть смысл запрашивать рекорд только при не null пользователе
   useEffect(() => {
-    // @ts-ignore
     dispatch(setScoreByUser(user));
   }, [user]);
 
