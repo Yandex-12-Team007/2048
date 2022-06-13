@@ -1,20 +1,25 @@
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import {logger, errorLogger} from './server/middleware/logger';
 import sequalize from './server/db';
 import * as models from './server/models/model';
 import router from './server/routes/index';
-import compression from 'compression';
 import serverRenderMiddleware from './server/middleware/serverRenderMiddleware';
+import authMiddleware from './server/middleware/authMiddleware';
 import '@babel/polyfill';
 
 const app = express();
+app.use(logger());
+app.use(errorLogger());
 app.use(cors())
+app.use(cookieParser())
 app.use(express.json())
-
 app.use(compression())
     .use(express.static(path.resolve(__dirname, '../dist')));
-
+app.use(authMiddleware);
 // Сначала Api потом отлавливаем все запросы в SSR midleware
 app.use('/api', router);
 app.get('*', serverRenderMiddleware);

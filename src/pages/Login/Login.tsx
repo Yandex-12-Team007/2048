@@ -55,7 +55,7 @@ export default function Login() {
       {login, password}: { login: string, password: string }
   ) => {
     authController.signIn({login, password})
-        .then(() => {
+        .then((res) => {
           dispatch(getUser());
         })
         .then(() => {
