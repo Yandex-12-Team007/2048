@@ -3,7 +3,6 @@ import {useParams, Redirect} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
-import {Scrollbar} from 'react-scrollbars-custom';
 
 import Layout from 'Components/Layout';
 import TopicCard from './components/TopicCard';
@@ -89,7 +88,7 @@ export default function ForumTheme() {
       contentClassName='forum-theme-container'
       title={currentTopic.title}
     >
-      <Scrollbar className={'forum-theme__scroll'}>
+      <div className={'forum-theme__scroll'}>
         <TopicCard topic={currentTopic} />
         {
           comments.map((comment) => (
@@ -108,7 +107,7 @@ export default function ForumTheme() {
           unsetCommentId={unsetCommentId}
           topicId={currentTopic.id}
         />
-      </Scrollbar>
+      </div>
     </Layout>
   )
 }

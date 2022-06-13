@@ -59,6 +59,7 @@ function App() {
 
     const savedDarkThemeState =
       localStorage.getItem('darkThemeState') as 'on' | 'off' | null;
+
     setDarkThemeState(savedDarkThemeState ?? 'off');
   }, []);
 
