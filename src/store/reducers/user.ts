@@ -25,6 +25,11 @@ export function userReducer(state = defaultState, action: IActionType)
         ...state,
         model: action.payload as IUser,
       };
+    case userActionTypes.LOGOUT:
+      return {
+        status: 'failed',
+        model: null,
+      };
     default:
       return state;
   }

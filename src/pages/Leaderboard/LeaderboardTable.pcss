@@ -1,6 +1,8 @@
 .leaderboard-table {
   width: 100%;
   max-width: 640px;
+  background-color: var(--main-bg);
+  font: var(--title-font);
 
   table {
     width: 100%;
@@ -12,9 +14,9 @@
     thead {
       tr {
         th {
-          width: 50%;
           border-bottom: 1px solid #cdc1b3;
           padding: 0 0 10px;
+          color: var(--main-text-color);
         }
       }
     }
@@ -22,7 +24,6 @@
     tbody {
       tr {
         height: 32px;
-        padding: 10px 20px;
         color: #756a61;
 
         &:nth-child(1) {
@@ -38,10 +39,22 @@
         }
 
         td {
-          width: 50%;
+          padding: 10px;
           text-align: center;
         }
       }
     }
+  }
+
+  &__number_cell {
+    width: 80px;
+  }
+
+  &__user_cell {
+    width: auto;
+  }
+
+  &__score_cell {
+    width: 120px;
   }
 }

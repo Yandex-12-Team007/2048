@@ -116,7 +116,10 @@ function moving(
       }
     }
   }
-  return [matrix, moveList];
+  return {
+    matrix: matrix,
+    moveList: moveList,
+  };
 }
 
 function swipe(matrix, i, j, index, pos, direction, moveList) {

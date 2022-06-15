@@ -6,7 +6,7 @@
     ],
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "importHelpers": true,
     "noUnusedLocals": true,
@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "declaration": false,
     "sourceMap": false,
     "outDir": "./dist",
@@ -33,12 +34,19 @@
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "es6"
+    }
+  },
   "include": [
+    "webpack.config.ts",
     "src",
     "typings/**/*.d.ts",
     "./node_modules/@types"
   ],
   "exclude": [
     "**/*.js"
-  ]
+  ],
 }

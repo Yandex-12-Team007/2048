@@ -1,13 +1,16 @@
 import React, {FunctionComponent} from 'react';
 import Button, {ButtonAppearance} from 'Components/Button/Button';
 import './ProfileInfo.pcss';
+import IUser, {Nullable} from 'Interface/IUser';
 
 interface IProfileInfo {
+  user: Nullable<IUser>,
   onInfoChange: () => void;
   onPasswordChange: () => void;
 }
 
 const ProfileInfo: FunctionComponent<IProfileInfo> = ({
+  user,
   onInfoChange,
   onPasswordChange,
 }) => {
@@ -17,25 +20,25 @@ const ProfileInfo: FunctionComponent<IProfileInfo> = ({
         <li className='profile-info__item'>
           <span className='profile-info__item-caption'>Почта</span>
           <span className='profile-info__item-value'>
-            pochta@yandex.ru
+            {user?.email ?? ''}
           </span>
         </li>
         <li className='profile-info__item'>
           <span className='profile-info__item-caption'>Логин</span>
           <span className='profile-info__item-value'>
-            login
+            {user?.login ?? ''}
           </span>
         </li>
         <li className='profile-info__item'>
           <span className='profile-info__item-caption'>Имя</span>
           <span className='profile-info__item-value'>
-            Иван
+            {user?.first_name ?? ''}
           </span>
         </li>
         <li className='profile-info__item'>
           <span className='profile-info__item-caption'>Фамилия</span>
           <span className='profile-info__item-value'>
-            Иванов
+            {user?.second_name ?? ''}
           </span>
         </li>
       </ul>

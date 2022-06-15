@@ -6,8 +6,6 @@ import './Footer.pcss';
 
 export default function Footer() {
   return <ErrorBoundary>
-    <footer className={'footer'}>
-        Тут будет Футер
-    </footer>
+    <footer className={'footer'} />
   </ErrorBoundary>
 }

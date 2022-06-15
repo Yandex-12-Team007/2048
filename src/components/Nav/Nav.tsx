@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 
 import ErrorBoundary from 'Components/ErrorBoundary';
@@ -21,11 +21,11 @@ export interface INavLink {
   link: null | Routes,
   icon: string
   linkActive: boolean,
-  action: null | any
+  action: null | any,
 }
 
 export default function Nav({isSmall = true, changeSize, contentRef}) {
-  /* TODO : Либо будем делать проверку на текущий роут, либо храним состояние */
+  const location = useLocation();
   const navClass = classNames({
     'nav': true,
     'nav_full': !isSmall,
@@ -37,7 +37,7 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
     const navLink : INavLink = {
       ...el,
       isSmall: isSmall,
-      linkActive: false,
+      linkActive: location.pathname.match(el.link),
       action: null,
     }
     return navLink;
@@ -65,7 +65,10 @@ export default function Nav({isSmall = true, changeSize, contentRef}) {
 
   return <div className={navClass}>
     <ErrorBoundary>
-      {nav.map((el) => <NavLink {...el}/>)}
+      {nav.map((el, id) => <NavLink
+        {...el}
+        key={id}
+      />)}
     </ErrorBoundary>
   </div>
 }

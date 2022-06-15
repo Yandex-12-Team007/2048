@@ -1,17 +1,30 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {useHistory} from 'react-router-dom';
+import classNames from 'classnames';
+import {useDispatch, useSelector} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
+
 import Arrow, {ArrowDirection} from 'Components/Arrow';
 import DropDown, {IDropDownItem, DropDownItemType} from 'Components/DropDown';
 
+import {authController} from 'Controllers/authController';
+
+import {resourceLink} from 'Utils/uploadHelper';
+
+import {userAvatarSelector, userNameSelector} from 'Store/selectors';
+import {logout} from 'Store/actionCreators/user';
+
 import Routes from 'Constants/Routes';
 
+import {IRootState} from 'Interface/IRootState';
+
 import './ProfileWidget.pcss';
-import {useSelector} from 'react-redux';
-import {userAvatarSelector, userNameSelector} from 'Store/selectors';
-import classNames from 'classnames';
-import {authController} from '../../controllers/authController';
 
 export default function ProfileWidget() {
+  const blockRef = useRef(null);
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
+
   const userName = useSelector(userNameSelector);
   const userAvatar = useSelector(userAvatarSelector);
 
@@ -28,18 +41,19 @@ export default function ProfileWidget() {
       title: 'Выйти',
       action: () => {
         authController.logout().then(() => {
+          dispatch(logout())
           history.push(Routes.LOGIN);
         })
       },
     },
   ];
 
-  return <div className={'profile-widget'}>
+  return <div className={'profile-widget'} ref={blockRef}>
     {
       userAvatar.length > 0 ?
       <img
         className={'profile-widget__image'}
-        src={userAvatar}
+        src={resourceLink(userAvatar)}
         alt={'аватар'}
       /> :
       <div

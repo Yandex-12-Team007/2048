@@ -1,18 +1,6 @@
-var express = require('express');
-var app = express();
-const path = require('path');
+// @ts-ignore
+import {start} from './dist/server';
 
-const PORT = 3000;
-const HOST = '0.0.0.0';
-/** Возможность прокидывания порта из CLI */
-const port = process.env.PORT || PORT;
-const host = process.env.IP || HOST;
+const port = process.env.PORT || 8000;
 
-app.use(express.static('dist'));
-
-//Стартовая страница
-app.get('*', function(req, res) {
-  res.status(200).sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-});
-
-app.listen(port, host, () => console.log(`Server started on port ${port}`));
+start(port);

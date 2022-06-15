@@ -11,9 +11,15 @@
   border-bottom: 1px solid var(--gray);
 }
 
-.header-title {
+.header-title__wrapper {
+  position: absolute;
+  width: 100%;
   text-align: center;
   height: 64px;
+}
+
+.header-title {
+  text-align: center;
   line-height: 64px;
 }
 
@@ -23,6 +29,8 @@
 }
 
 .logo-container {
+  position: relative;
+  z-index: 1001;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +38,8 @@
   height: 64px;
   background: var(--second-bg);
   transition: var(--change-width);
+  cursor: pointer;
+  text-decoration: none;
 
   &--wide {
     width: 280px;

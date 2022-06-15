@@ -9,9 +9,13 @@ import Input from 'Components/Input/Input';
 import {userController} from 'Controllers/userController';
 
 import './ProfileInfoEditing.pcss';
+import IUser, {Nullable} from 'Interface/IUser';
+import {useDispatch} from 'react-redux';
 
 interface IProfileInfoEditingProps {
-  onSave: () => void;
+  user: Nullable<IUser>
+  onSave: () => void
+  back: () => void
 }
 
 const schema = object({
@@ -26,25 +30,27 @@ const schema = object({
 }).required();
 
 const ProfileInfoEditing:
-  FunctionComponent<IProfileInfoEditingProps> = ({onSave}) => {
+  FunctionComponent<IProfileInfoEditingProps> = ({
+    user,
+    onSave,
+    back,
+  }) => {
     const {handleSubmit, formState: {errors}, register} = useForm({
       resolver: yupResolver(schema),
       defaultValues: {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        first_name: 'Иван',
-        second_name: 'Иванов',
-        display_name: 'Ivanya',
-        phone: '79099673030',
+        email: user?.email ?? '',
+        login: user?.login ?? '',
+        first_name: user?.first_name ?? '',
+        second_name: user?.second_name ?? '',
+        display_name: user?.display_name ?? '',
+        phone: user?.phone ?? '',
       },
     });
 
+    const dispatch = useDispatch();
 
     const handleInfoSave = async (data) => {
-      const res = await userController.changeProfile(data);
-      if (!res) {
-        throw new Error('Bad http request');
-      }
+      await userController.changeProfile(dispatch, data);
       onSave();
     }
 
@@ -104,12 +110,19 @@ const ProfileInfoEditing:
             />
           </li>
         </ul>
-        <Button
-          className='profile-info-editing__submit-button'
-          text='Сохранить'
-          type='submit'
-          onClick={handleInfoSave}
-        />
+        <div className='profile-info-editing__action-wrapper'>
+          <Button
+            className='profile-info-editing__submit-button'
+            text='Сохранить'
+            type='submit'
+          />
+          <Button
+            className={'profile-info-editing__back-button'}
+            text={'Назад'}
+            type={'button'}
+            onClick={back}
+          />
+        </div>
       </form>
     )
   }

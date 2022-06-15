@@ -1,30 +1,26 @@
-import {
-  BOARD_SIZE,
-  GameState,
-  KeyCodes,
-} from 'Constants/game';
+import {BOARD_SIZE, GameState, KeyCodes} from 'Constants/game';
 import {Direction, ICanMove, IMoveTile, INewTileScheme, ITile} from '../types';
 
 import gamePainter from './gamePainter';
 import {check, move} from './gameMatrixHelper';
 
+import audioMove from 'Static/audio/moving-sound_short.mp3';
+
 class GameEngine {
   private tileList: ITile[][];
   private moveList: IMoveTile[];
   private newList: ITile[];
-  private record: number;
   private gameState: GameState;
   private canMove: ICanMove;
+  private isSoundEnabled: boolean;
 
   private updateScoreCallback!: (score: number) => void;
-  private updateRecordCallback!: (score: number) => void;
   private updateGameStateCallback!: (score: number) => void;
 
   constructor() {
     this.gameState = GameState.INIT;
     this.tileList = new Array(BOARD_SIZE).fill(new Array(BOARD_SIZE));
     this.moveList = [];
-    this.record = 0;
     this.newList = [];
     this.canMove = {
       [Direction.LEFT]: true,
@@ -32,6 +28,7 @@ class GameEngine {
       [Direction.UP]: true,
       [Direction.DOWN]: true,
     };
+    this.isSoundEnabled = true;
   }
 
   private createTileListFromMatrix(matrix : number[][]) {
@@ -83,6 +80,15 @@ class GameEngine {
     }
   }
 
+  private playAudio = () => {
+    if (this.isSoundEnabled) {
+      const audio = new Audio(audioMove);
+      audio.oncanplaythrough = () => {
+        audio.play();
+      };
+    }
+  }
+
   private checkMove() {
     this.canMove = check(this.tileList);
   }
@@ -93,6 +99,7 @@ class GameEngine {
         return false;
       }
     }
+    this.removeListeners();
     return true;
   }
 
@@ -101,40 +108,43 @@ class GameEngine {
   }
 
   private moveCells = (event: KeyboardEvent) => {
-    // Обнуляем список сдвигов
-    this.moveList = [];
-    this.newList = [];
-
-    let res;
-
+    let direction : Direction | null = null;
     switch (event.code) {
       case KeyCodes.LEFT:
         if (!this.canMove[Direction.LEFT]) {
           return;
         }
-        res = move(this.tileList, Direction.LEFT)
+        direction = Direction.LEFT;
         break;
       case KeyCodes.RIGHT:
         if (!this.canMove[Direction.RIGHT]) {
           return;
         }
-        res = move(this.tileList, Direction.RIGHT)
+        direction = Direction.RIGHT;
         break;
       case KeyCodes.DOWN:
         if (!this.canMove[Direction.DOWN]) {
           return;
         }
-        res = move(this.tileList, Direction.DOWN)
+        direction = Direction.DOWN;
         break;
       case KeyCodes.UP:
         if (!this.canMove[Direction.UP]) {
           return;
         }
-        res = move(this.tileList, Direction.UP)
+        direction = Direction.UP;
         break;
     }
 
-    const [matrix, moveList] = res;
+    if (direction === null) {
+      return;
+    }
+
+    this.playAudio();
+    this.clearTilesAndMove();
+    const res = move(this.tileList, direction)
+
+    const {matrix, moveList} = res;
 
     this.moveList = moveList;
     this.tileList = this.createTileListFromMatrix(matrix)
@@ -142,6 +152,12 @@ class GameEngine {
     this.addTile();
 
     this.updateGameState();
+  }
+
+  private clearTilesAndMove() {
+    // Обнуляем список сдвигов
+    this.moveList = [];
+    this.newList = [];
   }
 
   private addTile() {
@@ -210,11 +226,6 @@ class GameEngine {
       return acc;
     }, 0)
     this.updateScoreCallback(currentScore);
-    // Обновляем рекорд
-    if (currentScore > this.record) {
-      this.record = currentScore;
-      this.updateRecordCallback(this.record);
-    }
     // Если игра в стадии Play - проверяем на 2048
     // eslint-disable-next-line max-len
     if (this.gameState === GameState.PLAY && Math.max(...tileValueList) >= 2048) {
@@ -231,21 +242,17 @@ class GameEngine {
   public init(
       ctx: CanvasRenderingContext2D,
       width: number,
-      record = 0,
       updateScoreCallback: (score: number) => void,
-      updateRecordCallback: (score: number) => void,
       updateGameStateCallback: (score: number) => void,
   ) {
     gamePainter.init(ctx, width);
     this.updateScoreCallback = updateScoreCallback;
-    this.updateRecordCallback = updateRecordCallback;
     this.updateGameStateCallback = updateGameStateCallback;
-    this.record = record;
 
-    this.tileList = this.createEmptyTiles();
-    // this.tileList = this.createTestFields();
-    // Добавляем ячейки
-    this.addStartTiles();
+    if (this.gameState === GameState.INIT) {
+      this.tileList = this.createEmptyTiles();
+      this.addStartTiles();
+    }
     // Рисуем
     this.updateGameState();
     // Выставляем статус начала игры
@@ -266,6 +273,8 @@ class GameEngine {
 
     // Выставляем статус начала игры
     this.setGameStatus(GameState.PLAY);
+    // Вешаем обработчик
+    this.addListeners();
   }
 
   // Продолжаем игру после сбора плитки 2048
@@ -275,6 +284,10 @@ class GameEngine {
 
   public finish() {
     this.removeListeners();
+  }
+
+  public setSoundState(isSoundEnabled: boolean) {
+    this.isSoundEnabled = isSoundEnabled;
   }
 }
 

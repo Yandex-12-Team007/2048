@@ -1,7 +1,9 @@
 import React, {useRef, useState, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark} from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames';
+import _ from 'lodash';
 
 import DefaultModal from 'Components/Modal/DefaultModal';
 import Button from 'Components/Button/Button';
@@ -9,9 +11,6 @@ import Button from 'Components/Button/Button';
 import {userController} from 'Controllers/userController';
 
 import './ProfileModal.pcss';
-
-/* eslint @typescript-eslint/no-var-requires: "off" */
-const _ = require('lodash');
 
 enum ErrorType {
   VALID,
@@ -30,6 +29,8 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
   const avatar = useRef<HTMLInputElement>(null);
   const [isFileUpload, setIsFileUpload] = useState(false);
   const [error, setError] = useState(DEFAULT_ERROR_STATE);
+
+  const dispatch = useDispatch();
 
   const changeFile = useCallback(() => {
     if (avatar.current?.files?.length === 1) {
@@ -53,8 +54,10 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
     }
     const file = current.files[0];
 
-    userController.uploadProfileImg(file)
-        .then(() => {})
+    userController.uploadProfileImg(dispatch, file)
+        .then(() => {
+          close();
+        })
         .catch(() => {
           const updatedError = error;
           updatedError[ErrorType.QUERY] = true;

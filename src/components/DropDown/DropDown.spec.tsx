@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import DropDown, {DropDownItemType, IDropDownItem} from './';
+import DropDown, {DropDownItemType} from './';
 
 it('Dropdown with options', () => {
-  const options : IDropDownItem[] = [
+  const options = [
     {
       title: 'test link',
       type: DropDownItemType.LINK,
@@ -17,7 +17,7 @@ it('Dropdown with options', () => {
   ];
 
   const tree = renderer.create(
-      <DropDown options={options}>
+      <DropDown options={options} >
         <h2>Test</h2>
       </DropDown>
   ).toJSON();
