@@ -5,6 +5,7 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import Dotenv from 'dotenv-webpack';
 
@@ -76,6 +77,42 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: envPath}),
+    new WorkboxPlugin.GenerateSW({
+      exclude: [/(?:)/],
+      clientsClaim: true,
+      skipWaiting: true,
+      navigateFallback: 'index.html',
+      runtimeCaching: [
+        {
+          urlPattern: (options) => options.sameOrigin && options.request.destination === 'document',
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'pages',
+          },
+        },
+        {
+          urlPattern: /\.(?:bundle.js)$/,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'scripts',
+          },
+        },
+        {
+          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images',
+          },
+        },
+        {
+          urlPattern: /\.(?:woff|woff2|ttf)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'fonts',
+          },
+        },
+      ],
+    }),
   ],
   devtool: 'source-map',
 }
