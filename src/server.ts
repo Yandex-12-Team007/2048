@@ -10,7 +10,7 @@ import sequalize from './server/db';
 import * as models from './server/models/model';
 import router from './server/routes/index';
 import serverRenderMiddleware from './server/middleware/serverRenderMiddleware';
-import authMiddleware from './server/middleware/authMiddleware';
+import {authMiddlewareServer, authMiddlewareApi} from './server/middleware/authMiddleware';
 import '@babel/polyfill';
 
 const app = express();
@@ -22,8 +22,8 @@ app.use(express.json())
 app.use(compression())
     .use(express.static(path.resolve(__dirname, '../dist')));
 // Сначала Api потом отлавливаем все запросы в SSR midleware
-app.use('/api', authMiddleware, router);
-app.get('*', authMiddleware, serverRenderMiddleware);
+app.use('/api', authMiddlewareApi, router);
+app.get('*', authMiddlewareServer, serverRenderMiddleware);
 
 // TODO: Без вызова models не обновляется sequalize, придумать метод лучше
 // @ts-ignore

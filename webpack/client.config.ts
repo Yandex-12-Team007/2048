@@ -5,6 +5,7 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 
 import Dotenv from 'dotenv-webpack';
 
@@ -76,6 +77,16 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: envPath}),
+    // TODO: Проблемы с относительными путями, всегда запрашивается с корня
+    // Хотелось бы передвинуть в папку assets
+    new FaviconsWebpackPlugin({
+      logo: './src/static/img/favicon.ico',
+      cache: true,
+      outputPath: './',
+      publicPath: './',
+      prefix: './',
+      inject: true,
+    }),
   ],
   devtool: 'source-map',
 }

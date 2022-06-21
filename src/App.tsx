@@ -4,25 +4,27 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 import queryString from 'query-string';
+import loadable from '@loadable/component';
+import classNames from 'classnames';
+
+import ThemeSwitcher from 'Components/ThemeSwitcher';
+import PrivateRoute from './PrivateRoute';
+import ErrorBoundary from 'Components/ErrorBoundary';
+
+import {getUser} from 'Store/actionCreators/user';
+import {getLeaderboard} from 'Store/actionCreators/leaderboard';
+import {isUserStatusFailedSelector} from 'Store/selectors';
 
 import {authController} from 'Controllers/authController';
 
-import loadable from '@loadable/component';
+import {IRootState} from 'Interface/IRootState';
 
-import PrivateRoute from './PrivateRoute';
-import ErrorBoundary from 'Components/ErrorBoundary';
 // import Loading from 'Components/Loading';
 
 import Routes from 'Constants/Routes';
 
 import './App.pcss';
 
-import {getUser} from './store/actionCreators/user';
-import {getLeaderboard} from './store/actionCreators/leaderboard';
-import {IRootState} from 'Interface/IRootState';
-import {isUserStatusFailedSelector} from './store/selectors';
-import ThemeSwitcher from 'Components/ThemeSwitcher';
-import classNames from 'classnames';
 // import ForumTheme from 'Pages/ForumTheme';
 
 const Login = loadable(() => import('Pages/Login'));

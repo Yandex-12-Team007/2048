@@ -1,4 +1,6 @@
 import apiModule from './index';
+import fetch from 'node-fetch';
+// import {isServer} from 'Store';
 import IUser, {IUserChangePassword} from 'Interface/IUser';
 
 const USER_PATH = '/user/';
