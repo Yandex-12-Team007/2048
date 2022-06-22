@@ -46,7 +46,16 @@ const config = [
         {name: 'add_header', type: 'option', params: 'content-type "application/json"'},
         {name: 'return', type: 'option', params: '200 \'{"status": "ok", "message": "pong", "timestamp": "$date_gmt", "env": "<my-env>"}\''},
       ]},
-      {name: 'location', type: 'block_replace', params: '/%APP_CONTAINER_NAME%/', replace: ['APP_CONTAINER_NAME'], children: [
+
+      {name: 'location', type: 'block_replace', params: '/%PG_ADMIN_CONTAINER_NAME%/', replace: ['PG_ADMIN_CONTAINER_NAME'], children: [
+        {name: 'proxy_set_header', type: 'option', params: 'X-Script-Name /pgadmin/'},
+        {name: 'proxy_set_header', type: 'option', params: 'X-Scheme $scheme'},
+        {name: 'proxy_set_header', type: 'option', params: 'Host $host'},
+        {name: 'proxy_pass', type: 'option_replace', params: 'http://%PG_ADMIN_CONTAINER_NAME%:%PG_ADMIN_PORT%/', replace: ['PG_ADMIN_CONTAINER_NAME', 'PG_ADMIN_PORT']},
+        {name: 'proxy_redirect', type: 'option', params: 'off'},
+      ]},
+
+      {name: 'location', type: 'block_replace', params: '/', replace: ['APP_CONTAINER_NAME'], children: [
         {name: 'add_header', type: 'option', params: 'X-App-Host $host'},
         {name: 'add_header', type: 'option', params: 'Last-Modified $date_gmt'},
         {name: 'add_header', type: 'option', params: 'Cache-Control \'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0\''},
@@ -56,13 +65,6 @@ const config = [
         {name: 'proxy_set_header', type: 'option', params: 'X-Scheme $scheme'},
         {name: 'proxy_set_header', type: 'option', params: 'Host $host'},
         {name: 'proxy_pass', type: 'option_replace', params: 'http://%APP_CONTAINER_NAME%:%PORT%/', replace: ['APP_CONTAINER_NAME', 'PORT']},
-        {name: 'proxy_redirect', type: 'option', params: 'off'},
-      ]},
-      {name: 'location', type: 'block_replace', params: '/%PG_ADMIN_CONTAINER_NAME%/', replace: ['PG_ADMIN_CONTAINER_NAME'], children: [
-        {name: 'proxy_set_header', type: 'option', params: 'X-Script-Name /pgadmin/'},
-        {name: 'proxy_set_header', type: 'option', params: 'X-Scheme $scheme'},
-        {name: 'proxy_set_header', type: 'option', params: 'Host $host'},
-        {name: 'proxy_pass', type: 'option_replace', params: 'http://%PG_ADMIN_CONTAINER_NAME%:%PG_ADMIN_PORT%/', replace: ['PG_ADMIN_CONTAINER_NAME', 'PG_ADMIN_PORT']},
         {name: 'proxy_redirect', type: 'option', params: 'off'},
       ]},
     ]},
