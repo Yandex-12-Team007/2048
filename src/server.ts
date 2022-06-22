@@ -17,6 +17,11 @@ app.use(compression())
 
 // Сначала Api потом отлавливаем все запросы в SSR midleware
 app.use('/api', router);
+
+app.get('/ping', function(req, res) {
+  res.send('OK');
+});
+
 app.get('*', serverRenderMiddleware);
 
 // TODO: Без вызова models не обновляется sequalize, придумать метод лучше

@@ -1,18 +1,8 @@
 version: "3"
 
 services:
-  server:
-    build:
-      context: .
-    depends_on:
-      - postgres
-    ports:
-      - "${PORT}:${PORT}"
-    restart: always
-    networks:
-      - awesome
   postgres:
-    container_name: postgres
+    container_name: ${DB_CONTAINER_NAME}
     image: postgres:14.3
     environment:
       POSTGRES_USER: "${DB_USER}"
@@ -22,7 +12,7 @@ services:
     ports:
       - "${DB_PORT_FORWARDING}:${DB_PORT}"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -33,6 +23,7 @@ services:
     networks:
       - awesome
   pgadmin:
+    container_name: ${PG_ADMIN_CONTAINER_NAME}
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -40,12 +31,48 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
       PGADMIN_LISTEN_PORT: "${PG_ADMIN_PORT}"
     ports:
-      - "${PG_ADMIN_PORT_FORWARDING}:${PG_ADMIN_PORT}"
+      - ${PG_ADMIN_PORT}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://${PG_ADMIN_CONTAINER_NAME}:${PG_ADMIN_PORT}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - postgres
     volumes:
       - pgadmin:/root/.pgadmin
       - ./docker/servers.json:/pgadmin4/servers.json
+    networks:
+      - awesome
+  app:
+    container_name: ${APP_CONTAINER_NAME}
+    build:
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "${PORT}:${PORT}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://${APP_CONTAINER_NAME}:${PORT}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - awesome
+  nginx:
+    restart: always
+    container_name: ${NGINX_CONTAINER_NAME}
+    image: nginx:latest
+    depends_on:
+      - app
+      - pgadmin
+    ports:
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "${NGINX_CONFIG_PATH}:${NGINX_DOCKER_CONFIG_PATH}"
+      - "${NGINX_LOCAL_SSL_PATH}:${NGINX_DOCKER_SSL_PATH}"
     networks:
       - awesome
 
@@ -54,5 +81,6 @@ networks:
     driver: bridge
 
 volumes:
+  nginx:
   postgres:
   pgadmin:

@@ -1,13 +1,15 @@
 // Создаем конфиг для nginx
 // TODO: Нужно для Replace !
-const PARAMS = {};
 try {
   const fs = require('node:fs');
   const path = require('node:path');
   const env = require('node-env-file');
+  const NGINX_CONFIG = require('./nginxConfig');
   // Находим корневой каталог
   const ROOT = path.resolve(__dirname, '..');
-  PARAMS.ROOT = ROOT;
+  process.env.ROOT = ROOT;
+
+
   // Получаем переменное окружение
   env(path.resolve(ROOT, '.env'));
 
@@ -19,23 +21,23 @@ try {
       mode: '0777',
     });
   } else {
-    // Если папка существуем - чистим старые конфиги
-    // fs.readdir(NGINX_DIR, (err, files) => {
-    //   if (err) throw err;
-    //
-    //   for (const file of files) {
-    //     fs.unlink(path.join(NGINX_DIR, file), (err) => {
-    //       if (err) throw err;
-    //     });
-    //   }
-    // });
+  // TODO: переписать на sync а то удаляет уже созданный файл
+  // Если папка существуем - чистим старые конфиги
+  // fs.readdir(NGINX_DIR, (err, files) => {
+  //   if (err) throw err;
+  //
+  //   for (const file of files) {
+  //     fs.unlink(path.join(NGINX_DIR, file), (err) => {
+  //       if (err) throw err;
+  //     });
+  //   }
+  // });
   }
 
   const NGINX_CONFIG_FILE = path.resolve(NGINX_DIR, 'nginx.conf');
   const nginxConfigFile = fs.openSync(NGINX_CONFIG_FILE, 'w');
-  const NGINX_CONFIG = require('./nginxConfig');
   const config = prettier(nginxConfigToString(NGINX_CONFIG));
-  console.log(`config ${config}`);
+  // console.log(`config ${config}`);
   fs.writeSync(nginxConfigFile, config);
   fs.closeSync(nginxConfigFile);
 } catch (e) {
@@ -53,6 +55,12 @@ function nginxConfigToString(config, indent = 0) {
 
     if (option.type === 'block') {
       str+= `\n${indentSpace}${option.name} ${option.params} {
+${nginxConfigToString(option.children, indent+1)}
+${indentSpace}}\n`
+    }
+
+    if (option.type === 'block_replace') {
+      str+= `\n${indentSpace}${option.name} ${replace(option.params, option.replace)} {
 ${nginxConfigToString(option.children, indent+1)}
 ${indentSpace}}\n`
     }
@@ -83,10 +91,8 @@ function createIndent(n) {
 function replace(str, replace) {
   for (let i = 0; i < replace.length; i++) {
     const key = replace[i];
-    console.log(key);
-    console.log(PARAMS);
     // console.log(global[key]);
-    str = str.replace(`%${key}%`, PARAMS[key]);
+    str = str.replaceAll(`%${key}%`, process.env[key]);
   }
 
   return str;
