@@ -1,29 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {ThunkDispatch} from 'redux-thunk';
-import {AnyAction} from 'redux';
-import queryString from 'query-string';
-
-import {authController} from 'Controllers/authController';
-
+import {useSelector} from 'react-redux';
 import loadable from '@loadable/component';
+import classNames from 'classnames';
 
+import ThemeSwitcher from 'Components/ThemeSwitcher';
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from 'Components/ErrorBoundary';
-// import Loading from 'Components/Loading';
+import Oauth from 'Pages/Oauth';
+
+import {isUserStatusFailedSelector} from 'Store/selectors';
+
+import {IRootState} from 'Interface/IRootState';
 
 import Routes from 'Constants/Routes';
 
 import './App.pcss';
-
-import {getUser} from './store/actionCreators/user';
-import {getLeaderboard} from './store/actionCreators/leaderboard';
-import {IRootState} from 'Interface/IRootState';
-import {isUserStatusFailedSelector} from './store/selectors';
-import ThemeSwitcher from 'Components/ThemeSwitcher';
-import classNames from 'classnames';
-// import ForumTheme from 'Pages/ForumTheme';
 
 const Login = loadable(() => import('Pages/Login'));
 const Registration = loadable(() => import('Pages/Registration'));
@@ -41,22 +33,8 @@ function App() {
     useState<'on' | 'off'>('off');
 
   const isUserStatusFailed = useSelector<IRootState>(isUserStatusFailedSelector)
-  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
 
   useEffect(() => {
-    dispatch(getLeaderboard());
-    const parse = queryString.parse(window.location.search)
-    if (parse && parse.code && typeof parse.code === 'string') {
-      authController.loginWithCode(parse.code)
-          .then((res) => {
-            if (res) {
-              dispatch(getUser());
-            }
-          })
-    } else {
-      dispatch(getUser());
-    }
-
     const savedDarkThemeState =
       localStorage.getItem('darkThemeState') as 'on' | 'off' | null;
 
@@ -83,6 +61,7 @@ function App() {
       <Switch>
         <Route exact path={Routes.LOGIN} component={Login}/>
         <Route exact path={Routes.REGISTRATION} component={Registration}/>
+        <Route exact path={Routes.OAUTH} component={Oauth}/>
         <PrivateRoute
           exact
           path={Routes.GAME}

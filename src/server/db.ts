@@ -1,4 +1,7 @@
 import {Sequelize} from 'sequelize';
+import {sequalizeLogger} from './middleware/logger';
+
+const logger = sequalizeLogger();
 
 const sequalize = new Sequelize(
     // @ts-ignore
@@ -9,6 +12,7 @@ const sequalize = new Sequelize(
       dialect: 'postgres',
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
+      logging: (msg) => logger.info(msg),
     }
 )
 

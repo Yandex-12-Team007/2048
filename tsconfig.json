@@ -31,6 +31,8 @@
       "Api/*": ["./src/api/*"],
       "Controllers/*": ["./src/controllers/*"],
       "Store/*": ["./src/store/*"],
+      "Server/*": ["./src/server/*"],
+      "Webpack/*": ["./src/webpack/*"],
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },

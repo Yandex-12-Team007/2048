@@ -1,5 +1,5 @@
 import {authApi} from 'Api/auth-api';
-import {OAuthApi} from 'Api/Oauth';
+import {OAUTH_REDIRECT_URI, OAuthApi} from 'Api/Oauth';
 import {ILoginUserModel, IRegistrationUserModel} from 'Interface/IUser';
 
 export class AuthController {
@@ -26,8 +26,7 @@ export class AuthController {
       throw new Error('Can\'t get service_id');
     }
 
-    const redirectUrl = window.origin;
-    const OauthUrl = AuthController.createOauthUrl(res.service_id, redirectUrl);
+    const OauthUrl = AuthController.createOauthUrl(res.service_id, OAUTH_REDIRECT_URI);
 
     window.location.replace(OauthUrl);
   }

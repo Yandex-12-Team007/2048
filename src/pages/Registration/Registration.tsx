@@ -1,20 +1,28 @@
-/* eslint-disable camelcase */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Redirect, Link, useHistory} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {authController} from 'Controllers/authController';
-import Routes from 'Constants/Routes';
+
 import Input from 'Components/Input/Input';
 import LoginLayout from 'Components/LoginLayout/LoginLayout';
 import Button from 'Components/Button/Button';
-import './Registration.pcss';
-import {IRegistrationUserModel} from 'Interface/IUser';
-import {phoneRegExp} from './constants';
-import {useSelector} from 'react-redux';
+
+import {authController} from 'Controllers/authController';
+
+import {userStatusSelector} from 'Store/selectors';
+import {getUser} from 'Store/actionCreators/user';
+
 import {IRootState} from 'Interface/IRootState';
-import {userSelector} from 'Store/selectors';
+import {IRegistrationUserModel} from 'Interface/IUser';
+
+import {phoneRegExp} from './constants';
+import Routes from 'Constants/Routes';
+
+import './Registration.pcss';
 
 const schema = object({
   login: string().matches(
@@ -47,9 +55,17 @@ export default function Registration() {
 
   const history = useHistory();
 
-  const user = useSelector<IRootState>(userSelector);
+  const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
+  // Проверка на наличие cookie + редирект авторизованного пользователя
+  const userStatus = useSelector<IRootState>(userStatusSelector);
 
-  if (user !== null) {
+  useEffect(() => {
+    if (userStatus === 'pending') {
+      dispatch(getUser());
+    }
+  }, []);
+
+  if (userStatus === 'success') {
     return <Redirect to={Routes.HOME} />
   }
 

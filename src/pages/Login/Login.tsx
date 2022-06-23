@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Redirect, Link, useHistory} from 'react-router-dom';
 import {object, string} from 'yup';
 import {useForm} from 'react-hook-form';
@@ -18,7 +18,7 @@ import {IRootState} from 'Interface/IRootState';
 import Routes from 'Constants/Routes';
 
 import {getUser} from 'Store/actionCreators/user';
-import {userSelector} from 'Store/selectors';
+import {userStatusSelector} from 'Store/selectors';
 
 import './Login.pcss';
 
@@ -45,9 +45,16 @@ export default function Login() {
 
   const history = useHistory();
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
-  const user = useSelector<IRootState>(userSelector);
+  // Проверка на наличие cookie + редирект авторизованного пользователя
+  const userStatus = useSelector<IRootState>(userStatusSelector);
 
-  if (user !== null) {
+  useEffect(() => {
+    if (userStatus === 'pending') {
+      dispatch(getUser());
+    }
+  }, []);
+
+  if (userStatus === 'success') {
     return <Redirect to={Routes.HOME} />
   }
 
@@ -55,7 +62,7 @@ export default function Login() {
       {login, password}: { login: string, password: string }
   ) => {
     authController.signIn({login, password})
-        .then(() => {
+        .then((res) => {
           dispatch(getUser());
         })
         .then(() => {

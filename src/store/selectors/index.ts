@@ -12,6 +12,10 @@ export const usersSelector = (state: IRootState) => {
   return state.users;
 };
 
+export const userStatusSelector = (state: IRootState) => {
+  return state.user.status;
+};
+
 export const userSelector = (state: IRootState) => {
   return state.user.model;
 };

@@ -5,8 +5,10 @@ import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 
 import Dotenv from 'dotenv-webpack';
+import ALIAS from './alias';
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -25,17 +27,7 @@ const config: Configuration = {
   },
   resolve: {
     modules: ['src', 'node_modules'],
-    alias: {
-      '~': path.resolve(SRC_DIR),
-      'Pages': path.resolve(SRC_DIR, 'pages'),
-      'Constants': path.resolve(SRC_DIR, 'constants'),
-      'Components': path.resolve(SRC_DIR, 'components'),
-      'Utils': path.resolve(SRC_DIR, 'utils'),
-      'Static': path.resolve(SRC_DIR, 'static'),
-      'Api': path.resolve(SRC_DIR, 'api'),
-      'Controllers': path.resolve(SRC_DIR, 'controllers'),
-      'Store': path.resolve(SRC_DIR, 'store'),
-    },
+    alias: ALIAS,
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   module: {
@@ -76,6 +68,16 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: envPath}),
+    // TODO: Проблемы с относительными путями, всегда запрашивается с корня
+    // Хотелось бы передвинуть в папку assets
+    new FaviconsWebpackPlugin({
+      logo: './src/static/img/favicon.png',
+      cache: true,
+      outputPath: './',
+      publicPath: './',
+      prefix: './',
+      inject: true,
+    }),
   ],
   devtool: 'source-map',
 }

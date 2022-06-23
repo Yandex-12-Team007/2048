@@ -4,6 +4,12 @@
 #history
 .history
 
+#cetrs
+certs
+
+#nginx
+nginx
+
 # Logs
 logs
 *.log

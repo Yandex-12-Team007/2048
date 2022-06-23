@@ -3,7 +3,7 @@
 ## Полезные ссылки :
 - [Макет в Figma](https://www.figma.com/files/team/1090687441741906303/Barcelona-007?fuid=606444840848690880)
 - [Гайд по .md](https://github.com/GnuriaN/format-README)
-- [Ифнормация о приложение](https://disk.yandex.ru/d/JmLwXRMgqO2FFw)
+- [Информация о приложение](https://disk.yandex.ru/d/JmLwXRMgqO2FFw)
 - [Задеплоенная версия на heroku](https://barcelona-007.herokuapp.com/)
 
 ## Инструменты разработки
