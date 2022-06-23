@@ -49,15 +49,21 @@ export function authMiddlewareServer(req, res, next) {
 
 export function authMiddlewareApi(req, res, next) {
   // Тут всегда проверяем права, нет публичных данных в апи
+  console.log('authMiddlewareApi');
   if (req.cookies.authCookie) {
     authApi.serverGet(req.cookies)
         .then(() => {
+          console.log('next');
           next();
         })
         .catch(() => {
-          res.statusCode(401);
+          console.log('FAIL');
+          res.statusCode = 401;
+          res.send('FAIL');
         })
   } else {
-    res.statusCode(401);
+    console.log('FAIL');
+    res.statusCode = 401;
+    res.send('FAIL');
   }
 }
