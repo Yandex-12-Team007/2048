@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, {useEffect} from 'react';
 import {Redirect, Link, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
