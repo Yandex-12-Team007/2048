@@ -3,7 +3,7 @@ import {Configuration} from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 import Dotenv from 'dotenv-webpack';
 
-import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
+import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 import ALIAS from './alias';
 
 // import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -11,8 +11,6 @@ import ALIAS from './alias';
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
-// const envPath = IS_DEV ? './.env.development' : './.env.production';
-const envPath = IS_DEV ? './.env' : './.env';
 
 const config: Configuration = {
   name: 'server',
@@ -62,8 +60,7 @@ const config: Configuration = {
   },
   devtool: 'source-map',
   plugins: [
-    new Dotenv({path: envPath}),
-    new Dotenv({path: envPath}),
+    new Dotenv({path: ENV_PATH}),
   ],
   externals: ['@loadable/component', nodeExternals({allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i]})],
   optimization: {nodeEnv: false},

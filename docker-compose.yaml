@@ -7,7 +7,6 @@ services:
     environment:
       POSTGRES_USER: "${DB_USER}"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
-      POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_DB: "${DB_NAME}"
     ports:
       - "${DB_PORT_FORWARDING}:${DB_PORT}"
@@ -18,7 +17,7 @@ services:
       retries: 5
     restart: always
     volumes:
-      - "./docker/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "${DB_PATH}/${DB_ININT_SQL}:/docker-entrypoint-initdb.d/init.sql"
       - "postgres:/data/postgres"
     networks:
       - awesome
@@ -31,7 +30,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
       PGADMIN_LISTEN_PORT: "${PG_ADMIN_PORT}"
     ports:
-      - ${PG_ADMIN_PORT}
+      - ${PG_PORT_FORWARDING}:${PG_ADMIN_PORT}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://${PG_ADMIN_CONTAINER_NAME}:${PG_ADMIN_PORT}"]
       interval: 10s
@@ -41,7 +40,7 @@ services:
       - postgres
     volumes:
       - pgadmin:/root/.pgadmin
-      - ./docker/servers.json:/pgadmin4/servers.json
+      - ${PG_ADMIN_CONFIG_PATH}/${PG_ADMIN_SERVERS}:/pgadmin4/${PG_ADMIN_SERVERS}
     networks:
       - awesome
   app:

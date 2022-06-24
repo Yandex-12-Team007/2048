@@ -13,7 +13,6 @@ import {renderObject} from 'Utils/renderObject';
 
 // В тут мы формируем первичное состояние приложения на стороне сервера
 export default function serverRenderMiddleware(req: Request, res: Response) {
-  console.log('serverRenderMiddleware');
   const location = req.url;
   const context: StaticRouterContext = {};
   const store = configureStore(getInitialState());

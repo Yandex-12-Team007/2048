@@ -1,5 +1,4 @@
 // Создаем конфиг для nginx
-// TODO: Нужно для Replace !
 try {
   const fs = require('node:fs');
   const path = require('node:path');
@@ -9,30 +8,25 @@ try {
   const ROOT = path.resolve(__dirname, '..');
   process.env.ROOT = ROOT;
 
-
   // Получаем переменное окружение
   env(path.resolve(ROOT, '.env'));
 
-  const NGINX_DIR = path.resolve(ROOT, 'nginx');
+  const NGINX_DIR = path.resolve(ROOT, 'docker', 'nginx');
 
   if (!fs.existsSync(NGINX_DIR)) {
     fs.mkdirSync(NGINX_DIR, {
       recursive: true,
       mode: '0777',
     });
-  } else {
-  // TODO: переписать на sync а то удаляет уже созданный файл
-  // Если папка существуем - чистим старые конфиги
-  // fs.readdir(NGINX_DIR, (err, files) => {
-  //   if (err) throw err;
-  //
-  //   for (const file of files) {
-  //     fs.unlink(path.join(NGINX_DIR, file), (err) => {
-  //       if (err) throw err;
-  //     });
-  //   }
-  // });
   }
+  // Создаем папку под сертификаты
+  if (!fs.existsSync(process.env.NGINX_LOCAL_SSL_PATH)) {
+    fs.mkdirSync(NGINX_DIR, {
+      recursive: true,
+      mode: '0777',
+    });
+  }
+
 
   const NGINX_CONFIG_FILE = path.resolve(NGINX_DIR, 'nginx.conf');
   const nginxConfigFile = fs.openSync(NGINX_CONFIG_FILE, 'w');

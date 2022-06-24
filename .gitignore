@@ -4,12 +4,6 @@
 #history
 .history
 
-#cetrs
-certs
-
-#nginx
-nginx
-
 # Logs
 logs
 *.log
@@ -18,8 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-nginx
-nginx/ssl
+docker
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

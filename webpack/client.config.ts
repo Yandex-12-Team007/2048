@@ -1,7 +1,7 @@
 import path from 'path';
 import {Configuration} from 'webpack';
 
-import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
+import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -14,8 +14,6 @@ import ALIAS from './alias';
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
-// const envPath = IS_DEV ? './.env.development' : './.env.production';
-const envPath = IS_DEV ? './.env' : './.env';
 
 const config: Configuration = {
   name: 'client',
@@ -68,7 +66,7 @@ const config: Configuration = {
   plugins: [
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
-    new Dotenv({path: envPath}),
+    new Dotenv({path: ENV_PATH}),
     // TODO: Проблемы с относительными путями, всегда запрашивается с корня
     // Хотелось бы передвинуть в папку assets
     new FaviconsWebpackPlugin({
