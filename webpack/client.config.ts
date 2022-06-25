@@ -64,19 +64,17 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new FaviconsWebpackPlugin({
+      logo: './src/static/img/favicon.png',
+      cache: true,
+      prefix: 'favicon',
+      mode: 'webapp',
+    }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: ENV_PATH}),
     // TODO: Проблемы с относительными путями, всегда запрашивается с корня
     // Хотелось бы передвинуть в папку assets
-    new FaviconsWebpackPlugin({
-      logo: './src/static/img/favicon.png',
-      cache: true,
-      outputPath: './',
-      publicPath: './',
-      prefix: './',
-      inject: true,
-    }),
     new WorkboxPlugin.GenerateSW({
       exclude: [/(?:)/],
       clientsClaim: true,

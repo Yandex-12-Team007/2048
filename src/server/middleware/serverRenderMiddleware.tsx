@@ -1,15 +1,23 @@
 import React from 'react';
+import {StaticRouterContext} from 'react-router';
+import {StaticRouter} from 'react-router-dom';
 import {renderToString} from 'react-dom/server';
 import {Request, Response} from 'express';
 import {Provider} from 'react-redux';
-import {configureStore} from '../../store/';
-import {StaticRouter} from 'react-router-dom';
-import {StaticRouterContext} from 'react-router';
 import {ChunkExtractor} from '@loadable/server';
-import App from '../../App';
 import path from 'path';
+
+import App from '../../App';
+
+import {configureStore} from 'Store/index';
+
 import {getInitialState, IRootState} from '../../Interface/IRootState';
+
 import {renderObject} from 'Utils/renderObject';
+import {
+  faviconPluginStaticMeta,
+  staticSCPmeta,
+} from 'Utils/staticMeta';
 
 // В тут мы формируем первичное состояние приложения на стороне сервера
 export default function serverRenderMiddleware(req: Request, res: Response) {
@@ -64,6 +72,8 @@ function getHtml(
   <title>2048</title>
   <meta charset="UTF-8"/>
   <meta name="description" content="Та самая 2048 !">
+  ${faviconPluginStaticMeta()}
+  ${staticSCPmeta()}
   ${linkTags}
   ${styleTags}
 </head>

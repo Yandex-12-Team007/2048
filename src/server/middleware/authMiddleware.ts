@@ -17,7 +17,6 @@ function checkRight(origin) {
 export function authMiddlewareServer(req, res, next) {
   const route = checkRight(req.originalUrl);
   // Если не нашли маршрут - кидаем ошибку
-  console.log(route);
   if (route === null) {
     res.redirect(Routes.ERROR_404);
     return;
@@ -44,6 +43,12 @@ export function authMiddlewareServer(req, res, next) {
 }
 
 export function authMiddlewareApi(req, res, next) {
+  // Заглушка для отдачи статики на локальной машине без cookie
+  if (req.headers.host.match('localhost')) {
+    next();
+    return;
+  }
+
   // Тут всегда проверяем права, нет публичных данных в апи
   if (req.cookies.authCookie) {
     authApi.serverGet(req.cookies)

@@ -6,8 +6,6 @@ import Dotenv from 'dotenv-webpack';
 import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 import ALIAS from './alias';
 
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';

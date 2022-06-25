@@ -6,6 +6,7 @@ const logger = sequalizeLogger();
 // Если не режим разработки - берем DN из Composer
 // Если локалка с Docker - выставляем localhost;
 // Если локалка без Docker - смотрим Адресс из .env;
+
 const DB_HOST = process.env.NODE_ENV !== 'development' ?
   process.env.DB_HOST_DOCKER :
   process.env.IS_DOCKER ?
@@ -21,7 +22,6 @@ const DB_PORT = process.env.NODE_ENV !== 'development' ?
     process.env.DB_PORT_FORWARDING :
     process.env.DB_LOCAL_PORT
 
-
 const sequalize = new Sequelize(
     // @ts-ignore
     process.env.DB_NAME, // Название БД
@@ -29,8 +29,8 @@ const sequalize = new Sequelize(
     process.env.DB_PASSWORD, // ПАРОЛЬ
     {
       dialect: 'postgres',
-      DB_HOST,
-      DB_PORT,
+      host: DB_HOST,
+      post: DB_PORT,
       logging: (msg) => logger.info(msg),
     }
 )
