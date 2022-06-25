@@ -3,7 +3,7 @@ import {Configuration} from 'webpack';
 
 import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 
-import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
+import webpackBundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
@@ -15,6 +15,13 @@ import ALIAS from './alias';
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
+
+// const ANALYZE_OPTIONS = IS_DEV ?
+//   {} :
+//   {
+//     analyzeMode: 'disabled',
+//     generateStatsFile: true,
+//   };
 
 const config: Configuration = {
   name: 'client',
@@ -65,7 +72,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
-    new BundleAnalyzerPlugin.BundleAnalyzerPlugin(),
+    IS_DEV ? new webpackBundleAnalyzerPlugin.BundleAnalyzerPlugin() : null,
     new FaviconsWebpackPlugin({
       logo: './src/static/img/favicon.png',
       cache: true,
@@ -113,7 +120,7 @@ const config: Configuration = {
         },
       ],
     }),
-  ],
+  ].filter((el) => el !== null),
   devtool: 'source-map',
 }
 
