@@ -3,6 +3,7 @@ import {Configuration} from 'webpack';
 
 import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 
+import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
@@ -64,6 +65,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new BundleAnalyzerPlugin.BundleAnalyzerPlugin(),
     new FaviconsWebpackPlugin({
       logo: './src/static/img/favicon.png',
       cache: true,

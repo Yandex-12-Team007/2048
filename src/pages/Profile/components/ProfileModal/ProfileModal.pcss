@@ -1,6 +1,17 @@
 .profile-modal {
   box-sizing: border-box;
 
+  &__cross {
+    color: var(--orange);
+    cursor: pointer;
+
+    &::after {
+      display: inline-block;
+      font: var(--title-font);
+      content: "\00d7";
+    }
+  }
+
   &__title-wrapper {
     width: 100%;
     padding: 15px;
