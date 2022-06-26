@@ -13,6 +13,7 @@ const ALIAS = {
   'Store': path.join(SRC_DIR, 'store'),
   'Server': path.join(SRC_DIR, 'server'),
   'Webpack': path.join(SRC_DIR, 'webpack'),
+  'Hooks': path.join(SRC_DIR, 'hooks'),
 };
 
 export default ALIAS;

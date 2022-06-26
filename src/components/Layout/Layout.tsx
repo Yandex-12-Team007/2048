@@ -1,14 +1,15 @@
 import React, {useState, useRef, FunctionComponent, ReactNode} from 'react';
 import DocumentMeta from 'react-document-meta';
+import classNames from 'classnames';
 
 import Header from 'Components/Header';
 import Footer from 'Components/Footer';
 import ErrorBoundary from 'Components/ErrorBoundary';
 import Sidebar from 'Components/Sidebar';
 
-import './Layout.pcss';
 import {getPageTitle} from 'Utils/getTitle';
-import classNames from 'classnames';
+
+import './Layout.pcss';
 
 interface ILayoutProps {
   title: string;

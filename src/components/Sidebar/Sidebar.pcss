@@ -7,6 +7,10 @@
   width: var(--small-side-size);
   background: var(--second-bg);
   transition: var(--change-width);
+
+  @media screen and (max-width: 600px) {
+    width: 0;
+  }
 }
 
 .sidebar_full {

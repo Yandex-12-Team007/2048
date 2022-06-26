@@ -13,6 +13,10 @@
     border-radius: 40px;
     margin-right: 20px;
 
+    @media screen and (max-width: 400px) {
+      margin: 0;
+    }
+
     &--empty {
       background-color: var(--light-gray);
     }
@@ -24,6 +28,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
   }
 
   &__options-wrapper {
