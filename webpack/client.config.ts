@@ -3,7 +3,7 @@ import {Configuration} from 'webpack';
 
 import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 
-import webpackBundleAnalyzerPlugin from 'webpack-bundle-analyzer';
+// import webpackBundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
@@ -72,7 +72,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
-    IS_DEV ? new webpackBundleAnalyzerPlugin.BundleAnalyzerPlugin() : null,
+    // IS_DEV ? new webpackBundleAnalyzerPlugin.BundleAnalyzerPlugin() : null,
     new FaviconsWebpackPlugin({
       logo: './src/static/img/favicon.png',
       cache: true,
@@ -82,8 +82,6 @@ const config: Configuration = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
     new Dotenv({path: ENV_PATH}),
-    // TODO: Проблемы с относительными путями, всегда запрашивается с корня
-    // Хотелось бы передвинуть в папку assets
     new WorkboxPlugin.GenerateSW({
       exclude: [/(?:)/],
       clientsClaim: true,

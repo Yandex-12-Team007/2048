@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import {logger, errorLogger} from 'Server/middleware/logger';
-import sequalize from 'Server/db';
+import {sequelize} from 'Server/db';
 import * as models from 'Server/models/model';
 import router from 'Server/routes/index';
 import serverRenderMiddleware from 'Server/middleware/serverRenderMiddleware';
@@ -27,14 +27,14 @@ app.use('/api', authMiddlewareApi, router);
 app.use(OauthMiddleware)
 app.get('*', authMiddlewareServer, serverRenderMiddleware);
 
-// TODO: Без вызова models не обновляется sequalize, придумать метод лучше
+// TODO: Без вызова models не обновляется sequelize, придумать метод лучше
 // @ts-ignore
 for (const model in models);
 
 async function start(port) {
   try {
-    await sequalize.authenticate();
-    await sequalize.sync({alter: true});
+    await sequelize.authenticate();
+    await sequelize.sync({alter: true});
     app.listen(port, () => console.log(`Server started on port ${port}`));
   } catch (e) {
     console.log(e);

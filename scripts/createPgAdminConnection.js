@@ -28,8 +28,9 @@ try {
   const DB_HOST = process.env.NODE_ENV !== 'development' ?
     process.env.DB_HOST_DOCKER :
     process.env.IS_DOCKER ?
-      'localhost' :
-      process.env.DB_HOST_LOCAL
+      process.env.DB_HOST_DOCKER :
+      process.env.DB_HOST_LOCAL;
+
 
   // Если не режим разработки - берем внутрений порт сети
   // Если локалка с Docker - выставляем внешний порт;
@@ -37,9 +38,8 @@ try {
   const DB_PORT = process.env.NODE_ENV !== 'development' ?
     process.env.DB_PORT :
     process.env.IS_DOCKER ?
-      process.env.DB_PORT_FORWARDING :
+      process.env.DB_PORT :
       process.env.DB_LOCAL_PORT
-
 
   const config = {
     'Servers': {

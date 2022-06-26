@@ -17,7 +17,7 @@ services:
       retries: 5
     restart: always
     volumes:
-      - "${DB_PATH}/${DB_ININT_SQL}:/docker-entrypoint-initdb.d/init.sql"
+      - "${DB_PATH}/${DB_INIT_SQL}:/docker-entrypoint-initdb.d/init.sql"
       - "postgres:/data/postgres"
     networks:
       - awesome

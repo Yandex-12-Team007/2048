@@ -68,7 +68,7 @@ function generateStatic() {
     DB_CONTAINER_NAME: 'postgres',
     DB_HOST_DOCKER: 'postgres',
     DB_PATH: './docker/postgres',
-    DB_ININT_SQL: 'init.sql',
+    DB_INIT_SQL: 'init.sql',
     PG_ADMIN_CONTAINER_NAME: 'pgadmin',
     PG_ADMIN_CONFIG_PATH: './docker/pgadmin',
     PG_ADMIN_SERVERS: 'servers.json',

@@ -39,21 +39,21 @@ export function errorLogger() {
   });
 }
 
-export function sequalizeLogger() {
+export function sequelizeLogger() {
   return winston.createLogger({
     level: 'info',
     format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     transports: [
       new winston.transports.File({
-        filename: path.join('logs', 'sequalize-error.log'),
+        filename: path.join('logs', 'sequelize-error.log'),
         level: 'error',
       }),
       new winston.transports.File({
-        filename: path.join('logs', 'sequalize-info.log'),
+        filename: path.join('logs', 'sequelize-info.log'),
         level: 'info',
       }),
       new winston.transports.File({
-        filename: path.join('logs', 'sequalize-combined.log'),
+        filename: path.join('logs', 'sequelize-combined.log'),
       }),
     ],
   });

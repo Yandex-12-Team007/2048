@@ -1,38 +1,49 @@
 import {Sequelize} from 'sequelize';
-import {sequalizeLogger} from './middleware/logger';
 
-const logger = sequalizeLogger();
+import {sequelizeLogger} from './middleware/logger';
+const logger = sequelizeLogger();
 
-// Если не режим разработки - берем DN из Composer
-// Если локалка с Docker - выставляем localhost;
-// Если локалка без Docker - смотрим Адресс из .env;
+const LOCAL_CONFIG = [
+  process.env.DB_NAME, // Название БД
+  process.env.DB_USER, // Пользователь
+  process.env.DB_PASSWORD, // ПАРОЛЬ
+  {
+    dialect: 'postgres',
+    host: process.env.DB_HOST_LOCAL,
+    post: process.env.DB_LOCAL_PORT,
+    logging: (msg) => logger.info(msg),
+  },
+];
 
-const DB_HOST = process.env.NODE_ENV !== 'development' ?
-  process.env.DB_HOST_DOCKER :
+const LOCAL_DOCKER_CONFIG = [
+  process.env.DB_NAME, // Название БД
+  process.env.DB_USER, // Пользователь
+  process.env.DB_PASSWORD, // ПАРОЛЬ
+  {
+    dialect: 'postgres',
+    host: 'localhost',
+    post: process.env.DB_PORT_FORWARDING,
+    logging: (msg) => logger.info(msg),
+  },
+];
+
+const DOCKER_CONFIG = [
+  process.env.DB_NAME, // Название БД
+  process.env.DB_USER, // Пользователь
+  process.env.DB_PASSWORD, // ПАРОЛЬ
+  {
+    dialect: 'postgres',
+    host: process.env.DB_HOST_DOCKER,
+    post: process.env.DB_PORT,
+    logging: (msg) => logger.info(msg),
+  },
+]
+
+const config = process.env.NODE_ENV !== 'development' ?
+  DOCKER_CONFIG :
   process.env.IS_DOCKER ?
-    'localhost' :
-    process.env.DB_HOST_LOCAL
+    LOCAL_DOCKER_CONFIG :
+    LOCAL_CONFIG
 
-// Если не режим разработки - берем внутрений порт сети
-// Если локалка с Docker - выставляем внешний порт;
-// Если локалка без Docker - выставляем .env порт для локальной БД;
-const DB_PORT = process.env.NODE_ENV !== 'development' ?
-  process.env.DB_PORT :
-  process.env.IS_DOCKER ?
-    process.env.DB_PORT_FORWARDING :
-    process.env.DB_LOCAL_PORT
-
-const sequalize = new Sequelize(
-    // @ts-ignore
-    process.env.DB_NAME, // Название БД
-    process.env.DB_USER, // Пользователь
-    process.env.DB_PASSWORD, // ПАРОЛЬ
-    {
-      dialect: 'postgres',
-      host: DB_HOST,
-      post: DB_PORT,
-      logging: (msg) => logger.info(msg),
-    }
-)
-
-export default sequalize;
+// @ts-ignore
+export const sequelize = new Sequelize(...config)
