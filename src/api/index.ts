@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 const API_URL = 'https://ya-praktikum.tech/api/v2';
 
 class ApiModule {

@@ -1,6 +1,8 @@
 enum Routes {
     // Домашняя
     HOME = '/',
+    OAUTH = '/oauth',
+    HOME_FOR_SERVER_AUTH = '^/$',
     // Авторизация
     LOGIN = '/login',
     REGISTRATION = '/registration',
@@ -11,11 +13,12 @@ enum Routes {
     // Форум
     FORUM = '/forum',
     FORUM_THEME = '/forum/:topicId',
-    FORUM_CARD = '/forum/:topicId/:card_id',
     // Профиль
     PROFILE = '/profile',
     // Ошибки
     ERROR = '/error/:num',
+    // TODO: Пока так сделаем
+    ERROR_FOR_SERVER_AUTH = '/error/',
     ERROR_404 = '/error/404',
     ERROR_500 = '/error/500',
     // Правила

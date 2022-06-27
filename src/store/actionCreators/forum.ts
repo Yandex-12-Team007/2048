@@ -19,7 +19,7 @@ export const getForumState = () =>
     return forumApi.getState().then((response) => {
       dispatch({type: ForumActionTypes.GET_STATE, payload: response});
     }).catch(() => {
-      console.log('getForumState bad request')
+      // console.log('getForumState bad request')
     })
   };
 

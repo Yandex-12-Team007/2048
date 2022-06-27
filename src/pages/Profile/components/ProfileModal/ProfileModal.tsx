@@ -1,14 +1,13 @@
 import React, {useRef, useState, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faXmark} from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames';
-import _ from 'lodash';
 
 import DefaultModal from 'Components/Modal/DefaultModal';
 import Button from 'Components/Button/Button';
 
 import {userController} from 'Controllers/userController';
+
+import {cloneDeep} from 'Utils/myLodash';
 
 import './ProfileModal.pcss';
 
@@ -34,7 +33,8 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
 
   const changeFile = useCallback(() => {
     if (avatar.current?.files?.length === 1) {
-      setError(_.clone(DEFAULT_ERROR_STATE));
+      // @ts-ignore
+      setError(cloneDeep(DEFAULT_ERROR_STATE));
       setIsFileUpload(true);
       return
     }
@@ -97,11 +97,7 @@ export default function ProfileModal({isOpen = true, setIsOpen}) {
   >
     <div className={'profile-modal__title-wrapper'}>
       <span className={titleClass}>{title}</span>
-      <FontAwesomeIcon
-        className={'profile-modal__icon'}
-        icon={faXmark}
-        onClick={close}
-      />
+      <span className={'profile-modal__cross'} onClick={close}/>
     </div>
     <div className={'profile-modal__body-wrapper'}>
       <label className={labelClass} htmlFor={'avatar'}>{label}</label>

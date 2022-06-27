@@ -9,7 +9,7 @@ import {formaDate} from 'Utils/dateHelper';
 import {IComment} from 'Interface/IComment';
 import IUser, {Nullable} from 'Interface/IUser';
 
-import _ from 'lodash';
+import {isEqual} from 'Utils/myLodash';
 
 import './ForumCard.pcss';
 
@@ -65,8 +65,8 @@ const ForumCard = ({
 }
 
 function areEqual(prevProps, nextProps) {
-  return _.isEqual(prevProps.comment, nextProps.comment) &&
-    _.isEqual(prevProps.commentUser, nextProps.commentUser)
+  return isEqual(prevProps.comment, nextProps.comment) &&
+    isEqual(prevProps.commentUser, nextProps.commentUser)
 }
 
 const MemoForumCard = React.memo(ForumCard, areEqual);

@@ -35,25 +35,24 @@ const Layout: FunctionComponent<ILayoutProps> = ({
   };
 
   return <ErrorBoundary>
-    <DocumentMeta {...meta}>
-      <div className={'container'}>
-        <Header title={title} isSmall={isSmall} />
-        <main className={'content-wrapper'}>
-          <Sidebar
-            isSmall={isSmall}
-            contentRef={contentRef}
-            changeSize={changeSize}
-          />
-          <div
-            className={classNames('content', contentClassName)}
-            ref={contentRef}
-          >
-            {children}
-          </div>
-          <Footer/>
-        </main>
-      </div>
-    </DocumentMeta>
+    <DocumentMeta meta={meta}/>
+    <div className={'container'}>
+      <Header title={title} isSmall={isSmall} />
+      <main className={'content-wrapper'}>
+        <Sidebar
+          isSmall={isSmall}
+          contentRef={contentRef}
+          changeSize={changeSize}
+        />
+        <div
+          className={classNames('content', contentClassName)}
+          ref={contentRef}
+        >
+          {children}
+        </div>
+        <Footer/>
+      </main>
+    </div>
   </ErrorBoundary>
 }
 

@@ -1,19 +1,27 @@
 import path from 'path';
 import {Configuration} from 'webpack';
 
-import {IS_DEV, DIST_DIR, SRC_DIR} from './env';
+import {IS_DEV, DIST_DIR, SRC_DIR, ENV_PATH} from './env';
 
+// import webpackBundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import Dotenv from 'dotenv-webpack';
+import ALIAS from './alias';
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const envType = IS_DEV ? 'development' : 'production';
-// const envPath = IS_DEV ? './.env.development' : './.env.production';
-const envPath = IS_DEV ? './.env' : './.env';
+
+// const ANALYZE_OPTIONS = IS_DEV ?
+//   {} :
+//   {
+//     analyzeMode: 'disabled',
+//     generateStatsFile: true,
+//   };
 
 const config: Configuration = {
   name: 'client',
@@ -26,17 +34,7 @@ const config: Configuration = {
   },
   resolve: {
     modules: ['src', 'node_modules'],
-    alias: {
-      '~': path.resolve(SRC_DIR),
-      'Pages': path.resolve(SRC_DIR, 'pages'),
-      'Constants': path.resolve(SRC_DIR, 'constants'),
-      'Components': path.resolve(SRC_DIR, 'components'),
-      'Utils': path.resolve(SRC_DIR, 'utils'),
-      'Static': path.resolve(SRC_DIR, 'static'),
-      'Api': path.resolve(SRC_DIR, 'api'),
-      'Controllers': path.resolve(SRC_DIR, 'controllers'),
-      'Store': path.resolve(SRC_DIR, 'store'),
-    },
+    alias: ALIAS,
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   module: {
@@ -74,9 +72,16 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    // IS_DEV ? new webpackBundleAnalyzerPlugin.BundleAnalyzerPlugin() : null,
+    new FaviconsWebpackPlugin({
+      logo: './src/static/img/favicon.png',
+      cache: true,
+      prefix: 'favicon',
+      mode: 'webapp',
+    }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new LoadablePlugin() as { apply(...args: any[]): void; },
-    new Dotenv({path: envPath}),
+    new Dotenv({path: ENV_PATH}),
     new WorkboxPlugin.GenerateSW({
       exclude: [/(?:)/],
       clientsClaim: true,
@@ -113,7 +118,7 @@ const config: Configuration = {
         },
       ],
     }),
-  ],
+  ].filter((el) => el !== null),
   devtool: 'source-map',
 }
 
