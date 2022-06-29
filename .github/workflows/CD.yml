@@ -30,5 +30,6 @@ jobs:
           script: |
             cd 2048 && \
             npm ci && \
-            cp ./.env ./2048 && \
-            npm run createAfterEnv
+            cp ~/.env ~/2048/ && \
+            npm run createAfterEnv && \
+            npm run composeReBuild
