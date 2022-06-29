@@ -22,16 +22,29 @@ jobs:
           source: "."
           target: "/home/barcelona/2048/"
 
-      - name: Executing remote command
+      - name: Install node_modules
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: |
-            cd 2048 && \
-            npm ci && \
-            cp ~/.env ~/2048/ && \
-            npm run createAfterEnv && \
-            npm run CDdocker
+          script: cd 2048 && npm ci
+
+      - name: copy .env & create config
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: cd 2048 && cp ~/.env ~/2048/ && npm run createAfterEnv
+
+      - name: docker-compose restart
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: cd 2048 && npm run CDdocker>~/logs/docker-compose.log 2>~/logs/docker-compose-error.log &
