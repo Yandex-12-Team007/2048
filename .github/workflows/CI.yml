@@ -23,3 +23,23 @@ jobs:
           npm run eslint
         env:
           CI: true
+  test_check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      # Checkout action must run prior to eslint check
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Install and check codestyle
+        run: |
+          npm ci
+          npm run test
+        env:
+          CI: true
