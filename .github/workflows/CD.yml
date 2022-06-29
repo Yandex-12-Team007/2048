@@ -32,4 +32,4 @@ jobs:
             npm ci && \
             cp ~/.env ~/2048/ && \
             npm run createAfterEnv && \
-            npm run composeReBuild
+            npm run CDdocker
