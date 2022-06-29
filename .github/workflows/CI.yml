@@ -1,0 +1,25 @@
+name: CI
+on: [push]
+
+
+jobs:
+  eslint_check:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout action must run prior to eslint check
+        uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+          with:
+            node-version: '16.x'
+      - name: Install and check codestyle
+        run: |
+          npm ci
+          npm run eslint
+        env:
+          CI: true
+  test_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
