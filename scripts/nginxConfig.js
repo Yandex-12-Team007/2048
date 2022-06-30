@@ -59,6 +59,11 @@ const config = [
 
     // Основной сервер
     {name: 'server', type: 'block', params: '', children: [
+      {name: 'listen', type: 'option', params: '[::]:443 ssl http2 backlog=2048 ipv6only=off'},
+      {name: 'server_name', type: 'option_replace', params: '%DOMAIN%', replace: ['DOMAIN']},
+      {name: 'root', type: 'option', params: '$root'},
+      {name: 'charset', type: 'option', params: 'utf-8'},
+
       {name: 'set', type: 'option_replace', params: '$root %ROOT%', replace: ['ROOT']},
 
       // X-XSS-Protection
@@ -83,25 +88,25 @@ const config = [
       // Запрещаем автоматическое определение типа фалов
       {name: 'add_header', type: 'option', params: 'X-Content-Type-Options nosniff'},
 
-      {name: 'listen', type: 'option', params: '[::]:443 ssl http2 backlog=2048 ipv6only=off'},
       {name: 'ssi', type: 'option', params: 'on'},
       {name: 'add_header', type: 'option', params: 'Strict-Transport-Security "max-age=31536000"'},
       {name: 'ssl_ciphers', type: 'option', params: 'HIGH:!RC4:!aNULL:!eNULL:!MD5:!EXPORT:!EXP:!LOW:!SEED:!CAMELLIA:!IDEA:!PSK:!SRP:!SSLv2'},
       {name: 'ssl_prefer_server_ciphers', type: 'option', params: 'on'},
       {name: 'ssl_protocols', type: 'option', params: 'TLSv1 TLSv1.1 TLSv1.2'},
-      {name: 'ssl_certificate', type: 'option_replace', params: '%NGINX_DOCKER_SSL_PATH%%NGINX_SSL_CERT%', replace: ['NGINX_DOCKER_SSL_PATH', 'NGINX_SSL_CERT']},
-      {name: 'ssl_certificate_key', type: 'option_replace', params: '%NGINX_DOCKER_SSL_PATH%%NGINX_SSL_CERT_KEY%', replace: ['NGINX_DOCKER_SSL_PATH', 'NGINX_SSL_CERT_KEY']},
+      // {name: 'ssl_certificate', type: 'option_replace', params: '%NGINX_DOCKER_SSL_PATH%%NGINX_SSL_CERT%', replace: ['NGINX_DOCKER_SSL_PATH', 'NGINX_SSL_CERT']},
+      // {name: 'ssl_certificate_key', type: 'option_replace', params: '%NGINX_DOCKER_SSL_PATH%%NGINX_SSL_CERT_KEY%', replace: ['NGINX_DOCKER_SSL_PATH', 'NGINX_SSL_CERT_KEY']},
 
-
-      {name: 'server_name', type: 'option_replace', params: '%DOMAIN%', replace: ['DOMAIN']},
-      {name: 'root', type: 'option', params: '$root'},
-      {name: 'charset', type: 'option', params: 'utf-8'},
+      // certbot
+      {name: 'ssl_certificate', type: 'option', params: '/etc/letsencrypt/live/barcelona-2048-12.ya-praktikum.tech-0001/fullchain.pem'},
+      {name: 'ssl_certificate_key', type: 'option', params: '/etc/letsencrypt/live/barcelona-2048-12.ya-praktikum.tech-0001/privkey.pem'},
+      {name: 'ssl_trusted_certificate', type: 'option', params: '/etc/letsencrypt/livebarcelona-2048-12.ya-praktikum.tech-0001/chain.pem'},
+      // {name: 'include', type: 'option', params: '/etc/letsencrypt/options-ssl-nginx.conf'},
+      // {name: 'ssl_dhparam', type: 'option', params: '/etc/letsencrypt/ssl-dhparams.pem'},
 
       {name: 'proxy_connect_timeout', type: 'option', params: '600'},
       {name: 'proxy_send_timeout', type: 'option', params: '600'},
       {name: 'proxy_read_timeout', type: 'option', params: '600'},
       {name: 'send_timeout', type: 'option', params: '600'},
-      {name: 'server_name', type: 'option', params: 'ya-practicum.tech'},
       {name: 'location', type: 'block', params: '= /favicon.jpg', children: [
         {name: 'root', type: 'option', params: '$root'},
       ]},
@@ -109,6 +114,10 @@ const config = [
       // {name: 'location', type: 'block', params: '= /robots.txt', children: [
       //   {name: 'root', type: 'option', params: '$root'},
       // ]},
+
+      {name: 'location', type: 'block', params: '/.well-known/acme-challenge/', children: [
+        {name: 'root', type: 'option', params: '/var/www/certbot'},
+      ]},
 
       // Проверка статуса сервера
       {name: 'location', type: 'block', params: '/ping', children: [

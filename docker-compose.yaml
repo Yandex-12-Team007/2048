@@ -60,18 +60,18 @@ services:
     networks:
       - awesome
   nginx:
-    restart: always
+    restart: unless-stopped
     container_name: ${NGINX_CONTAINER_NAME}
     image: nginx:latest
     depends_on:
       - app
       - pgadmin
     ports:
-      - "8080:8080"
+      - "80:80"
       - "443:443"
     volumes:
-      - "${NGINX_CONFIG_PATH}:${NGINX_DOCKER_CONFIG_PATH}"
-      - "${NGINX_LOCAL_SSL_PATH}:${NGINX_DOCKER_SSL_PATH}"
+      - ${NGINX_CONFIG_PATH}:${NGINX_DOCKER_CONFIG_PATH}
+      - /etc/letsencrypt/:/etc/letsencrypt/
     networks:
       - awesome
 

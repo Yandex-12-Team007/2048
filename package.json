@@ -19,6 +19,7 @@
     "start": "cross-env nodemon index.ts",
     "startDocker": "docker-compose up",
     "composeReBuild": "docker-compose rm -f && docker-compose build && docker-compose up",
+    "CDdocker": "docker-compose rm -f && docker-compose build && docker-compose up app postgres pgadmin &",
     "prepare": "cross-env husky install",
     "create:nginx": "node ./scripts/createNginxConfig.js",
     "create:postgres": "node ./scripts/createPostgressConfig.js",

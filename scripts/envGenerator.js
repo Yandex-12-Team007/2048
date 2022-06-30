@@ -63,7 +63,7 @@ main();
 // Большая часть конфига не будет меняться, Вписываем статичную часть
 function generateStatic() {
   return {
-    DOMAIN: 'local.ya-praktikum.tech',
+    DOMAIN: 'barcelona-2048-12.ya-praktikum.tech',
     APP_CONTAINER_NAME: 'app',
     DB_CONTAINER_NAME: 'postgres',
     DB_HOST_DOCKER: 'postgres',
