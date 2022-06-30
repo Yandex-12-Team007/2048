@@ -8,6 +8,10 @@
   flex-direction: column;
   position: relative;
 
+  @media screen and (max-width: 400px) {
+    padding: 0;
+  }
+
   &__sound-button {
     position: absolute;
     top: 50px;
@@ -33,14 +37,17 @@
 
 .game-score,
 .game-record {
-  margin: 20px;
-}
-
-.game-score {
   font-size: 40px;
+  margin: 20px;
   font-weight: bold;
   text-align: center;
 
+  @media screen and (max-width: 400px) {
+    font-size: 24px;
+  }
+}
+
+.game-score {
   &__caption {
     color: var(--light-orange);
     margin: 0 0 10px;
@@ -53,10 +60,6 @@
 }
 
 .game-record {
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-
   &__caption {
     color: var(--orange);
     margin: 0 0 10px;

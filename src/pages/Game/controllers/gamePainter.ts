@@ -112,6 +112,7 @@ class GamePainter {
   }
 
   public animatedBoardUpdate(moveList, newList) {
+    console.log('animatedBoardUpdate');
     const renderBoard = this.renderBoard.bind(this);
     const renderGrid = this.renderGrid.bind(this);
     const renderAnimatedTiles = this.renderAnimatedTiles.bind(this);

@@ -103,7 +103,12 @@ class GameEngine {
     return true;
   }
 
-  private updatedBoard() {
+  public resize(width) {
+    this.setWidth(width);
+    this.updatedBoard();
+  }
+
+  public updatedBoard() {
     gamePainter.animatedBoardUpdate(this.moveList, this.newList);
   }
 
@@ -288,6 +293,10 @@ class GameEngine {
 
   public setSoundState(isSoundEnabled: boolean) {
     this.isSoundEnabled = isSoundEnabled;
+  }
+
+  private setWidth(width: number) {
+    gamePainter.setWidth(width);
   }
 }
 

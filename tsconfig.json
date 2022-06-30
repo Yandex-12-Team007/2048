@@ -27,6 +27,7 @@
       "Constants/*": ["./src/constants/*"],
       "Components/*": ["./src/components/*"],
       "Utils/*": ["./src/utils/*"],
+      "Hooks/*": ["./src/hooks/*"],
       "Static/*": ["./src/static/*"],
       "Api/*": ["./src/api/*"],
       "Controllers/*": ["./src/controllers/*"],

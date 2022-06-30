@@ -1,32 +1,49 @@
 import React, {useEffect, useRef, useState} from 'react';
-
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 import {useDispatch, useSelector} from 'react-redux';
 
 import Layout from 'Components/Layout';
+import {SoundButton} from 'Components/SoundButton/SoundButton';
 import GameModal from './components/GameModal';
 
-import {GameState} from 'Constants/game';
-
 import gameEngine from './controllers/gameEngine';
+
+import {useWindowSize} from 'hooks/useWindowSize';
 
 import {leaderboardSelector, userSelector} from 'Store/selectors';
 import {setScoreByUser, updateScore} from 'Store/actionCreators/leaderboard';
 
-import './Game.pcss';
-import {SoundButton} from 'Components/SoundButton/SoundButton';
-import {ThunkDispatch} from 'redux-thunk';
 import {IRootState} from 'Interface/IRootState';
-import {AnyAction} from 'redux';
+
+import {GameState} from 'Constants/game';
+
+import './Game.pcss';
 
 export default function Game() {
   const ref = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  const size = useWindowSize();
+
+  const windowWidth = size.width ?? 500;
+  const windowHeight = size.height ?? 500;
+
   const user = useSelector(userSelector)
   const leaderboard = useSelector(leaderboardSelector)
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState(GameState.INIT);
-  const [width] = useState(450);
+  const [width, setWidth] = useState(Math.min(windowWidth, windowHeight));
+
+  useEffect(() => {
+    console.log('Size effect');
+    console.log(`width : ${width} | windowWidth : ${windowWidth} | windowHeight : ${windowHeight}`);
+    if (width > windowWidth || width > windowHeight) {
+      const min = Math.min(windowWidth, windowHeight);
+      setWidth(min);
+      gameEngine.resize(min);
+    }
+  }, [size])
 
   const dispatch: ThunkDispatch<IRootState, unknown, AnyAction> = useDispatch();
   // Берем рекорд из хранилища
@@ -65,6 +82,8 @@ export default function Game() {
   function setSoundState(isSoundEnabled: boolean) {
     gameEngine.setSoundState(isSoundEnabled);
   }
+
+  console.log(width);
 
   return (
     <Layout title={'Игра'}>

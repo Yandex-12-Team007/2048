@@ -6,6 +6,10 @@
   justify-content: center;
   align-items: center;
 
+  @media screen and (max-width: 400px) {
+    padding: 0;
+  }
+
   &__wrapper {
     min-width: 320px;
     max-width: 640px;
@@ -25,9 +29,10 @@
   &__paragraph {
     font: var(--default-font);
     font-size: 18px;
-    text-align: left;
+    text-align: justify;
     text-indent: 15px;
     line-height: 20px;
+    padding: 10px;
     margin: 20px 0;
   }
 
